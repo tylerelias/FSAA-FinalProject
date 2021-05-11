@@ -9,7 +9,6 @@ class NonIndexedLinked:
         self.CPI = 100
         self.cost = cost
 
-        self.inflation_index_list = []
         self.annuity_factor_list = []
         self.principal_list = []
         self.payment_list = []
@@ -23,12 +22,11 @@ class NonIndexedLinked:
     def non_index_calculation(self):
         for i in range(1, self.duration + 1):
             if i == 1:
-                inflation_index = self.CPI + self.CPI
                 annuity_factor = (1 / self.monthly_interest) - 1 / (
                         self.monthly_interest
                         * pow(1 + self.monthly_interest, self.duration)
                 )
-                principal = self.principal * inflation_index / self.CPI
+                principal = self.principal / self.CPI
 
             else:
 

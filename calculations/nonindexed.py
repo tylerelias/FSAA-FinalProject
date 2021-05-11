@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 
 
 class NonIndexedLinked:
+    """
+    principal is the capital loan amount
+    intereset is yearly in percentages (i.e. 4.34)
+    duration is in months
+    cost is monthly fee from the bank
+
+    """
+
     def __init__(self, principal, duration, interest, cost=130):
         self.principal = principal
         self.duration = duration

@@ -64,8 +64,73 @@ class IndexLinked:
         self.monthly_interest = self.interest / 12
         self.monthly_inflation = pow(1 + self.inflation, 1 / 12) - 1
 
+    def reset_stored_values(self):
+        self.inflation_index_list = []
+        self.annuity_factor_list = []
+        self.principal_list = []
+        self.payment_list = []
+        self.interest_list = []
+        self.payment_of_capital_list = []
+        self.step = []
+        self.total_payment_list = []
+
     def index_calculation(self):
 
+        # For each month in time period
+        for i in range(1, self.duration + 1):
+            # seperate calculation for initial step
+            if i == 1:
+                # inflation index, necessary for index calculations
+                inflation_index = self.CPI + self.CPI * self.monthly_inflation
+
+                # annuity factor, necessary for index calculations
+                annuity_factor = (1 / self.monthly_interest) - 1 / (
+                    self.monthly_interest
+                    * pow(1 + self.monthly_interest, self.duration)
+                )
+
+                # calculated principal change per month
+                principal = self.principal * inflation_index / self.CPI
+
+            # every step after initial step, since they depend on previous values
+            else:
+                # inflation index, necessary for index calculations
+                inflation_index += inflation_index * self.monthly_inflation
+
+                # annuity factor, necessary for index calculations
+                annuity_factor = (1 / self.monthly_interest) - 1 / (
+                    self.monthly_interest
+                    * pow(1 + self.monthly_interest, self.duration - (i - 1))
+                )
+
+                # calculated principal change per month
+                principal = (principal - capital_payment) * (
+                    inflation_index / self.inflation_index_list[i - 2]
+                )
+
+            # monthly payment
+            payment = principal / annuity_factor
+
+            # how much of payment is payment of interests
+            interest = principal * self.monthly_interest
+
+            # how much of payment is payment of loan capital
+            capital_payment = payment - interest
+
+            # total payment, with monthly cost constant added
+            total_payment = payment + self.cost
+
+            # store value from each month for graphing and calculation purposes
+            self.inflation_index_list.append(inflation_index)
+            self.annuity_factor_list.append(annuity_factor)
+            self.principal_list.append(principal)
+            self.payment_list.append(payment)
+            self.interest_list.append(interest)
+            self.payment_of_capital_list.append(capital_payment)
+            self.total_payment_list.append(total_payment)
+            self.step.append(i)
+
+    def calculation_extra_payments(self, amount, start_step=1):
         for i in range(1, self.duration + 1):
             if i == 1:
                 inflation_index = self.CPI + self.CPI * self.monthly_inflation
@@ -86,6 +151,8 @@ class IndexLinked:
                     inflation_index / self.inflation_index_list[i - 2]
                 )
             payment = principal / annuity_factor
+            if i >= start_step:
+                payment += amount
             interest = principal * self.monthly_interest
             capital_payment = payment - interest
             total_payment = payment + self.cost
@@ -101,10 +168,14 @@ class IndexLinked:
 
     def _graph(self):
         plt.plot(self.step, self.principal_list)
-        plt.show()
 
 
 if __name__ == "__main__":
     l = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
     l.index_calculation()
     l._graph()
+
+    k = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
+    k.calculation_extra_payments(50000)
+    k._graph()
+    plt.show()

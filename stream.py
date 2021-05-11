@@ -12,9 +12,19 @@ lanstimi = st.sidebar.slider(
     5, 40, (40)
 )
 
+lan_upphaed = st.sidebar.slider(
+    'Upphæð láns (Milljónir)',
+    5.0, 200.0, (20.0)
+)
+
 vextir_ari = st.sidebar.radio(
     'Vextir á ári',
     ['3,44% breytilegir vextir', '4,20% fastir vextir í 3 ár']
+)
+
+inflation = st.sidebar.slider(
+    'Inflation',
+    1.0, 30.0, (4.3)
 )
 
 # temporary variable to understand what is happening
@@ -85,7 +95,7 @@ def DisplayInfo(principal, interest, inflation, cost=130, total_payments=[]):
     st.write("""# Lán""")
     st.write('lán = ', principal)
     st.write('mánuðir = ', interest)
-    st.write('vextir sem bætast ofan á =', 0)
+    st.write('vextir sem bætast ofan á =', )
     st.write('Samanlagt ', cost)
 
     st.write("""# Lán afborganir""")
@@ -93,15 +103,20 @@ def DisplayInfo(principal, interest, inflation, cost=130, total_payments=[]):
 
 
 if __name__ == "__main__":
+    milljon = 1000000
     #principal, duration, interest, inflation, cost
-    l = IndexLinked(40000000, lanstimi * 12, 2.54, 4.3)
+    vextir_ari_use = 3.44
+    if(vextir_ari == "3,44% breytilegir vextir"):
+        vextir_ari_use = 3.44
+    elif(vextir_ari == "4,20% fastir vextir í 3 ár"):
+        vextir_ari_use = 4.20
+    l = IndexLinked(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, inflation)
     l.index_calculation()
     #l._graph()
     #print(l.total_payment_list)
     total_payments = l.total_payment_list
-    PrintVariables(l)
-    DisplayInfo(40000000, lanstimi * 12, 2.54, 4.3, total_payments)
-    print()
+    #PrintVariables(l)
+    DisplayInfo(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, inflation, l.principal_list)
 
 
 #Total payment list 

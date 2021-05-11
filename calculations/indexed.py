@@ -130,44 +130,8 @@ class IndexLinked:
             self.total_payment_list.append(total_payment)
             self.step.append(i)
 
-    def calculation_extra_payments(self, amount, start_step=1):
-        for i in range(1, self.duration + 1):
-            if i == 1:
-                inflation_index = self.CPI + self.CPI * self.monthly_inflation
-                annuity_factor = (1 / self.monthly_interest) - 1 / (
-                    self.monthly_interest
-                    * pow(1 + self.monthly_interest, self.duration)
-                )
-                principal = self.principal * inflation_index / self.CPI
-
-            else:
-                inflation_index += inflation_index * self.monthly_inflation
-
-                annuity_factor = (1 / self.monthly_interest) - 1 / (
-                    self.monthly_interest
-                    * pow(1 + self.monthly_interest, self.duration - (i - 1))
-                )
-                principal = (principal - capital_payment) * (
-                    inflation_index / self.inflation_index_list[i - 2]
-                )
-            payment = principal / annuity_factor
-            if i >= start_step:
-                payment += amount
-            interest = principal * self.monthly_interest
-            capital_payment = payment - interest
-            total_payment = payment + self.cost
-
-            self.inflation_index_list.append(inflation_index)
-            self.annuity_factor_list.append(annuity_factor)
-            self.principal_list.append(principal)
-            self.payment_list.append(payment)
-            self.interest_list.append(interest)
-            self.payment_of_capital_list.append(capital_payment)
-            self.total_payment_list.append(total_payment)
-            self.step.append(i)
-
     def _graph(self):
-        plt.plot(self.step, self.principal_list)
+        plt.plot(self.step, self.total_payment_list)
 
 
 if __name__ == "__main__":

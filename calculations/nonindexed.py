@@ -123,18 +123,8 @@ if __name__ == "__main__":
     l.non_index_calculation()
     l._graph()
 
-    k = NonIndexedLinked(
-        40000000,
-        40 * 12,
-        3.44,
-    )
-    k.calculation_extra_amount(50000)
-    k._graph()
-
-    plt.show()
-
     print(sum(l.total_payment_list))
-    print(sum(k.total_payment_list))
+    print(l.interest_list)
 
     """k = NonIndexedLinked(
         40000000,

@@ -64,16 +64,6 @@ class IndexLinked:
         self.monthly_interest = self.interest / 12
         self.monthly_inflation = pow(1 + self.inflation, 1 / 12) - 1
 
-    def reset_stored_values(self):
-        self.inflation_index_list = []
-        self.annuity_factor_list = []
-        self.principal_list = []
-        self.payment_list = []
-        self.interest_list = []
-        self.payment_of_capital_list = []
-        self.step = []
-        self.total_payment_list = []
-
     def index_calculation(self):
 
         # For each month in time period
@@ -131,15 +121,11 @@ class IndexLinked:
             self.step.append(i)
 
     def _graph(self):
-        plt.plot(self.step, self.total_payment_list)
+        plt.plot(self.step, self.principal_list)
 
 
 if __name__ == "__main__":
     l = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
     l.index_calculation()
     l._graph()
-
-    k = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
-    k.calculation_extra_payments(50000)
-    k._graph()
     plt.show()

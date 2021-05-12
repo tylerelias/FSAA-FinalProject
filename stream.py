@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from print_helper import *
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from calculations.re_finance import ReFinance
@@ -68,6 +69,7 @@ if __name__ == "__main__":
     if(lan_typa == "Óverðtryggt"):
         l = NonIndexedLinked(lan_upphaed_milljonir, lans_timi_ar, vextir_ari)
         l.non_index_calculation()
+        #PrintVariables(l)
         DisplayInfo(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, l.total_payment_list, l.principal_list, 0)
         
         n = ReFinance(repay, lan_upphaed_milljonir, lans_timi_ar, vextir_ari)
@@ -78,73 +80,8 @@ if __name__ == "__main__":
         l.index_calculation()
         DisplayInfo(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, l.total_payment_list, l.principal_list, -1)
     
-    #PrintVariables(l)
     ## TODO: Add repayment to chart
     st.write("""# Lán afborganir""")
     st.line_chart(l.principal_list)
     #st.dataframe(l.total_payment_list)
 
-
-# temporary variable to understand what is happening
-def PrintVariables(l):
-    print(f'Principal {l.principal}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Duration {l.duration}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Interest {l.interest}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Inflation {l.inflation}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'CPI {l.CPI}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Cost {l.cost}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Inflation index list {l.inflation_index_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Annuity factor list {l.annuity_factor_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Principal list {l.principal_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Payment list {l.payment_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Interest list {l.interest_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Payment of capital {l.payment_of_capital_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Step {l.step}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Total payment list {l.total_payment_list}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Monthly interest {l.monthly_interest}')
-    print('============================')
-    print('============================')
-    print('============================')
-    print(f'Monthly inflation {l.monthly_inflation}')

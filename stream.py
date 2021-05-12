@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from calculations.indexed import IndexLinked
+from calculations.nonindexed import NonIndexedLinked
 
 lan_typa = st.sidebar.selectbox(
     'Lán?',
@@ -8,13 +9,13 @@ lan_typa = st.sidebar.selectbox(
 )
 
 if(lan_typa == "Óverðtryggt"):
-    vextir_ari = st.sidebar.radio(
+    vextir_val = st.sidebar.radio(
         'Vextir á ári',
         ['3.44% breytilegir vextir', '4.20% fastir vextir í 3 ár']
     )
 
 elif(lan_typa == "Verðtryggt"):
-    vextir_ari = st.sidebar.radio(
+    vextir_val = st.sidebar.radio(
         'Vextir á ári',
         ['2.54% breytilegir vextir', '2.54% fastir vextir í 5 ár']
     )
@@ -48,13 +49,16 @@ def DisplayInfo(principal, loan_months, inflation, total_payment_list, principal
 
 if __name__ == "__main__":
     milljon = 1000000
-    vextir_ari_use = float(vextir_ari[:4].strip())
-
-    l = IndexLinked(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, inflation)
-    l.index_calculation()
+    vextir_ari = float(vextir_val[:4].strip())
+    if(lan_typa == "Óverðtryggt"):
+        l = NonIndexedLinked(lan_upphaed*milljon, lanstimi * 12, vextir_ari)
+        l.non_index_calculation()
+    elif(lan_typa == "Verðtryggt"):
+        l = IndexLinked(lan_upphaed*milljon, lanstimi * 12, vextir_ari, inflation)
+        l.index_calculation()
     
     #PrintVariables(l)
-    DisplayInfo(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, l.total_payment_list, l.principal_list)
+    DisplayInfo(lan_upphaed*milljon, lanstimi * 12, vextir_ari, l.total_payment_list, l.principal_list)
     #st.dataframe(l.total_payment_list)
 
 

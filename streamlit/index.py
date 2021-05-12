@@ -3,9 +3,31 @@ from text.text import Text
 
 
 def loan_text_input():
-    st.text_input(Text.loan_amount, "0")
-    st.text_input(Text.interest_rate, "0.0")
-    st.text_input(Text.duration, "0")
+    amount = st.text_input(
+        Text.loan_amount,
+        "0",
+        help=Text.amount_help
+    )
+    interest = st.text_input(
+        Text.interest_rate,
+        "0.0",
+        help=Text.interest_rate_help
+    )
+    duration = st.text_input(
+        Text.duration,
+        "0",
+        help=Text.duration_help
+    )
+
+    return amount, interest, duration
+
+
+def calculate_non_indexed(amount, interest, duration):
+    st.write(amount, interest, duration)
+
+
+def calculate_indexed(amount, interest, duration, inflation):
+    st.write(amount, interest, duration, inflation)
 
 
 # The layout of the website
@@ -28,16 +50,26 @@ if loan_type == Text.non_indexed:
     st.markdown(Text.line)
     st.markdown(Text.selected_non_indexed)
     st.markdown(Text.step_2)
-    loan_text_input()
+
+    amount, interest, duration = loan_text_input()
+
     if st.button(Text.done):
-        st.write("Smellt")
+        st.markdown(Text.line)
+        calculate_non_indexed(amount, interest, duration)
 
 # Second step - indexed
 if loan_type == Text.indexed:
     st.markdown(Text.line)
     st.markdown(Text.selected_indexed)
     st.markdown(Text.step_2)
-    loan_text_input()
-    st.text_input(Text.inflation_rate, "0.0")
+
+    amount, interest, duration = loan_text_input()
+    inflation = st.text_input(
+        Text.inflation_rate,
+        "4.6",
+        help=Text.inflation_rate_help
+    )
+
     if st.button(Text.done):
-        st.write("Smellt")
+        st.markdown(Text.line)
+        calculate_indexed(amount, interest, duration, inflation)

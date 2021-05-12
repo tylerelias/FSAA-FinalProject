@@ -19,7 +19,6 @@ elif(lan_typa == "Verðtryggt"):
         ['2.54% breytilegir vextir', '2.54% fastir vextir í 5 ár']
     )
 
-
 inflation = st.sidebar.slider(
     'Inflation',
     1.0, 30.0, (4.3)
@@ -36,38 +35,27 @@ lan_upphaed = st.sidebar.slider(
 )
 
 
-
-
-def DisplayInfo(principal, interest, inflation, cost=130, total_payments=[]):
+def DisplayInfo(principal, loan_months, inflation, total_payment_list, principal_list=[]):
     st.write("""# Lán""")
     st.write('lán = ', principal)
-    st.write('mánuðir = ', interest)
-    st.write('vextir sem bætast ofan á =', )
-    st.write('Samanlagt ', cost)
+    st.write('mánuðir = ', loan_months)
+    st.write('vextir sem bætast ofan á =', 0)
+    st.write('Samtals greitt', sum(total_payment_list))
 
     st.write("""# Lán afborganir""")
-    st.line_chart(total_payments)
+    st.line_chart(principal_list)
 
 
 if __name__ == "__main__":
     milljon = 1000000
-    #principal, duration, interest, inflation, cost
-
-    if(lan_typa == "Óverðtryggt"):
-        print("Óverðtryggt")
-    elif(lan_typa == "Verðtryggt"):
-        print("Verðtryggt")
-
     vextir_ari_use = float(vextir_ari[:4].strip())
-    #if(vextir_ari_use == 3.44):
-        #print("it is", 3.44)
 
     l = IndexLinked(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, inflation)
     l.index_calculation()
-    #l._graph()
-    total_payments = l.total_payment_list
+    
     #PrintVariables(l)
-    DisplayInfo(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, inflation, l.principal_list)
+    DisplayInfo(lan_upphaed*milljon, lanstimi * 12, vextir_ari_use, l.total_payment_list, l.principal_list)
+    #st.dataframe(l.total_payment_list)
 
 
 # temporary variable to understand what is happening

@@ -124,8 +124,19 @@ class IndexLinked:
         plt.plot(self.step, self.principal_list)
 
 
+    # total amount payed
+    def get_total_payment(self):
+        return sum(self.total_payment_list)
+
+
+    # highest loan capital point
+    def get_loan_highpoint(self):
+        return max(self.principal_list)
+
+
 if __name__ == "__main__":
     l = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
     l.index_calculation()
     l._graph()
-    plt.show()
+    
+    print(l.get_loan_highpoint())

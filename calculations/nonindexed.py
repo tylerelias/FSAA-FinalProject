@@ -120,6 +120,11 @@ class NonIndexedLinked:
     def _graph(self):
         plt.plot(self.step, self.principal_list)
 
+    # total amount payed
+    def get_total_payment(self):
+        return sum(self.total_payment_list)
+
+
 
 if __name__ == "__main__":
 

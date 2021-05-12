@@ -125,7 +125,6 @@ class NonIndexedLinked:
         return sum(self.total_payment_list)
 
 
-
 if __name__ == "__main__":
 
     l = NonIndexedLinked(

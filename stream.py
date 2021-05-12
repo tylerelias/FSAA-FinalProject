@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import copy
 from print_helper import *
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
@@ -72,8 +73,11 @@ if __name__ == "__main__":
         #PrintVariables(l)
         DisplayInfo(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, l.total_payment_list, l.principal_list, 0)
         
-        n = ReFinance(repay, lan_upphaed_milljonir, lans_timi_ar, vextir_ari)
-        DisplayInfo(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, l.total_payment_list, l.principal_list, 1)
+        #n = ReFinance(repay, lan_upphaed_milljonir, lans_timi_ar, vextir_ari)
+        #print(n.non)
+        n = copy.deepcopy(l)
+        n.calculation_extra_amount(repay)
+        DisplayInfo(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, n.total_payment_list, n.principal_list, 1)
 
     elif(lan_typa == "Verðtryggt"):
         l = IndexLinked(lan_upphaed_milljonir, lans_timi_ar, vextir_ari, inflation)

@@ -12,31 +12,33 @@ ss = SessionState.get(
     two=False,
     three=False,
     four=False,
-    principal='0',
-    duration='0',
-    interest='0.0',
-    inflation='0.0',
+    principal=0,
+    duration=0,
+    interest=0.0,
+    inflation=0.0,
     is_indexed=False
 )
 
 def loan_text_input():
+    tmp_principal = ss.principal
+    tmp_duration = ss.duration
+    tmp_interest = ss.interest
+
     ss.principal = st.text_input(
         Text.loan_amount,
-        '0' if ss.principal == '0' else ss.principal,
+        tmp_principal,
         help=Text.amount_help
     )
     ss.duration = st.text_input(
         Text.duration,
-        '0' if ss.duration == '0' else ss.duration,
+        tmp_duration,
         help=Text.duration_help
     )
     ss.interest = st.text_input(
         Text.interest_rate,
-        '0.0' if ss.interest == '0.0' else ss.interest,
+        tmp_interest,
         help=Text.interest_rate_help
     )
-
-    return ss.principal, ss.duration, ss.interest
 
 
 def validate_input():
@@ -46,8 +48,8 @@ def validate_input():
         return False
     if not ss.interest.replace('.', '', 1).isdigit() or float(ss.interest) < 0:
         return False
-    if not ss.inflation.replace('.', '', 1).isdigit():
-        return False
+    #if not ss.inflation.replace('.', '', 1).isdigit():
+        #return False
     return True
 
 
@@ -69,16 +71,18 @@ def no_missing_parameters(loan_type):
 
 def step_two_form(loan_type = '', markdown_text=''):
     ss.two = False
+    # if values above are changed we don't wanna see step three
+    ss.three = False
     st.markdown(markdown_text)
     st.markdown(Text.step_2)
     # Print out the various stats
-    ss.principal, ss.duration, ss.interest = loan_text_input()
+    loan_text_input()
     ss.is_indexed = False
 
     if loan_type == "indexed":
         ss.inflation = st.text_input(
             Text.inflation_rate,
-            '0.0' if ss.inflation == '0.0' else ss.inflation,
+            ss.inflation,
             help=Text.inflation_rate_help
         )
         ss.is_indexed = True
@@ -93,20 +97,13 @@ def step_two_form(loan_type = '', markdown_text=''):
             st.markdown("## Illegal input")
         
 def step_two(loan_type):
-
     # non-indexed loans
     if loan_type == Text.non_indexed:
-        # The form
-        #with st.form("non_indexed"):
         step_two_form("non_indexed", Text.selected_non_indexed)
 
     # Second step - indexed
     if loan_type == Text.indexed:
-
-        #with st.form("indexed"):
         step_two_form("indexed", Text.selected_indexed)
-
-    #return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
 def step_three(loan_type):
     # For non-indexed case
@@ -129,7 +126,7 @@ def step_three(loan_type):
 
 def step_four():
     # st.write(is_step_three.checkboxed)
-    if ss.three:
+    if ss.three and loan_type != "Ekkert valið":
         with st.form("step_four"):
             st.markdown(Text.step_4)
             payment_option = st.radio(
@@ -187,8 +184,6 @@ def calculate_indexed():
 
 
 if __name__ == '__main__':
-
-
     # The layout of the website
     # Header and introduction text for the website
     st.markdown(Text.header)
@@ -196,7 +191,6 @@ if __name__ == '__main__':
     st.markdown(Text.intro_text)
 
     loan_type = step_one()
-    #ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
     step_two(loan_type)
     step_three(loan_type)
     step_four()

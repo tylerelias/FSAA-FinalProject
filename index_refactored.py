@@ -1,14 +1,23 @@
 import locale
-
 import streamlit as st
 import SessionState
-
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
-
 locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
 
+# Used to keep track of the states
+ss = SessionState.get(
+    one=False,
+    two=False,
+    three=False,
+    four=False,
+    principal='0',
+    duration='0',
+    interest='0.0',
+    inflation='0.0',
+    is_indexed=False
+)
 
 def loan_text_input():
     ss.principal = st.text_input(
@@ -30,14 +39,14 @@ def loan_text_input():
     return ss.principal, ss.duration, ss.interest
 
 
-def validate_input(principal, interest, duration, inflation='0.0'):
-    if not principal.isnumeric() or int(principal) < 1:
+def validate_input():
+    if not ss.principal.isnumeric() or int(ss.principal) < 1:
         return False
-    if not duration.isnumeric() or int(duration) < 1:
+    if not ss.duration.isnumeric() or int(ss.duration) < 1:
         return False
-    if not interest.replace('.', '', 1).isdigit() or float(interest) < 0:
+    if not ss.interest.replace('.', '', 1).isdigit() or float(ss.interest) < 0:
         return False
-    if not inflation.replace('.', '', 1).isdigit():
+    if not ss.inflation.replace('.', '', 1).isdigit():
         return False
     return True
 
@@ -52,65 +61,67 @@ def step_one():
     )
     return loan_type
 
+def no_missing_parameters(loan_type):
+    if(loan_type == 'non_indexed'):
+        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0'
+    elif(loan_type == 'indexed'):
+        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0' and ss.inflation != '0.0' and ss.inflation != 0.0 and ss.inflation != 0
 
 def step_two_form(loan_type = '', markdown_text=''):
+    ss.two = False
     st.markdown(markdown_text)
     st.markdown(Text.step_2)
     # Print out the various stats
     ss.principal, ss.duration, ss.interest = loan_text_input()
+    ss.is_indexed = False
 
-    input_validation = validate_input(ss.principal, ss.interest, ss.duration)
     if loan_type == "indexed":
         ss.inflation = st.text_input(
             Text.inflation_rate,
             '0.0' if ss.inflation == '0.0' else ss.inflation,
             help=Text.inflation_rate_help
         )
-        input_validation = validate_input(ss.principal, ss.interest, ss.duration, ss.inflation)
+        ss.is_indexed = True
 
-
-    # Submit the checkbox to get validated
-    submit = st.form_submit_button(Text.submit)
-
-    if submit or ss.two:
+    if no_missing_parameters(loan_type):
+        input_validation = validate_input()
         if input_validation:
             ss.two = True
         else:
             # TODO: Fix to make a proper Wrong Value message
             ss.two = False
             st.markdown("## Illegal input")
-
+        
 def step_two(loan_type):
 
     # non-indexed loans
     if loan_type == Text.non_indexed:
         # The form
-        with st.form("non_indexed"):
-           step_two_form("non_indexed", Text.selected_non_indexed)
+        #with st.form("non_indexed"):
+        step_two_form("non_indexed", Text.selected_non_indexed)
 
     # Second step - indexed
     if loan_type == Text.indexed:
 
-        with st.form("indexed"):
-            step_two_form("indexed", Text.selected_indexed)
+        #with st.form("indexed"):
+        step_two_form("indexed", Text.selected_indexed)
 
-    return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
+    #return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
-
-def step_three(principal, interest, duration, inflation, is_indexed):
+def step_three(loan_type):
     # For non-indexed case
-    if ss.two and is_indexed is False:
+    if ss.two and ss.is_indexed is False and loan_type != "Ekkert valið":
         with st.form("non_indexed_overview"):
-            calculate_non_indexed(principal, interest, duration)
+            calculate_non_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
             # st.write(is_step_three.three)
             if step_three_submit:
                 ss.three = True
 
     # For indexed loan case
-    if ss.two and is_indexed is True:
+    if ss.two and ss.is_indexed is True and loan_type != "Ekkert valið":
         with st.form("indexed_overview"):
-            calculate_indexed(principal, interest, duration, inflation)
+            calculate_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
                 ss.three = True
@@ -137,10 +148,10 @@ def convert_to_isk(amount):
 
 
 # Part of Step 3
-def display_info(tegund, principal, interest, duration, inflation=4.3):
-    isk = locale.currency(int(principal), grouping=True)
-    _interest = float(interest)
-    _duration = int(duration)
+def display_info(loan_type):
+    isk = locale.currency(int(ss.principal), grouping=True)
+    _interest = float(ss.interest)
+    _duration = int(ss.duration)
 
     st.markdown(Text.step_3)
     st.markdown(f'### {Text.loan_amount}: {isk}')
@@ -148,12 +159,12 @@ def display_info(tegund, principal, interest, duration, inflation=4.3):
     st.markdown(f'### {Text.interest_rate}: {_interest}%')
     st.markdown(f'*{Text.if_wrong_input}*')
 
-    if(tegund == "indexed"):
-        _inflation = float(inflation)
-        lt = IndexLinked(int(principal), _duration, _interest, _inflation)
+    if(loan_type == "indexed"):
+        _inflation = float(ss.inflation)
+        lt = IndexLinked(int(ss.principal), _duration, _interest, _inflation)
         lt.index_calculation()
-    elif(tegund == "non_indexed"):
-        lt = NonIndexedLinked(int(principal), _duration, _interest)
+    elif(loan_type == "non_indexed"):
+        lt = NonIndexedLinked(int(ss.principal), _duration, _interest)
         lt.non_index_calculation()
 
     st.markdown(
@@ -167,27 +178,16 @@ def display_info(tegund, principal, interest, duration, inflation=4.3):
     #st.markdown(f'{Text.stop_getting_ripped_off}')
 
 
-def calculate_non_indexed(principal, interest, duration):
-    display_info("non_indexed", principal, interest, duration)
+def calculate_non_indexed():
+    display_info("non_indexed")
 
 
-def calculate_indexed(principal, interest, duration, inflation):
-    display_info("indexed", principal, interest, duration, inflation)
+def calculate_indexed():
+    display_info("indexed")
 
 
 if __name__ == '__main__':
-    # Used to keep track of the states
-    ss = SessionState.get(
-        one=False,
-        two=False,
-        three=False,
-        four=False,
-        principal='0',
-        duration='0',
-        interest='0.0',
-        inflation='0.0',
-        is_indexed=False
-    )
+
 
     # The layout of the website
     # Header and introduction text for the website
@@ -196,6 +196,7 @@ if __name__ == '__main__':
     st.markdown(Text.intro_text)
 
     loan_type = step_one()
-    ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
-    step_three(ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed)
+    #ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
+    step_two(loan_type)
+    step_three(loan_type)
     step_four()

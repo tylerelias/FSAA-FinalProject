@@ -10,6 +10,26 @@ from text.text import Text
 locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
 
 
+def loan_text_input():
+    principal = st.text_input(
+        Text.loan_amount,
+        "40000000",
+        help=Text.amount_help
+    )
+    duration = st.text_input(
+        Text.duration,
+        "300",
+        help=Text.duration_help
+    )
+    interest = st.text_input(
+        Text.interest_rate,
+        "3.3",
+        help=Text.interest_rate_help
+    )
+
+    return principal, duration, interest
+
+
 def validate_input(principal, interest, duration, inflation='0.0'):
     if not principal.isnumeric() or int(principal) < 1:
         return False
@@ -39,22 +59,7 @@ def step_two(loan_type):
     interest = '0.0'
     inflation = '0.0'
     is_indexed = False
-    if loan_type != Text.none_selected:
-        principal = st.text_input(
-            Text.loan_amount,
-            "40000000",
-            help=Text.amount_help
-        )
-        duration = st.text_input(
-            Text.duration,
-            "300",
-            help=Text.duration_help
-        )
-        interest = st.text_input(
-            Text.interest_rate,
-            "3.3",
-            help=Text.interest_rate_help
-        )
+
     # non-indexed loans
     if loan_type == Text.non_indexed:
         # The form
@@ -63,6 +68,8 @@ def step_two(loan_type):
             st.markdown(Text.selected_non_indexed)
             st.markdown(Text.step_2)
             # Print out the various stats
+
+            principal, duration, interest = loan_text_input()
 
             # Submit the checkbox to get validated
             submit = st.form_submit_button(Text.submit)
@@ -78,15 +85,17 @@ def step_two(loan_type):
     # Second step - indexed
     if loan_type == Text.indexed:
         is_indexed = True
+
         with st.form("indexed"):
             st.markdown(Text.selected_indexed)
             st.markdown(Text.step_2)
 
-            inflation = float(st.text_input(
+            principal, duration, interest = loan_text_input()
+            inflation = st.text_input(
                 Text.inflation_rate,
                 "4.6",
                 help=Text.inflation_rate_help
-            ))
+            )
 
             submit = st.form_submit_button(Text.submit)
             if submit:
@@ -108,7 +117,8 @@ def step_three(principal, interest, duration, inflation, is_indexed):
             step_three_submit = st.form_submit_button(Text.btn_step4)
             # st.write(is_step_three.checkboxed)
             if step_three_submit:
-                is_step_three.checkboxed = True
+                ...
+                # is_step_three.checkboxed = True
 
     # For indexed loan case
     if is_step_two.checkboxed and is_indexed is True:
@@ -116,7 +126,8 @@ def step_three(principal, interest, duration, inflation, is_indexed):
             calculate_indexed(principal, interest, duration, inflation)
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
-                is_step_three.checkboxed = True
+                ...
+                # is_step_three.checkboxed = True
 
 
 def step_four():

@@ -108,9 +108,9 @@ def step_two(loan_type):
 
     #return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
-def step_three():
+def step_three(loan_type):
     # For non-indexed case
-    if ss.two and ss.is_indexed is False:
+    if ss.two and ss.is_indexed is False and loan_type != "Ekkert valið":
         with st.form("non_indexed_overview"):
             calculate_non_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
@@ -119,7 +119,7 @@ def step_three():
                 ss.three = True
 
     # For indexed loan case
-    if ss.two and ss.is_indexed is True:
+    if ss.two and ss.is_indexed is True and loan_type != "Ekkert valið":
         with st.form("indexed_overview"):
             calculate_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
@@ -198,5 +198,5 @@ if __name__ == '__main__':
     loan_type = step_one()
     #ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
     step_two(loan_type)
-    step_three()
+    step_three(loan_type)
     step_four()

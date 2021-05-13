@@ -1,14 +1,10 @@
 import locale
-
 import streamlit as st
 import SessionState
-
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
-
 locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
-
 
 def loan_text_input():
     ss.principal = st.text_input(
@@ -68,7 +64,6 @@ def step_two_form(loan_type = '', markdown_text=''):
         )
         input_validation = validate_input(ss.principal, ss.interest, ss.duration, ss.inflation)
 
-
     # Submit the checkbox to get validated
     submit = st.form_submit_button(Text.submit)
 
@@ -79,7 +74,7 @@ def step_two_form(loan_type = '', markdown_text=''):
             # TODO: Fix to make a proper Wrong Value message
             ss.two = False
             st.markdown("## Illegal input")
-
+        
 def step_two(loan_type):
 
     # non-indexed loans
@@ -94,23 +89,22 @@ def step_two(loan_type):
         with st.form("indexed"):
             step_two_form("indexed", Text.selected_indexed)
 
-    return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
+    #return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
-
-def step_three(principal, interest, duration, inflation, is_indexed):
+def step_three():
     # For non-indexed case
-    if ss.two and is_indexed is False:
+    if ss.two and ss.is_indexed is False:
         with st.form("non_indexed_overview"):
-            calculate_non_indexed(principal, interest, duration)
+            calculate_non_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
             # st.write(is_step_three.three)
             if step_three_submit:
                 ss.three = True
 
     # For indexed loan case
-    if ss.two and is_indexed is True:
+    if ss.two and ss.is_indexed is True:
         with st.form("indexed_overview"):
-            calculate_indexed(principal, interest, duration, inflation)
+            calculate_indexed()
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
                 ss.three = True
@@ -137,10 +131,10 @@ def convert_to_isk(amount):
 
 
 # Part of Step 3
-def display_info(tegund, principal, interest, duration, inflation=4.3):
-    isk = locale.currency(int(principal), grouping=True)
-    _interest = float(interest)
-    _duration = int(duration)
+def display_info(loan_type):
+    isk = locale.currency(int(ss.principal), grouping=True)
+    _interest = float(ss.interest)
+    _duration = int(ss.duration)
 
     st.markdown(Text.step_3)
     st.markdown(f'### {Text.loan_amount}: {isk}')
@@ -148,12 +142,12 @@ def display_info(tegund, principal, interest, duration, inflation=4.3):
     st.markdown(f'### {Text.interest_rate}: {_interest}%')
     st.markdown(f'*{Text.if_wrong_input}*')
 
-    if(tegund == "indexed"):
-        _inflation = float(inflation)
-        lt = IndexLinked(int(principal), _duration, _interest, _inflation)
+    if(loan_type == "indexed"):
+        _inflation = float(ss.inflation)
+        lt = IndexLinked(int(ss.principal), _duration, _interest, _inflation)
         lt.index_calculation()
-    elif(tegund == "non_indexed"):
-        lt = NonIndexedLinked(int(principal), _duration, _interest)
+    elif(loan_type == "non_indexed"):
+        lt = NonIndexedLinked(int(ss.principal), _duration, _interest)
         lt.non_index_calculation()
 
     st.markdown(
@@ -167,12 +161,12 @@ def display_info(tegund, principal, interest, duration, inflation=4.3):
     #st.markdown(f'{Text.stop_getting_ripped_off}')
 
 
-def calculate_non_indexed(principal, interest, duration):
-    display_info("non_indexed", principal, interest, duration)
+def calculate_non_indexed():
+    display_info("non_indexed")
 
 
-def calculate_indexed(principal, interest, duration, inflation):
-    display_info("indexed", principal, interest, duration, inflation)
+def calculate_indexed():
+    display_info("indexed")
 
 
 if __name__ == '__main__':
@@ -196,6 +190,7 @@ if __name__ == '__main__':
     st.markdown(Text.intro_text)
 
     loan_type = step_one()
-    ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
-    step_three(ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed)
+    #ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
+    step_two(loan_type)
+    step_three()
     step_four()

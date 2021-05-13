@@ -6,6 +6,19 @@ from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
 locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
 
+# Used to keep track of the states
+ss = SessionState.get(
+    one=False,
+    two=False,
+    three=False,
+    four=False,
+    principal='0',
+    duration='0',
+    interest='0.0',
+    inflation='0.0',
+    is_indexed=False
+)
+
 def loan_text_input():
     ss.principal = st.text_input(
         Text.loan_amount,
@@ -26,14 +39,14 @@ def loan_text_input():
     return ss.principal, ss.duration, ss.interest
 
 
-def validate_input(principal, interest, duration, inflation='0.0'):
-    if not principal.isnumeric() or int(principal) < 1:
+def validate_input():
+    if not ss.principal.isnumeric() or int(ss.principal) < 1:
         return False
-    if not duration.isnumeric() or int(duration) < 1:
+    if not ss.duration.isnumeric() or int(ss.duration) < 1:
         return False
-    if not interest.replace('.', '', 1).isdigit() or float(interest) < 0:
+    if not ss.interest.replace('.', '', 1).isdigit() or float(ss.interest) < 0:
         return False
-    if not inflation.replace('.', '', 1).isdigit():
+    if not ss.inflation.replace('.', '', 1).isdigit():
         return False
     return True
 
@@ -55,19 +68,20 @@ def step_two_form(loan_type = '', markdown_text=''):
     # Print out the various stats
     ss.principal, ss.duration, ss.interest = loan_text_input()
 
-    input_validation = validate_input(ss.principal, ss.interest, ss.duration)
+    input_validation = validate_input()
     if loan_type == "indexed":
         ss.inflation = st.text_input(
             Text.inflation_rate,
             '0.0' if ss.inflation == '0.0' else ss.inflation,
             help=Text.inflation_rate_help
         )
-        input_validation = validate_input(ss.principal, ss.interest, ss.duration, ss.inflation)
+        input_validation = validate_input()
 
     # Submit the checkbox to get validated
-    submit = st.form_submit_button(Text.submit)
+    #submit = st.form_submit_button(Text.submit)
 
-    if submit or ss.two:
+    #if submit or ss.two:
+    if ss.principal != 0 and ss.duration != 0 and ss.interest != 0.0:
         if input_validation:
             ss.two = True
         else:
@@ -80,14 +94,14 @@ def step_two(loan_type):
     # non-indexed loans
     if loan_type == Text.non_indexed:
         # The form
-        with st.form("non_indexed"):
-           step_two_form("non_indexed", Text.selected_non_indexed)
+        #with st.form("non_indexed"):
+        step_two_form("non_indexed", Text.selected_non_indexed)
 
     # Second step - indexed
     if loan_type == Text.indexed:
 
-        with st.form("indexed"):
-            step_two_form("indexed", Text.selected_indexed)
+        #with st.form("indexed"):
+        step_two_form("indexed", Text.selected_indexed)
 
     #return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
@@ -170,18 +184,7 @@ def calculate_indexed():
 
 
 if __name__ == '__main__':
-    # Used to keep track of the states
-    ss = SessionState.get(
-        one=False,
-        two=False,
-        three=False,
-        four=False,
-        principal='0',
-        duration='0',
-        interest='0.0',
-        inflation='0.0',
-        is_indexed=False
-    )
+
 
     # The layout of the website
     # Header and introduction text for the website

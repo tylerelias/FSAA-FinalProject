@@ -26,6 +26,15 @@ class NonIndexedLinked:
 
         self.monthly_interest = self.interest / 12
 
+    def _clear_buffer(self):
+        self.principal_list = []
+        self.payment_list = []
+        self.interest_list = []
+        self.payment_of_capital_list = []
+        self.step = []
+        self.total_payment_list = []
+        self.annuity_factor_list = []
+
     def non_index_calculation(self):
         for i in range(1, self.duration + 1):
             # seperate calculation for initial step
@@ -124,6 +133,29 @@ class NonIndexedLinked:
     def get_total_payment(self):
         return sum(self.total_payment_list)
 
+    def total_saved_from_extra_payment(self, amount):
+        self._clear_buffer()
+
+        self.non_index_calculation()
+        norm = self.get_total_payment()
+        self._clear_buffer()
+
+        self.calculation_extra_amount(amount)
+        ex = self.get_total_payment()
+
+        return norm - ex
+
+    def time_saved_from_extra_payment(self, amount):
+        self._clear_buffer()
+        self.non_index_calculation()
+        norm = len(self.total_payment_list)
+        self._clear_buffer()
+
+        self.calculation_extra_amount(amount)
+        ex = len(self.total_payment_list)
+
+        return norm - ex
+
 
 if __name__ == "__main__":
 
@@ -132,11 +164,9 @@ if __name__ == "__main__":
         40 * 12,
         3.44,
     )
-    l.non_index_calculation()
-    l._graph()
 
-    print(sum(l.total_payment_list))
-    print(l.interest_list)
+    print(l.total_saved_from_extra_payment(10000))
+    print(l.time_saved_from_extra_payment(10000))
 
     """k = NonIndexedLinked(
         40000000,

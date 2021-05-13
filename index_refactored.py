@@ -65,9 +65,10 @@ def no_missing_parameters(loan_type):
     if(loan_type == 'non_indexed'):
         return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0'
     elif(loan_type == 'indexed'):
-        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0' and ss.inflation != '0.0'
+        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0' and ss.inflation != '0.0' and ss.inflation != 0.0 and ss.inflation != 0
 
 def step_two_form(loan_type = '', markdown_text=''):
+    ss.two = False
     st.markdown(markdown_text)
     st.markdown(Text.step_2)
     # Print out the various stats

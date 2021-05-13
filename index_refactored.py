@@ -61,6 +61,11 @@ def step_one():
     )
     return loan_type
 
+def no_missing_parameters(loan_type):
+    if(loan_type == 'non_indexed'):
+        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0'
+    elif(loan_type == 'indexed'):
+        return ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0' and ss.inflation != '0.0'
 
 def step_two_form(loan_type = '', markdown_text=''):
     st.markdown(markdown_text)
@@ -74,9 +79,8 @@ def step_two_form(loan_type = '', markdown_text=''):
             '0.0' if ss.inflation == '0.0' else ss.inflation,
             help=Text.inflation_rate_help
         )
-        
-    if ss.principal != '0' and ss.duration != '0' and ss.interest != '0.0':
 
+    if no_missing_parameters(loan_type):
         input_validation = validate_input()
         if input_validation:
             ss.two = True

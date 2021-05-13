@@ -143,7 +143,7 @@ def convert_to_isk(amount):
 
 
 # Part of Step 3
-def calculate_non_indexed(principal, interest, duration):
+def display_info(tegund, principal, interest, duration, inflation=4.3):
     isk = locale.currency(int(principal), grouping=True)
     _interest = float(interest)
     _duration = int(duration)
@@ -154,34 +154,31 @@ def calculate_non_indexed(principal, interest, duration):
     st.markdown(f'### {Text.interest_rate}: {_interest}%')
     st.markdown(f'*{Text.if_wrong_input}*')
 
-    nil = NonIndexedLinked(int(principal), _duration, _interest)
-    nil.non_index_calculation()
+    if(tegund == "indexed"):
+        _inflation = float(inflation)
+        lt = IndexLinked(int(principal), _duration, _interest, _inflation)
+        lt.index_calculation()
+    elif(tegund == "non_indexed"):
+        lt = NonIndexedLinked(int(principal), _duration, _interest)
+        lt.non_index_calculation()
 
-    st.markdown(f'### {Text.monthly_payments}: {convert_to_isk(nil.total_payment_list[0])}')
-    st.markdown(f'### {Text.total_loan_payment}: {convert_to_isk(sum(nil.total_payment_list))}')
-    st.markdown(f'### {Text.total_interest_payment}: {convert_to_isk(sum(nil.interest_list))}')
+    st.markdown(
+        f'### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}')
+    st.markdown(
+        f'### {Text.total_loan_payment}: {convert_to_isk(sum(lt.total_payment_list))}')
+    st.markdown(
+        f'### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}')
+
+    #if(tegund == "indexed"):
+    #st.markdown(f'{Text.stop_getting_ripped_off}')
+
+
+def calculate_non_indexed(principal, interest, duration):
+    display_info("non_indexed", principal, interest, duration)
 
 
 def calculate_indexed(principal, interest, duration, inflation):
-    isk = locale.currency(int(principal), grouping=True)
-    _interest = float(interest)
-    _duration = int(duration)
-    _inflation = float(inflation)
-
-    st.markdown(Text.step_3)
-    st.markdown(f'### {Text.loan_amount}: {isk}')
-    st.markdown(f'### {Text.duration}: {_duration}')
-    st.markdown(f'### {Text.interest_rate}: {_interest}%')
-    st.markdown(f'*{Text.if_wrong_input}*')
-
-    il = IndexLinked(int(principal), _duration, _interest, _inflation)
-    il.index_calculation()
-
-    st.markdown(f'### {Text.monthly_payments}: {convert_to_isk(il.total_payment_list[0])}')
-    st.markdown(f'### {Text.total_loan_payment}: {convert_to_isk(sum(il.total_payment_list))}')
-    st.markdown(f'### {Text.total_interest_payment}: {convert_to_isk(sum(il.interest_list))}')
-
-    st.markdown(f'{Text.stop_getting_ripped_off}')
+    display_info("indexed", principal, interest, duration, inflation)
 
 
 if __name__ == '__main__':

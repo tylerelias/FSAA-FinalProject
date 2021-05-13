@@ -72,6 +72,7 @@ def step_two_form(loan_type = '', markdown_text=''):
     st.markdown(Text.step_2)
     # Print out the various stats
     ss.principal, ss.duration, ss.interest = loan_text_input()
+    ss.is_indexed = False
 
     if loan_type == "indexed":
         ss.inflation = st.text_input(
@@ -79,6 +80,7 @@ def step_two_form(loan_type = '', markdown_text=''):
             '0.0' if ss.inflation == '0.0' else ss.inflation,
             help=Text.inflation_rate_help
         )
+        ss.is_indexed = True
 
     if no_missing_parameters(loan_type):
         input_validation = validate_input()

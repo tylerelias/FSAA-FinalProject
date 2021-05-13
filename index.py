@@ -11,23 +11,23 @@ locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
 
 
 def loan_text_input():
-    principal = st.text_input(
+    ss.principal = st.text_input(
         Text.loan_amount,
-        "40000000",
+        '0' if ss.principal == '0' else ss.principal,
         help=Text.amount_help
     )
-    duration = st.text_input(
+    ss.duration = st.text_input(
         Text.duration,
-        "300",
+        '0' if ss.duration == '0' else ss.duration,
         help=Text.duration_help
     )
-    interest = st.text_input(
+    ss.interest = st.text_input(
         Text.interest_rate,
-        "3.3",
+        '0.0' if ss.interest == '0.0' else ss.interest,
         help=Text.interest_rate_help
     )
 
-    return principal, duration, interest
+    return ss.principal, ss.duration, ss.interest
 
 
 def validate_input(principal, interest, duration, inflation='0.0'):
@@ -54,11 +54,6 @@ def step_one():
 
 
 def step_two(loan_type):
-    principal = '0'
-    duration = '0'
-    interest = '0.0'
-    inflation = '0.0'
-    is_indexed = False
 
     # non-indexed loans
     if loan_type == Text.non_indexed:
@@ -69,70 +64,67 @@ def step_two(loan_type):
             st.markdown(Text.step_2)
             # Print out the various stats
 
-            principal, duration, interest = loan_text_input()
+            ss.principal, ss.duration, ss.interest = loan_text_input()
 
             # Submit the checkbox to get validated
             submit = st.form_submit_button(Text.submit)
 
-            if submit or is_step_two.checkboxed:
-                if validate_input(principal, interest, duration):
-                    is_step_two.checkboxed = True
+            if submit or ss.two:
+                if validate_input(ss.principal, ss.interest, ss.duration):
+                    ss.two = True
                 else:
                     # TODO: Fix to make a proper Wrong Value message
-                    is_step_two.checkboxed = False
+                    ss.two = False
                     st.markdown("## Illegal input")
 
     # Second step - indexed
     if loan_type == Text.indexed:
-        is_indexed = True
 
         with st.form("indexed"):
             st.markdown(Text.selected_indexed)
             st.markdown(Text.step_2)
 
-            principal, duration, interest = loan_text_input()
-            inflation = st.text_input(
+            ss.principal, ss.duration, ss.interest = loan_text_input()
+            ss.inflation = st.text_input(
                 Text.inflation_rate,
-                "4.6",
+                '0.0' if ss.inflation == '0.0' else ss.inflation,
                 help=Text.inflation_rate_help
             )
 
             submit = st.form_submit_button(Text.submit)
-            if submit:
-                if validate_input(principal, interest, duration, inflation):
-                    is_step_two.checkboxed = True
+            if submit or ss.two:
+                if validate_input(ss.principal, ss.interest, ss.duration, ss.inflation):
+                    ss.two = True
                 else:
                     # TODO: Fix to make a proper Wrong Value message
-                    is_step_two.checkboxed = False
+                    ss.two = False
                     st.markdown("## Illegal input")
 
-    return principal, interest, duration, inflation, is_indexed
+    return ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed
 
 
 def step_three(principal, interest, duration, inflation, is_indexed):
     # For non-indexed case
-    if is_step_two.checkboxed and is_indexed is False:
+    if ss.two and is_indexed is False:
         with st.form("non_indexed_overview"):
             calculate_non_indexed(principal, interest, duration)
             step_three_submit = st.form_submit_button(Text.btn_step4)
-            # st.write(is_step_three.checkboxed)
+            # st.write(is_step_three.three)
             if step_three_submit:
-                ...
-                # is_step_three.checkboxed = True
+                ss.three = True
 
     # For indexed loan case
-    if is_step_two.checkboxed and is_indexed is True:
+    if ss.two and is_indexed is True:
         with st.form("indexed_overview"):
             calculate_indexed(principal, interest, duration, inflation)
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
-                ...
-                # is_step_three.checkboxed = True
+                ss.three = True
 
 
 def step_four():
     # st.write(is_step_three.checkboxed)
-    if is_step_three.checkboxed:
+    if ss.three:
         with st.form("step_four"):
             st.markdown(Text.step_4)
             payment_option = st.radio(
@@ -141,7 +133,7 @@ def step_four():
             )
             step_four_submit = st.form_submit_button(Text.line)
             if step_four_submit:
-                is_step_four.checkboxed = True
+                ss.four = True
 
         return payment_option
 
@@ -194,10 +186,17 @@ def calculate_indexed(principal, interest, duration, inflation):
 
 if __name__ == '__main__':
     # Used to keep track of the states
-    is_step_one = SessionState.get(checkboxed=False)
-    is_step_two = SessionState.get(checkboxed=False)
-    is_step_three = SessionState.get(checkboxed=False)
-    is_step_four = SessionState.get(checkboxed=False)
+    ss = SessionState.get(
+        one=False,
+        two=False,
+        three=False,
+        four=False,
+        principal='0',
+        duration='0',
+        interest='0.0',
+        inflation='0.0',
+        is_indexed=False
+    )
 
     # The layout of the website
     # Header and introduction text for the website
@@ -206,6 +205,6 @@ if __name__ == '__main__':
     st.markdown(Text.intro_text)
 
     loan_type = step_one()
-    principal, interest, duration, inflation, is_indexed = step_two(loan_type)
-    step_three(principal, interest, duration, inflation, is_indexed)
+    ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed = step_two(loan_type)
+    step_three(ss.principal, ss.interest, ss.duration, ss.inflation, ss.is_indexed)
     step_four()

@@ -12,7 +12,7 @@ locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
 
 # Used to keep track of the states
 ss = SessionState.get(
-    one=False,
+    one=False,  # Not needed?
     two=False,
     three=False,
     four=False,
@@ -59,47 +59,46 @@ def step_one():
         (Text.none_selected, Text.non_indexed, Text.indexed),
         key='step_one'
     )
+    if loan_type == Text.none_selected:
+        ss.two = False
+        ss.three = False
+        ss.four = False
+
     return loan_type
 
 
 def step_two(loan_type):
-    # non-indexed loans
-    if loan_type == Text.non_indexed:
-        ss.is_indexed = False
+    if loan_type != Text.none_selected:
+        if loan_type == Text.non_indexed:
+            ss.is_indexed = False
+        else:
+            ss.is_indexed = True
         # The form
-        with st.form("non_indexed"):
+        with st.form(loan_type):
             # Text for the site
-            st.markdown(Text.selected_non_indexed)
+            if loan_type == Text.non_indexed:
+                st.markdown(Text.selected_non_indexed)
+            elif loan_type == Text.indexed:
+                st.markdown(Text.selected_indexed)
+
             st.markdown(Text.step_2)
             # Input fields
             # TODO: These values do not get updated when form is submitted again with changes
             # to the same field, but it does update if you change values in different fields?
             # this could be some Streamlit implementation problem
             loan_text_input()
+            if loan_type == Text.indexed:
+                ss.inflation = st.number_input(
+                    Text.inflation_rate,
+                    value=ss.inflation,
+                    help=Text.inflation_rate_help,
+                    min_value=-900000000.0,
+                    max_value=900000000.0,
+                    step=1.00
+                )
             # Submit the checkbox to get validated
             submit = st.form_submit_button(Text.submit)
             # If user submits, or if user is in another state
-            if submit or ss.two:
-                ss.two = True
-
-    # Second step - indexed
-    if loan_type == Text.indexed:
-        ss.is_indexed = True
-        with st.form("indexed"):
-            st.markdown(Text.selected_indexed)
-            st.markdown(Text.step_2)
-
-            loan_text_input()
-            ss.inflation = st.number_input(
-                Text.inflation_rate,
-                value=ss.inflation,
-                help=Text.inflation_rate_help,
-                min_value=-900000000.0,
-                max_value=900000000.0,
-                step=1.00
-            )
-
-            submit = st.form_submit_button(Text.submit)
             if submit or ss.two:
                 ss.two = True
 
@@ -124,19 +123,28 @@ def step_three():
 
 
 def step_four():
-    # st.write(is_step_three.checkboxed)
     if ss.three:
-        with st.form("step_four"):
-            st.markdown(Text.step_4)
-            payment_option = st.radio(
-                '',
-                (Text.none_selected, Text.radio_pay_fixed_rate, Text.radio_pay_adjusted_rate)
-            )
-            step_four_submit = st.form_submit_button(Text.line)
-            if step_four_submit:
-                ss.four = True
+        st.markdown(Text.step_4)
+        payment_option = st.radio(
+            '',
+            (Text.none_selected, Text.radio_pay_fixed_rate, Text.radio_pay_adjusted_rate)
+        )
 
-        return payment_option
+        if payment_option == Text.radio_pay_fixed_rate:
+            pay_fixed_rate()
+
+        if payment_option == Text.radio_pay_adjusted_rate:
+            pay_adjusted_rate()
+
+
+def pay_fixed_rate():
+    st.markdown(Text.pay_fixed_rate)
+    st.markdown(Text.pay_fixed_rate_example)
+
+
+def pay_adjusted_rate():
+    st.markdown(Text.pay_adjusted_rate)
+    st.markdown(Text.pay_adjusted_rate_example)
 
 
 def convert_to_isk(amount):

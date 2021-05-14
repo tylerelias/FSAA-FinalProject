@@ -182,6 +182,9 @@ def pay_adjusted_rate():
             elif(month_left_now <= 0):
                 st.markdown(
                     f'### {Text.loan_shortened_now} {year_left_now} {Text.years}')
+            
+            ss.saved = nil.principal_list
+            show_loan_saved_graph()
 
         # TODO: Correctly add data to Pandas DF...
         # chart_data = pd.DataFrame(
@@ -198,6 +201,26 @@ def pay_adjusted_rate():
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
 
+
+def make_same_size():
+    len_principal = len(ss.principal_list)
+    len_saved = len(ss.saved)
+
+    # have to make principal and saved be the same size to plot
+    tmp_saved = ss.saved
+    if(len_saved < len_principal):
+        for i in range(len_principal-len_saved):
+            tmp_saved.append(0)
+    return tmp_saved
+
+def show_loan_saved_graph():
+    st.write("""# Lán afborganir""")
+    # we don't wanna update the actual ss.saved array so we create a local variable
+    saved = make_same_size()
+
+    if ss.saved != 0:
+        df = pd.DataFrame({'Lán fyrir': ss.principal_list, 'Lán núna': saved})
+    st.line_chart(df)
 
 # Part of Step 3
 def display_info(tegund, principal, interest, duration, inflation=INFLATION):

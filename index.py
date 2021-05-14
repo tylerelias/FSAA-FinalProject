@@ -68,9 +68,7 @@ def step_one():
         key='step_one'
     )
     with st.beta_expander(Text.n_idx_diff):
-        st.markdown("""
-            TODO: Text
-            """)
+        st.markdown(Text.index_vs_nonindex)
     if loan_type == Text.none_selected:
         ss.two = False
         ss.three = False

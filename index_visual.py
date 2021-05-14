@@ -217,12 +217,18 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
 
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
 
+
+    interest_list_sum = sum(lt.interest_list)
+    total_amount_paid = interest_list_sum + int(principal)
+
     st.markdown(
         f'### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}')
     st.markdown(
         f'### {Text.total_loan_payment}: {convert_to_isk(avg_monthly_payment)}')
     st.markdown(
-        f'### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}')
+        f'### {Text.total_interest_payment}: {convert_to_isk(interest_list_sum)}')
+    st.markdown(
+        f'### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}')
 
     ss.principal_list = lt.principal_list
     ss.payed_interest = lt.interest_list

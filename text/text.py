@@ -28,14 +28,14 @@ class Text:
 
     - *Ath: Rauði kassinn með pílunni sýnir að **verðbætur bætast** á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er mjög slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum*
 
-    [Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærra en óverðtryggða](https://i.ibb.co/gJTKKSr/indexed-more-exp.png)
+    [Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærri en óverðtryggða](https://i.ibb.co/gJTKKSr/indexed-more-exp.png)
     
     - *Eftir þrjú ár og fimm mánuði eru mánaðarlegar afborganir á verðtryggðu láni orðið hærra en hjá sambærilegu óvertryggðu láni, og það mun halda áfram að hækka þar til að er greitt að fullu*
     
     
     > **Gallar**:
 
-    > 1. Verðtryggð lán eru þannig gerð til að líta út sem sá kostur sem býður lægri mánaðarlegar afborganir fyrir fólk sem vill borga sem minnst hvern mánuð. En raunin er sú að eftir nokkur ár verða afborganirnar hærri og viðkomandi endar með að greiða mikið meiri til baka heldur en sá sem tekur óverðtryggt.
+    > 1. Verðtryggð lán eru þannig gerð til að líta út sem sá kostur sem býður lægri mánaðarlegar afborganir fyrir fólk sem vill borga sem minnst hvern mánuð. En raunin er sú að eftir nokkur ár verða afborganirnar hærri og viðkomandi endar með að greiða miklu meira til baka heldur en sá sem tekur óverðtryggt.
     
     
     > 2. Höfuðstóll lánsins hækkar í hverjum mánuði fyrsta helming lán tímans, þannig að þú endar með að skulda meiri fjárhæð heldur en þú fékkst lánað fyrir.
@@ -92,7 +92,7 @@ class Text:
     inflation_rate_help = 'Verðbólga er breytileg og getur hækkað og lækkað í framtíðinni. Það er hægt að nálgast núverandi verðbólga á heimasíðu Seðlabanka Íslands: https://www.sedlabanki.is/ en þess má til gamans geta að verðbólgumarkmið seðlabankans er ávallt 2.5%. Dæmi: Ef verðbólgan er 2.5% skal setja 2.5 í reitinn.'
     
     duration = 'Lánstími eftir (í mánuðum)'
-    duration_help = 'Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuður í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300'
+    duration_help = 'Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuðir í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300'
     
     done = 'Allir reitir fylltir? Smelltu hér'
 
@@ -105,6 +105,7 @@ class Text:
     stop_getting_ripped_off = 'Þessir útreikningar gera ráð fyrir að þú greiðir aldrei inn á höfuðstól lánsins. Í næsta skrefi munum við kanna tvær leiðir til þess að minnka heildar vaxtagreiðslur til bankanna, en það getur verið sparnaður upp á margar milljónir.'
     radio_pay_fixed_rate = 'Borga fasta greiðslu inn á höfuðstól lánsins'
     radio_pay_adjusted_rate = 'Borga aðlaðandi greiðslu inn á höfuðstól'
+    total_amount_with_interest = 'Lán með vöxtum samtals'
 
     # Step 4
     btn_step4 = 'Smelltu hér til að fara í 4. skref'
@@ -112,7 +113,7 @@ class Text:
     pay_fixed_rate = 'Þú hefur valið að greiða **fastar greiðslur** inn á lánið. Vinsamlegast veldu þá upphæð sem að þú villt greiða mánaðarlega inn á lánið hérna fyrir neðan.'
     pay_fixed_rate_example = 'Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og er tilbúinn til þess að greiða ávallt 50.000kr inn á höfuðstól lánsins í hverjum mánuði og ert þar af leiðandi að greiða samtals 200.000kr hvern mánuð. Til að byrja með greiðir þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðarlega upphæðin sem bankinn rukkar lækka, en þú heldur áfram að greiða sömu upphæðina aukalega inn á höfuðstólinn. Sem dæmi væri mánaðalegur reikingurinn kominn niður í 120.000 en þú værir enn að greiða 50.000kr inn á höfuðstólinn þannig að þú værir nú að greiða í heildina 170.000kr hvern mánuð.'
     pay_adjusted_rate = 'Þú hefur valið að greiða **aðlagandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildar upphæð sem að þú vilt greiða mánaðarlega þegar lagt er saman reikninginn frá bankanum og svo innborgun á lánið.'
-    pay_adjusted_rate_example = ' Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reikning og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, og þarf af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.'
+    pay_adjusted_rate_example = ' Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reikning og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, og þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.'
     adj_fix_difference = 'Hvað eru "aðlagandi greiðslur"?'
     extra_payment = 'Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins'
     extra_payment_help = ''

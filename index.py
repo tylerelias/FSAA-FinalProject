@@ -20,7 +20,8 @@ ss = SessionState.get(
     duration=0,
     interest=0.0,
     inflation=0.0,
-    is_indexed=False
+    is_indexed=False,
+    extra_payment=0
 )
 
 
@@ -59,6 +60,10 @@ def step_one():
         (Text.none_selected, Text.non_indexed, Text.indexed),
         key='step_one'
     )
+    with st.beta_expander(Text.n_idx_diff):
+        st.markdown("""
+            TODO: Text
+            """)
     if loan_type == Text.none_selected:
         ss.two = False
         ss.three = False
@@ -109,7 +114,6 @@ def step_three():
         with st.form("non_indexed_overview"):
             calculate_non_indexed(ss.principal, ss.interest, ss.duration)
             step_three_submit = st.form_submit_button(Text.btn_step4)
-            # st.write(is_step_three.three)
             if step_three_submit:
                 ss.three = True
 
@@ -130,6 +134,11 @@ def step_four():
             (Text.none_selected, Text.radio_pay_fixed_rate, Text.radio_pay_adjusted_rate)
         )
 
+        with st.beta_expander(Text.adj_fix_difference):
+            st.markdown("""
+            TODO: Text
+            """)
+
         if payment_option == Text.radio_pay_fixed_rate:
             pay_fixed_rate()
 
@@ -140,6 +149,25 @@ def step_four():
 def pay_fixed_rate():
     st.markdown(Text.pay_fixed_rate)
     st.markdown(Text.pay_fixed_rate_example)
+    ss.extra_payment = st.number_input(
+        Text.extra_payment,
+        value=ss.extra_payment,
+        help=Text.extra_payment_help,
+        min_value=0,
+        max_value=1000000,
+        step=10000
+    )
+
+    if not ss.is_indexed:
+        nil = NonIndexedLinked(ss.principal, ss.duration, ss.interest)
+        nil.non_index_calculation()
+        saved = nil.total_saved_from_extra_payment(ss.extra_payment)
+
+        st.write("monthly extra payment: ", convert_to_isk(ss.extra_payment))
+        st.write('money saved: ', convert_to_isk(saved))
+        st.write('times saved: ', nil.time_saved_from_extra_payment(ss.extra_payment))
+
+    st.markdown(Text.line)
 
 
 def pay_adjusted_rate():

@@ -16,6 +16,7 @@ class Text:
     indexed = 'Verðtryggt'
     non_indexed = 'Óverðtryggt'
     submit = 'Staðfesta Upplýsingar'
+    n_idx_diff = 'Hver er munurinn á verðtryggðum og óverðtryggðum lánum?'
 
     # For the second step
     selected_non_indexed = '### Þú valdir **Óverðtryggt** lán'
@@ -37,7 +38,7 @@ class Text:
     done = 'Allir reitir fylltir? Smelltur hér'
 
     # Step 3
-    step_3 = '3. Hér fyrir neðan hefur verið reiknað út hvað þú munt enda með að greiða í heildina til banksans fyrir íbúðarlánið. Í flestum tilfellum endar þú með að greiða margar milljónir í vaxtarkostnað, en með því að greiða aukalega beint inn á höfuðstól lánsins er hægt að stórlækka þessa tölu. Við munum fara betur yfir það í 4. skrefi'
+    step_3 = '3. Hér fyrir neðan hefur verið reiknað út hvað þú munt enda með að greiða í heildina til bankans fyrir íbúðarlánið. Í flestum tilfellum endar þú með að greiða margar milljónir í vaxtarkostnað, en með því að greiða aukalega beint inn á höfuðstól lánsins er hægt að stórlækka þessa tölu. Við munum fara betur yfir það í 4. skrefi'
     if_wrong_input = 'Ath: Ef þú slóst inn einvherjar vitlausar upplýingar getur þú einfaldlega lagað það í 2. skrefi og smellt aftur takkann til að fá út nýja útreikninga'
     total_loan_payment = 'Samtals Greitt'
     total_interest_payment = 'Samtals Greiddir Vextir'
@@ -53,3 +54,6 @@ class Text:
     pay_fixed_rate_example = 'Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og er tilbúinn til þess að greiða ávallt 50.000kr inn á höfuðstól lánsins í hverjum mánuði og ert þar af leiðandi að greiða samtals 200.000kr á hvern mánuð. Þannig að til að byrja með geriðir þú reikinginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, en þú heldur áfram að greiða sömu upphæðina aukalega inn á höfuðstólinn. Sem dæmi væri mánaðalegur reikingiurinn kominn niður í 120.000 en þú værir enn að greiða 50.000kr inn á höfuðstólinn þannig að þú værir nú að greiða í heildina 170.000kr hvern mánuð.'
     pay_adjusted_rate = 'Þú hefur valið að greiða **aðlagandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildar upphæð sem að þú villt greiða mánaðarlega þegar lagt er saman reikinginn frá bankanum og svo innborgun á lánið.'
     pay_adjusted_rate_example = ' Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reiking og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, og þarf af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.'
+    adj_fix_difference = 'Hver er munurinn á föstum eða aðlagandi greiðslum?'
+    extra_payment = 'Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins'
+    extra_payment_help = ''

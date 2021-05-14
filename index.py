@@ -166,10 +166,23 @@ def pay_adjusted_rate():
         extra_amount = nil.calculation_extra_amount(ss.principal)
         money_saved = nil.total_saved_from_extra_payment(ss.extra_payment)
         year, month = format_time_saved(nil.time_saved_from_extra_payment(ss.extra_payment))
+        # year month left
+        months_shortened = ss.duration - (year*12+month)
+        year_left_now, month_left_now = format_time_saved(months_shortened)
 
-        st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}")
-        st.markdown(f'### {Text.money_saved}: {convert_to_isk(money_saved)}')
-        st.markdown(f'### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ')
+        if(ss.extra_payment > 0):
+            st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}")
+            st.markdown(f'### {Text.money_saved}: {convert_to_isk(money_saved)}')
+            st.markdown(f'### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ')
+            st.markdown(f'###')
+            st.markdown(f'### {Text.total_loan}: {convert_to_isk(ss.total_loan_amount-money_saved)}')
+            if(month_left_now > 0):
+                st.markdown(f'### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ')
+
+            elif(month_left_now <= 0):
+                st.markdown(
+                    f'### {Text.loan_shortened_now} {year_left_now} {Text.years}')
+
         # TODO: Correctly add data to Pandas DF...
         # chart_data = pd.DataFrame(
         #     nil.principal_list, ss.principal_list,
@@ -192,9 +205,18 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
     _interest = float(interest)
     _duration = int(duration)
 
+    # year month left
+    year_left, month_left = format_time_saved(_duration)
+
     st.markdown(Text.step_3)
     st.markdown(f'### {Text.loan_amount}: {isk}')
     st.markdown(f'### {Text.duration}: {_duration}')
+    if(month_left > 0):
+        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ')
+
+    elif(month_left <= 0):
+        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years}')
+    
     st.markdown(f'### {Text.interest_rate}: {_interest}%')
     st.markdown(f'*{Text.if_wrong_input}*')
 
@@ -207,6 +229,8 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
         lt.non_index_calculation()
 
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
+    interest_list_sum = sum(lt.interest_list)
+    total_amount_paid = interest_list_sum + int(principal)
 
     st.markdown(
         f'### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}')
@@ -214,10 +238,13 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
         f'### {Text.total_loan_payment}: {convert_to_isk(avg_monthly_payment)}')
     st.markdown(
         f'### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}')
+    st.markdown(
+        f'### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}')
 
     ss.principal_list = lt.principal_list
     ss.payed_interest = lt.interest_list
     ss.monthly_payments = avg_monthly_payment
+    ss.total_loan_amount = total_amount_paid
 
     # if(tegund == "indexed"):
     # st.markdown(f'{Text.stop_getting_ripped_off}')

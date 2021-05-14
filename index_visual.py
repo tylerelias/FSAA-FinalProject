@@ -29,7 +29,8 @@ ss = SessionState.get(
     principal_list=0,
     payed_interest=0,
     monthly_payments=0,
-    savings_list=0
+    savings_list=0,
+    total_loan_amount=0
 )
 
 
@@ -173,6 +174,9 @@ def pay_adjusted_rate():
         st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}")
         st.markdown(f'### {Text.money_saved}: {convert_to_isk(money_saved)}')
         st.markdown(f'### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ')
+        st.markdown(f'### Heildarlán {convert_to_isk(ss.total_loan_amount)} - {convert_to_isk(money_saved)} = {convert_to_isk(ss.total_loan_amount-money_saved)}')
+        st.markdown(f'### Stytting láns {convert_to_isk(ss.total_loan_amount)} - {convert_to_isk(money_saved)} = {convert_to_isk(ss.total_loan_amount-money_saved)}')
+        
         # TODO: Correctly add data to Pandas DF...
         # chart_data = pd.DataFrame(
         #     nil.principal_list, ss.principal_list,
@@ -233,6 +237,7 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
     ss.principal_list = lt.principal_list
     ss.payed_interest = lt.interest_list
     ss.monthly_payments = avg_monthly_payment
+    ss.total_loan_amount = total_amount_paid
 
     # if(tegund == "indexed"):
     # st.markdown(f'{Text.stop_getting_ripped_off}')

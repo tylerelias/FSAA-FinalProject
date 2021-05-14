@@ -123,6 +123,10 @@ class Text:
     time_saved = 'Stytting lánstíma'
     principal_downpay = 'Höfuðstóll með innborgun'
     years_and = 'ár og'
+    years = 'ár'
     months = 'mánuðir'
+    total_loan = "Heildar upphæð láns núna"
+    loan_duration = "Lánstími eftir"
+    loan_shortened_now = "Lánstími eftir núna"
 
 

@@ -144,25 +144,15 @@ def step_three():
 def step_four():
     if ss.three:
         st.markdown(Text.step_4)
-
-        with st.beta_expander(Text.adj_fix_difference):
-            st.markdown(
-                """
-            TODO: Text
-            """
-            )
-
         pay_adjusted_rate()
-
-
-def pay_fixed_rate():
-    st.markdown(Text.pay_fixed_rate)
-    st.markdown(Text.pay_fixed_rate_example)
 
 
 def pay_adjusted_rate():
     st.markdown(Text.pay_adjusted_rate)
-    st.markdown(Text.pay_adjusted_rate_example)
+
+    with st.beta_expander(Text.adj_fix_difference):
+        st.markdown(Text.pay_adjusted_rate_example)
+
     ss.extra_payment = st.number_input(
         Text.extra_payment,
         value=ss.extra_payment,
@@ -268,8 +258,12 @@ def display_info(tegund, principal, interest, duration, cost, inflation=INFLATIO
     elif month_left <= 0:
         st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
 
+    elif month_left <= 0:
+        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
+
     st.markdown(f"### {Text.interest_rate}: {_interest}%")
-    st.markdown(f"*{Text.if_wrong_input}*")
+    with st.beta_expander(Text.wrong_input):
+        st.markdown(f"{Text.if_wrong_input}")
 
     if tegund == "indexed":
         _inflation = float(inflation)

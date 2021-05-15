@@ -1,4 +1,5 @@
 import locale
+from numpy import cos
 
 import streamlit as st
 import SessionState
@@ -12,7 +13,7 @@ from text.text import Text
 INFLATION = 4.6
 
 # Set the currency to ISK
-locale.setlocale(locale.LC_ALL, 'is_IS.UTF-8')
+locale.setlocale(locale.LC_ALL, "is_IS.UTF-8")
 
 # Used to keep track of the states
 ss = SessionState.get(
@@ -28,7 +29,8 @@ ss = SessionState.get(
     extra_payment=0,
     principal_list=0,
     payed_interest=0,
-    monthly_payments=0
+    monthly_payments=0,
+    cost=0,
 )
 
 
@@ -39,7 +41,7 @@ def loan_text_input():
         help=Text.amount_help,
         min_value=0,
         max_value=100000000000,
-        step=1000000
+        step=1000000,
     )
     ss.duration = st.number_input(
         Text.duration,
@@ -47,7 +49,7 @@ def loan_text_input():
         help=Text.duration_help,
         min_value=0,
         max_value=480,
-        step=12
+        step=12,
     )
     ss.interest = st.number_input(
         Text.interest_rate,
@@ -55,7 +57,15 @@ def loan_text_input():
         help=Text.interest_rate_help,
         min_value=-10.00,
         max_value=50.00,
-        step=1.00
+        step=1.00,
+    )
+    ss.cost = st.number_input(
+        Text.cost,
+        value=ss.cost,
+        help=Text.cost_help,
+        min_value=-0,
+        max_value=5000,
+        step=10,
     )
 
 
@@ -63,9 +73,7 @@ def step_one():
     # The checkbox where the user selects the type of loan to fill out
     st.markdown(Text.step_1)
     loan_type = st.radio(
-        '',
-        (Text.none_selected, Text.non_indexed, Text.indexed),
-        key='step_one'
+        "", (Text.none_selected, Text.non_indexed, Text.indexed), key="step_one"
     )
     with st.beta_expander(Text.n_idx_diff):
         st.markdown(Text.index_vs_nonindex)
@@ -104,7 +112,7 @@ def step_two(loan_type):
                     help=Text.inflation_rate_help,
                     min_value=-900000000.0,
                     max_value=900000000.0,
-                    step=1.00
+                    step=1.00,
                 )
             # Submit the checkbox to get validated
             submit = st.form_submit_button(Text.submit)
@@ -117,7 +125,7 @@ def step_three():
     # For non-indexed case
     if ss.two and ss.is_indexed is False:
         with st.form("non_indexed_overview"):
-            calculate_non_indexed(ss.principal, ss.interest, ss.duration)
+            calculate_non_indexed(ss.principal, ss.interest, ss.duration, ss.cost)
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
                 ss.three = True
@@ -125,7 +133,9 @@ def step_three():
     # For indexed loan case
     if ss.two and ss.is_indexed is True:
         with st.form("indexed_overview"):
-            calculate_indexed(ss.principal, ss.interest, ss.duration, ss.inflation)
+            calculate_indexed(
+                ss.principal, ss.interest, ss.duration, ss.inflation, ss.cost
+            )
             step_three_submit = st.form_submit_button(Text.btn_step4)
             if step_three_submit:
                 ss.three = True
@@ -136,9 +146,11 @@ def step_four():
         st.markdown(Text.step_4)
 
         with st.beta_expander(Text.adj_fix_difference):
-            st.markdown("""
+            st.markdown(
+                """
             TODO: Text
-            """)
+            """
+            )
 
         pay_adjusted_rate()
 
@@ -157,7 +169,7 @@ def pay_adjusted_rate():
         help=Text.extra_payment_help,
         min_value=0,
         max_value=1000000,
-        step=10000
+        step=10000,
     )
 
     if not ss.is_indexed:
@@ -165,24 +177,35 @@ def pay_adjusted_rate():
         nil.non_index_calculation()
         extra_amount = nil.calculation_extra_amount(ss.principal)
         money_saved = nil.total_saved_from_extra_payment(ss.extra_payment)
-        year, month = format_time_saved(nil.time_saved_from_extra_payment(ss.extra_payment))
+        year, month = format_time_saved(
+            nil.time_saved_from_extra_payment(ss.extra_payment)
+        )
         # year month left
-        months_shortened = ss.duration - (year*12+month)
+        months_shortened = ss.duration - (year * 12 + month)
         year_left_now, month_left_now = format_time_saved(months_shortened)
 
-        if(ss.extra_payment > 0):
-            st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}")
-            st.markdown(f'### {Text.money_saved}: {convert_to_isk(money_saved)}')
-            st.markdown(f'### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ')
-            st.markdown(f'###')
-            st.markdown(f'### {Text.total_loan}: {convert_to_isk(ss.total_loan_amount-money_saved)}')
-            if(month_left_now > 0):
-                st.markdown(f'### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ')
-
-            elif(month_left_now <= 0):
+        if ss.extra_payment > 0:
+            st.markdown(
+                f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}"
+            )
+            st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+            st.markdown(
+                f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
+            )
+            st.markdown(f"###")
+            st.markdown(
+                f"### {Text.total_loan}: {convert_to_isk(ss.total_loan_amount-money_saved)}"
+            )
+            if month_left_now > 0:
                 st.markdown(
-                    f'### {Text.loan_shortened_now} {year_left_now} {Text.years}')
-            
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
+                )
+
+            elif month_left_now <= 0:
+                st.markdown(
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
+                )
+
             ss.saved = nil.principal_list
             show_loan_saved_graph()
 
@@ -208,10 +231,11 @@ def make_same_size():
 
     # have to make principal and saved be the same size to plot
     tmp_saved = ss.saved
-    if(len_saved < len_principal):
-        for i in range(len_principal-len_saved):
+    if len_saved < len_principal:
+        for i in range(len_principal - len_saved):
             tmp_saved.append(0)
     return tmp_saved
+
 
 def show_loan_saved_graph():
     st.write("""# Lán afborganir""")
@@ -219,36 +243,40 @@ def show_loan_saved_graph():
     saved = make_same_size()
 
     if ss.saved != 0:
-        df = pd.DataFrame({'Lán fyrir': ss.principal_list, 'Lán núna': saved})
+        df = pd.DataFrame({"Lán fyrir": ss.principal_list, "Lán núna": saved})
     st.line_chart(df)
 
+
 # Part of Step 3
-def display_info(tegund, principal, interest, duration, inflation=INFLATION):
+def display_info(tegund, principal, interest, duration, cost, inflation=INFLATION):
     isk = locale.currency(int(principal), grouping=True)
     _interest = float(interest)
     _duration = int(duration)
+    _cost = cost
 
     # year month left
     year_left, month_left = format_time_saved(_duration)
 
     st.markdown(Text.step_3)
-    st.markdown(f'### {Text.loan_amount}: {isk}')
-    st.markdown(f'### {Text.duration}: {_duration}')
-    if(month_left > 0):
-        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ')
+    st.markdown(f"### {Text.loan_amount}: {isk}")
+    st.markdown(f"### {Text.duration}: {_duration}")
+    if month_left > 0:
+        st.markdown(
+            f"### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} "
+        )
 
-    elif(month_left <= 0):
-        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years}')
-    
-    st.markdown(f'### {Text.interest_rate}: {_interest}%')
-    st.markdown(f'*{Text.if_wrong_input}*')
+    elif month_left <= 0:
+        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
+
+    st.markdown(f"### {Text.interest_rate}: {_interest}%")
+    st.markdown(f"*{Text.if_wrong_input}*")
 
     if tegund == "indexed":
         _inflation = float(inflation)
-        lt = IndexLinked(int(principal), _duration, _interest, _inflation)
+        lt = IndexLinked(int(principal), _duration, _interest, _inflation, cost=_cost)
         lt.index_calculation()
     elif tegund == "non_indexed":
-        lt = NonIndexedLinked(int(principal), _duration, _interest)
+        lt = NonIndexedLinked(int(principal), _duration, _interest, cost=_cost)
         lt.non_index_calculation()
 
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
@@ -256,13 +284,18 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
     total_amount_paid = interest_list_sum + int(principal)
 
     st.markdown(
-        f'### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}')
+        f"### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}"
+    )
     st.markdown(
-        f'### {Text.total_loan_payment}: {convert_to_isk(avg_monthly_payment)}')
+        f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}"
+    )
     st.markdown(
-        f'### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}')
+        f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}"
+    )
+    st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
     st.markdown(
-        f'### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}')
+        f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}"
+    )
 
     ss.principal_list = lt.principal_list
     ss.payed_interest = lt.interest_list
@@ -273,12 +306,12 @@ def display_info(tegund, principal, interest, duration, inflation=INFLATION):
     # st.markdown(f'{Text.stop_getting_ripped_off}')
 
 
-def calculate_non_indexed(principal, interest, duration):
-    display_info("non_indexed", principal, interest, duration)
+def calculate_non_indexed(principal, interest, duration, cost):
+    display_info("non_indexed", principal, interest, duration, cost)
 
 
-def calculate_indexed(principal, interest, duration, inflation):
-    display_info("indexed", principal, interest, duration, inflation)
+def calculate_indexed(principal, interest, duration, inflation, cost):
+    display_info("indexed", principal, interest, duration, inflation, cost)
 
 
 # returns years, months
@@ -293,7 +326,7 @@ def format_time_saved(time):
     return years, time
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # The layout of the website
     # Header and introduction text for the website
     st.markdown(Text.header)

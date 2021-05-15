@@ -31,87 +31,6 @@ payed_interest=0
 monthly_payments=0
 cost=0
 
-def step_three():
-    # For non-indexed case
-    if two and is_indexed is False:
-        with st.form("non_indexed_overview"):
-            calculate_non_indexed()
-            step_three_submit = st.form_submit_button(Text.btn_step4)
-            if step_three_submit:
-                three = True
-
-    # For indexed loan case
-    if two and is_indexed is True:
-        with st.form("indexed_overview"):
-            calculate_indexed()
-            step_three_submit = st.form_submit_button(Text.btn_step4)
-            if step_three_submit:
-                three = True
-
-
-def step_four():
-    if three:
-        st.markdown(Text.step_4)
-        pay_adjusted_rate()
-
-
-def pay_adjusted_rate():
-    st.markdown(Text.pay_adjusted_rate)
-
-    with st.beta_expander(Text.adj_fix_difference):
-        st.markdown(Text.pay_adjusted_rate_example)
-
-    extra_payment = st.number_input(
-        Text.extra_payment,
-        value=extra_payment,
-        help=Text.extra_payment_help,
-        min_value=0,
-        max_value=1000000,
-        step=10000,
-    )
-
-    if not is_indexed:
-        nil = NonIndexedLinked(principal, duration, interest)
-        nil.non_index_calculation()
-        extra_amount = nil.calculation_extra_amount(principal)
-        money_saved = nil.total_saved_from_extra_payment(extra_payment)
-        year, month = format_time_saved(
-            nil.time_saved_from_extra_payment(extra_payment)
-        )
-        # year month left
-        months_shortened = duration - (year * 12 + month)
-        year_left_now, month_left_now = format_time_saved(months_shortened)
-
-        if extra_payment > 0:
-            st.markdown(
-                f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
-            st.markdown(
-                f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-            st.markdown(
-                f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
-            st.markdown(f"###")
-            st.markdown(
-                f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
-            if month_left_now > 0:
-                st.markdown(
-                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
-
-            elif month_left_now <= 0:
-                st.markdown(
-                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
-            saved = nil.principal_list
-            show_loan_saved_graph()
-
-        # TODO: Correctly add data to Pandas DF...
-        # chart_data = pd.DataFrame(
-        #     nil.principal_list, principal_list,
-        #     columns=[Text.principal_downpay, 'hi']
-        # )
-        # st.line_chart(chart_data)
-
-    elif is_indexed:
-        ...
-    st.markdown(Text.line)
 
 
 def convert_to_isk(amount):
@@ -231,6 +150,13 @@ def format_time_saved(time):
     return years, time
 
 
+def no_missing_parameters(loan_type):
+    if(loan_type == 'Óverðtryggt'):
+        return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
+    elif(loan_type == 'Verðtryggt'):
+        return principal != 0 and duration != 0 and interest != 0.0 and inflation != 0.0 and inflation != 0 and cost != 0
+
+
 if __name__ == "__main__":
     # The layout of the website
     # Header and introduction text for the website
@@ -249,6 +175,7 @@ if __name__ == "__main__":
         two = False
         three = False
         four = False
+        
 
     ### step 2
     if loan_type != Text.none_selected:
@@ -257,67 +184,146 @@ if __name__ == "__main__":
         else:
             is_indexed = True
         # The form
-        with st.form(loan_type):
-            # Text for the site
-            if loan_type == Text.non_indexed:
-                st.markdown(Text.selected_non_indexed)
-            elif loan_type == Text.indexed:
-                st.markdown(Text.selected_indexed)
 
-            st.markdown(Text.step_2)
-            # Input fields
-            # TODO: These values do not get updated when form is submitted again with changes
-            # to the same field, but it does update if you change values in different fields?
-            # this could be some Streamlit implementation problem
-            
-            principal = st.number_input(
-                Text.loan_amount,
-                value=principal,
-                help=Text.amount_help,
-                min_value=0,
-                max_value=100000000000,
-                step=1000000,
-            )
-            duration = st.number_input(
-                Text.duration,
-                value=duration,
-                help=Text.duration_help,
-                min_value=0,
-                max_value=480,
-                step=12,
-            )
-            interest = st.number_input(
-                Text.interest_rate,
-                value=interest,
-                help=Text.interest_rate_help,
-                min_value=-10.00,
-                max_value=50.00,
+        # Text for the site
+        if loan_type == Text.non_indexed:
+            st.markdown(Text.selected_non_indexed)
+        elif loan_type == Text.indexed:
+            st.markdown(Text.selected_indexed)
+
+        st.markdown(Text.step_2)
+        # Input fields
+        # TODO: These values do not get updated when form is submitted again with changes
+        # to the same field, but it does update if you change values in different fields?
+        # this could be some Streamlit implementation problem
+        
+        principal = st.number_input(
+            Text.loan_amount,
+            value=principal,
+            help=Text.amount_help,
+            min_value=0,
+            max_value=100000000000,
+            step=1000000,
+        )
+        duration = st.number_input(
+            Text.duration,
+            value=duration,
+            help=Text.duration_help,
+            min_value=0,
+            max_value=480,
+            step=12,
+        )
+        interest = st.number_input(
+            Text.interest_rate,
+            value=interest,
+            help=Text.interest_rate_help,
+            min_value=-10.00,
+            max_value=50.00,
+            step=1.00,
+        )
+        cost = st.number_input(
+            Text.cost,
+            value=cost,
+            help=Text.cost_help,
+            min_value=-0,
+            max_value=5000,
+            step=10,
+        )
+
+        if loan_type == Text.indexed:
+            inflation = st.number_input(
+                Text.inflation_rate,
+                value=inflation,
+                help=Text.inflation_rate_help,
+                min_value=-900000000.0,
+                max_value=900000000.0,
                 step=1.00,
             )
-            cost = st.number_input(
-                Text.cost,
-                value=cost,
-                help=Text.cost_help,
-                min_value=-0,
-                max_value=5000,
-                step=10,
+        # Submit the checkbox to get validated
+        #submit = st.form_submit_button(Text.submit)
+        # If user submits, or if user is in another state
+        #if submit or two:
+        if(no_missing_parameters(loan_type)):
+            two = True
+
+    ### step 3
+    # For non-indexed case
+    if two and is_indexed is False:
+        with st.form("non_indexed_overview"):
+            calculate_non_indexed()
+            step_three_submit = st.form_submit_button(Text.btn_step4)
+            if step_three_submit:
+                print("inside nonindex")
+                three = True
+
+    # For indexed loan case
+    if two and is_indexed is True:
+        with st.form("indexed_overview"):
+            calculate_indexed()
+            step_three_submit = st.form_submit_button(Text.btn_step4)
+            if step_three_submit:
+                print("inside index")
+                three = True
+
+    ### step 4
+    if two:
+        print("2")
+    if three:
+        print("3")
+        st.markdown(Text.step_4)
+        st.markdown(Text.pay_adjusted_rate)
+
+        with st.beta_expander(Text.adj_fix_difference):
+            st.markdown(Text.pay_adjusted_rate_example)
+
+        extra_payment = st.number_input(
+            Text.extra_payment,
+            value=extra_payment,
+            help=Text.extra_payment_help,
+            min_value=0,
+            max_value=1000000,
+            step=10000,
+        )
+
+        if not is_indexed:
+            nil = NonIndexedLinked(principal, duration, interest)
+            nil.non_index_calculation()
+            extra_amount = nil.calculation_extra_amount(principal)
+            money_saved = nil.total_saved_from_extra_payment(extra_payment)
+            year, month = format_time_saved(
+                nil.time_saved_from_extra_payment(extra_payment)
             )
+            # year month left
+            months_shortened = duration - (year * 12 + month)
+            year_left_now, month_left_now = format_time_saved(months_shortened)
 
-            if loan_type == Text.indexed:
-                inflation = st.number_input(
-                    Text.inflation_rate,
-                    value=inflation,
-                    help=Text.inflation_rate_help,
-                    min_value=-900000000.0,
-                    max_value=900000000.0,
-                    step=1.00,
-                )
-            # Submit the checkbox to get validated
-            submit = st.form_submit_button(Text.submit)
-            # If user submits, or if user is in another state
-            if submit or two:
-                two = True
+            if extra_payment > 0:
+                st.markdown(
+                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
+                st.markdown(
+                    f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+                st.markdown(
+                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
+                st.markdown(f"###")
+                st.markdown(
+                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
+                if month_left_now > 0:
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
 
+                elif month_left_now <= 0:
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
+                saved = nil.principal_list
+                show_loan_saved_graph()
 
-    step_three()
-    step_four()
+            # TODO: Correctly add data to Pandas DF...
+            # chart_data = pd.DataFrame(
+            #     nil.principal_list, principal_list,
+            #     columns=[Text.principal_downpay, 'hi']
+            # )
+            # st.line_chart(chart_data)
+
+        elif is_indexed:
+            ...
+        st.markdown(Text.line)

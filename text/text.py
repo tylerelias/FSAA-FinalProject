@@ -5,8 +5,10 @@ class Text:
 
     # The intro and header
     header = "# Niðurgreiðslureiknivél"
-    intro_text = "Tilgangurinn með þessari vefsíðu er að veita einstaklingum yfirsín yfir hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni. Það reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið."
-    # Explain the diff between the two
+    intro_text = """
+    Tilgangurinn með þessari vefsíðu er að veita einstaklingum yfirsín yfir hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni. Það reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
+    Þú getur byrjað á því að velja hvernig lán þú villt fylla út og næstu skref munu sína hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
+    """    # Explain the diff between the two
     # TEMP ! Images:
     # https://i.ibb.co/gJTKKSr/indexed-more-exp.png
     # https://i.ibb.co/42rrCZ2/indexed.png
@@ -96,7 +98,15 @@ class Text:
     duration_help = "Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuðir í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300"
 
     cost = "Kostnaður"
-    cost_help = "Kostnaður er gjald sem bætt er við hverja lángreiðslu, upphæð fer eftir bankanum sem veitti lánið"
+    cost_help = """
+Kostnaður er gjald sem bætt er við hverja lángreiðslu, upphæð fer eftir bankanum sem veitir lánið. Þú getur nálgast þessa upphæð hjá bankanum þínum.
+
+Arion Banki: 130kr
+
+Landsbankinn: 120kr
+
+Íslandsbanki: Ekki vitað
+    """
 
     done = "Allir reitir fylltir? Smelltu hér"
 
@@ -105,7 +115,7 @@ class Text:
     wrong_input = "Settir þú inn rangar tölur?"
     if_wrong_input = """
     **Tímabundið: Vegna galla í kerfinu þarf að endurhlaða (refresh) síðuna og setja inn gögninn í skrefi 2 upp á nýtt. 
-    Það er hægt með að ýta á F5 takkann á lyklaborðinu eða Refresh hnappinn á vafranum þínum. Við byðjumst afsökunar á þessum óþægindum**
+    Það er hægt með að ýta á F5 takkann á lyklaborðinu eða Refresh hnappinn á vafranum þínum. Við biðjumst afsökunar á þessum óþægindum**
     
     Ath: Ef þú slóst inn einhverjar vitlausar upplýsingar getur þú einfaldlega lagað það í 2. skrefi og smellt aftur takkann til að fá út nýja útreikninga
     """
@@ -125,7 +135,7 @@ class Text:
     pay_fixed_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og er tilbúinn til þess að greiða ávallt 50.000kr inn á höfuðstól lánsins í hverjum mánuði og ert þar af leiðandi að greiða samtals 200.000kr hvern mánuð. Til að byrja með greiðir þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðarlega upphæðin sem bankinn rukkar lækka, en þú heldur áfram að greiða sömu upphæðina aukalega inn á höfuðstólinn. Sem dæmi væri mánaðalegur reikingurinn kominn niður í 120.000 en þú værir enn að greiða 50.000kr inn á höfuðstólinn þannig að þú værir nú að greiða í heildina 170.000kr hvern mánuð."
     pay_adjusted_rate = "Núna kynnum við okkur hvernig skal greiða **aðlagandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildar upphæð sem að þú vilt greiða mánaðarlega þegar lagt er saman reikninginn frá bankanum og svo innborgun á lánið."
     pay_adjusted_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reikning og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, og þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum."
-    adj_fix_difference = 'Hvað eru "aðlagandi greiðslur"?'
+    adj_fix_difference = 'Hvað eru aðlagandi greiðslur?'
     extra_payment = "Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins"
     extra_payment_help = ""
     monthly_extra_payment1 = "Með því að greiða inn "

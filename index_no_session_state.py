@@ -26,9 +26,11 @@ interest=0.0
 inflation=0.0
 is_indexed=False
 extra_payment=0
-principal_list=0
-payed_interest=0
-monthly_payments=0
+principal_list=[]
+payed_interest=[]
+monthly_payments=[]
+total_loan_amount = 0
+saved = []
 cost=0
 
 def convert_to_isk(amount):
@@ -36,6 +38,9 @@ def convert_to_isk(amount):
 
 
 def make_same_size():
+    global principal_list
+    global saved
+    
     len_principal = len(principal_list)
     len_saved = len(saved)
 
@@ -48,6 +53,9 @@ def make_same_size():
 
 
 def show_loan_saved_graph():
+    global principal_list
+    global saved
+
     st.write(f"# {Text.graph_title}")
     # we don't wanna update the actual saved array so we create a local variable
     saved = make_same_size()
@@ -59,6 +67,11 @@ def show_loan_saved_graph():
 
 # Part of Step 3
 def display_info(loan_type):
+    global principal_list
+    global payed_interest
+    global monthly_payments
+    global total_loan_amount
+
     isk = locale.currency(int(principal), grouping=True)
     # year month left
     year_left, month_left = format_time_saved(duration)
@@ -67,22 +80,21 @@ def display_info(loan_type):
     st.markdown(f"### {Text.loan_amount}: {isk}")
     st.markdown(f"### {Text.duration}: {duration}")
     if month_left > 0:
-        st.markdown(
-            f"### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ")
+        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ")
 
     elif month_left <= 0:
         st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
 
     st.markdown(f"### {Text.interest_rate}: {interest}%")
-    with st.beta_expander(Text.wrong_input):
-        st.markdown(f"{Text.if_wrong_input}")
+    
+    #with st.beta_expander(Text.wrong_input):
+    #    st.markdown(f"{Text.if_wrong_input}")
 
     other_loan_type = ""
     _interest = 4.34
     if loan_type == "indexed":
         # calculate the chosen loan
-        lt = IndexLinked(principal, duration,
-                         interest, inflation, cost=cost)
+        lt = IndexLinked(principal, duration, interest, inflation, cost=cost)
         lt.index_calculation()
         # calculated the other loan to compare results
         other_loan_type = Text.non_indexed
@@ -92,37 +104,29 @@ def display_info(loan_type):
 
     elif loan_type == "non_indexed":
         # calculate the chosen loan
-        lt = NonIndexedLinked(principal, duration,
-                              interest, cost=cost)
+        lt = NonIndexedLinked(principal, duration, interest, cost=cost)
         lt.non_index_calculation()
         # calculated the other loan to compare results
         other_loan_type = Text.indexed
-        ot = IndexLinked(principal, duration,
-                         interest, _interest, cost=cost)
+        ot = IndexLinked(principal, duration, interest, _interest, cost=cost)
         ot.index_calculation()
 
-    avg_monthly_payment = sum(lt.total_payment_list) / \
-        len(lt.total_payment_list)
+    avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
     interest_list_sum = sum(lt.interest_list)
     total_amount_paid = interest_list_sum + principal
 
-    st.markdown(
-        f"### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}")
-    st.markdown(
-        f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
-    st.markdown(
-        f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
-    st.markdown(
-        f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
-    st.markdown(
-        f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
-    st.markdown(
-        f"### Sama lán sem {other_loan_type} með {_interest}% verðbólgu: {convert_to_isk(ot.get_total_payment())}")
+    st.markdown(f"### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}")
+    st.markdown(f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
+    st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
+    st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
+    st.markdown(f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
+    st.markdown(f"### Sama lán sem {other_loan_type} með {_interest}% verðbólgu: {convert_to_isk(ot.get_total_payment())}")
 
     principal_list = lt.principal_list
     payed_interest = lt.interest_list
     monthly_payments = avg_monthly_payment
     total_loan_amount = total_amount_paid
+
 
     # if(tegund == "indexed"):
     # st.markdown(f'{Text.stop_getting_ripped_off}')
@@ -247,21 +251,19 @@ if __name__ == "__main__":
     ### step 3
     # For non-indexed case
     if two and is_indexed is False:
-        with st.form("non_indexed_overview"):
+        #with st.form("non_indexed_overview"):
             calculate_non_indexed()
-            step_three_submit = st.form_submit_button(Text.btn_step4)
-            if step_three_submit:
-                print("inside nonindex")
-                three = True
+            #step_three_submit = st.form_submit_button(Text.btn_step4)
+            #if step_three_submit:
+            three = True
 
     # For indexed loan case
     if two and is_indexed is True:
-        with st.form("indexed_overview"):
+        #with st.form("indexed_overview"):
             calculate_indexed()
-            step_three_submit = st.form_submit_button(Text.btn_step4)
-            if step_three_submit:
-                print("inside index")
-                three = True
+            #step_three_submit = st.form_submit_button(Text.btn_step4)
+            #if step_three_submit:
+            three = True
 
     ### step 4
     if three:
@@ -306,12 +308,6 @@ if __name__ == "__main__":
                 saved = nil.principal_list
                 show_loan_saved_graph()
 
-            # TODO: Correctly add data to Pandas DF...
-            # chart_data = pd.DataFrame(
-            #     nil.principal_list, principal_list,
-            #     columns=[Text.principal_downpay, 'hi']
-            # )
-            # st.line_chart(chart_data)
 
         elif is_indexed:
             ...

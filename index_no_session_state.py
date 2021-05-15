@@ -31,8 +31,6 @@ payed_interest=0
 monthly_payments=0
 cost=0
 
-
-
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
 
@@ -266,10 +264,7 @@ if __name__ == "__main__":
                 three = True
 
     ### step 4
-    if two:
-        print("2")
     if three:
-        print("3")
         st.markdown(Text.step_4)
         st.markdown(Text.pay_adjusted_rate)
 
@@ -298,22 +293,16 @@ if __name__ == "__main__":
             year_left_now, month_left_now = format_time_saved(months_shortened)
 
             if extra_payment > 0:
-                st.markdown(
-                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
-                st.markdown(
-                    f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-                st.markdown(
-                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
+                st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
+                st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+                st.markdown(f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
                 st.markdown(f"###")
-                st.markdown(
-                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
+                st.markdown(f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
                 if month_left_now > 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
+                    st.markdown(f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
 
                 elif month_left_now <= 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
+                    st.markdown(f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
                 saved = nil.principal_list
                 show_loan_saved_graph()
 

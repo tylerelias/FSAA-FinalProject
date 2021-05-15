@@ -20,21 +20,7 @@ class Text:
     **Verðtryggð** lán fylgja verðbólgu í landinu. \
     Það þýðir að í flestum tilfellum mun skuldinn hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. Það er vissulega hægt að finna nokkra mánuði síðustu áratugina þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.
     Það sem lætur verðtryggð lán líta vel út er að til að byrja með eru afborganir á þeim lánum lægri heldur en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkura ára.
-    En á sama tíma eru greiðslur á óverðtryggðum lánum þau sömu (svo lengi sem að vextir á lánunum hækka ekki).
-
-    
-    [Sjá dæmi um óverðtryggt lán](https://i.ibb.co/vPr9pDs/non-indexed.png)
-
-     - *Ath: Rauði kassinn með pílunni sýnir að ekkert bætist á höfuðstól lánsins, þannig að það greiðist niður með tímanum*
-
-    [Sjá dæmi um verðtryggt lán](https://i.ibb.co/42rrCZ2/indexed.png)
-
-    - *Ath: Rauði kassinn með pílunni sýnir að **verðbætur bætast** á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er mjög slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum*
-
-    [Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærri en óverðtryggða](https://i.ibb.co/gJTKKSr/indexed-more-exp.png)
-    
-    - *Eftir þrjú ár og fimm mánuði eru mánaðarlegar afborganir á verðtryggðu láni orðið hærra en hjá sambærilegu óvertryggðu láni, og það mun halda áfram að hækka þar til að er greitt að fullu*
-    
+    En á sama tíma eru greiðslur á óverðtryggðum lánum þau sömu (svo lengi sem að vextir á lánunum hækka ekki).    
     
     > **Gallar**:
 
@@ -68,6 +54,14 @@ class Text:
 
 
     """
+
+    img_non_idx_title = "Sjá dæmi um óverðtryggt lán"
+    img_idx_title = "Sjá dæmi um verðtryggt lán"
+    img_idx_exp_title = "Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærri en óverðtryggða"
+    img_non_idx_desc = "Rauði kassinn með pílunni sýnir að ekkert bætist á höfuðstól lánsins, þannig að hann greiðist niður með tímanum"
+    img_idx_desc = "Rauði kassinn með pílunni sýnir að verðbætur bætast á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er mjög slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum"
+    img_idx_exp_desc = "Eftir þrjú ár og fimm mánuði eru mánaðarlegar afborganir á verðtryggðu láni orðið hærra en hjá sambærilegu óvertryggðu láni, og það mun halda áfram að hækka þar til að er greitt að fullu"
+
     # for lines
     line = "---"
 

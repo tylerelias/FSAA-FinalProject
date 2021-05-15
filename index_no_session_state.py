@@ -4,7 +4,7 @@ from numpy import cos
 import pandas as pd
 import streamlit as st
 
-import SessionState
+from PIL import Image
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
@@ -172,7 +172,21 @@ if __name__ == "__main__":
         "", (Text.none_selected, Text.non_indexed, Text.indexed), key="step_one"
     )
     with st.beta_expander(Text.n_idx_diff):
+        img_non_idx = Image.open('img/non_indexed.png')
+        img_idx = Image.open('img/indexed.png')
+        img_idx_exp = Image.open('img/indexed_more_exp.png')
+        # Detailed explanation
         st.markdown(Text.index_vs_nonindex)
+        # images with desc
+        st.markdown(f"### {Text.img_idx_title}")
+        st.image(img_idx, caption=Text.img_idx_desc)
+
+        st.markdown(f"### {Text.img_non_idx_title}")
+        st.image(img_non_idx, caption=Text.img_non_idx_desc)
+
+        st.markdown(f"### {Text.img_idx_exp_title}")
+        st.image(img_idx_exp, caption=Text.img_idx_exp_desc)
+
     if loan_type == Text.none_selected:
         two = False
         three = False

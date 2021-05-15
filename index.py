@@ -30,7 +30,7 @@ ss = SessionState.get(
     principal_list=0,
     payed_interest=0,
     monthly_payments=0,
-    cost=0,
+    cost=0
 )
 
 

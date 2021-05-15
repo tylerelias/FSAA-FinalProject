@@ -1,10 +1,10 @@
 import locale
 from numpy import cos
 
-import streamlit as st
-import SessionState
 import pandas as pd
+import streamlit as st
 
+import SessionState
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
@@ -176,25 +176,18 @@ def pay_adjusted_rate():
 
         if ss.extra_payment > 0:
             st.markdown(
-                f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}"
-            )
-            st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-            st.markdown(
-                f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
-            )
-            st.markdown(f"###")
-            st.markdown(
-                f"### {Text.total_loan}: {convert_to_isk(ss.total_loan_amount-money_saved)}"
-            )
+                f"### {Text.monthly_extra_payment1} {convert_to_isk(ss.extra_payment)} {Text.monthly_extra_payment2}")
+            st.markdown(f'### {Text.money_saved}: {convert_to_isk(money_saved)}')
+            st.markdown(f'### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ')
+            st.markdown(f'###')
+            st.markdown(f'### {Text.total_loan}: {convert_to_isk(ss.total_loan_amount - money_saved)}')
             if month_left_now > 0:
                 st.markdown(
-                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
-                )
+                    f'### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ')
 
             elif month_left_now <= 0:
                 st.markdown(
-                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
-                )
+                    f'### {Text.loan_shortened_now} {year_left_now} {Text.years}')
 
             ss.saved = nil.principal_list
             show_loan_saved_graph()
@@ -228,7 +221,7 @@ def make_same_size():
 
 
 def show_loan_saved_graph():
-    st.write("""# Lán afborganir""")
+    st.write(f"# {Text.graph_title}")
     # we don't wanna update the actual ss.saved array so we create a local variable
     saved = make_same_size()
 
@@ -238,7 +231,7 @@ def show_loan_saved_graph():
 
 
 # Part of Step 3
-def display_info(tegund, principal, interest, duration, cost, inflation=INFLATION):
+def display_info(loan_type, principal, interest, duration, cost, inflation=INFLATION):
     isk = locale.currency(int(principal), grouping=True)
     _interest = float(interest)
     _duration = int(duration)
@@ -248,28 +241,23 @@ def display_info(tegund, principal, interest, duration, cost, inflation=INFLATIO
     year_left, month_left = format_time_saved(_duration)
 
     st.markdown(Text.step_3)
-    st.markdown(f"### {Text.loan_amount}: {isk}")
-    st.markdown(f"### {Text.duration}: {_duration}")
+    st.markdown(f'### {Text.loan_amount}: {isk}')
+    st.markdown(f'### {Text.duration}: {_duration}')
     if month_left > 0:
-        st.markdown(
-            f"### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} "
-        )
+        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ')
 
     elif month_left <= 0:
-        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
+        st.markdown(f'### {Text.loan_duration} {year_left} {Text.years}')
 
-    elif month_left <= 0:
-        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
-
-    st.markdown(f"### {Text.interest_rate}: {_interest}%")
+    st.markdown(f'### {Text.interest_rate}: {_interest}%')
     with st.beta_expander(Text.wrong_input):
         st.markdown(f"{Text.if_wrong_input}")
 
-    if tegund == "indexed":
+    if loan_type == "indexed":
         _inflation = float(inflation)
         lt = IndexLinked(int(principal), _duration, _interest, _inflation, cost=_cost)
         lt.index_calculation()
-    elif tegund == "non_indexed":
+    elif loan_type == "non_indexed":
         lt = NonIndexedLinked(int(principal), _duration, _interest, cost=_cost)
         lt.non_index_calculation()
 

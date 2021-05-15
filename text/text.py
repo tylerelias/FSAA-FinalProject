@@ -139,3 +139,4 @@ class Text:
     total_loan = "Heildar upphæð láns núna"
     loan_duration = "Lánstími eftir"
     loan_shortened_now = "Lánstími eftir núna"
+    graph_title = "Afborganir af höfuðstól lánsins"

@@ -231,6 +231,9 @@ class IndexLinked:
 
 
 if __name__ == "__main__":
-    l = IndexLinked(40000000, 40 * 12, 2.54, 4.3)
-    print(l.total_saved_from_extra_payment(10000))
-    print(l.time_saved_from_extra_payment(10000))
+    lt = IndexLinked(40000000, 40 * 12, 2.54, 4.3, cost=130)
+    lt.index_calculation()
+    print(lt.get_total_payment())
+    avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
+    interest_list_sum = sum(lt.interest_list)
+    total_amount_paid = interest_list_sum + int(40000000)

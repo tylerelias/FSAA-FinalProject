@@ -7,16 +7,16 @@ class Text:
     line = "---"
     linebreak = "  "
     # The intro and header
-    header = "Niðurgreiðslureiknivél fyrir íbúðarlán"
+    header = "Niðurgreiðslureiknivél fyrir íbúðalán"
     intro_text = """
-    Tilgangurinn með þessari vefsíðu er að veita einstaklingum upplýsingar um hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni og kosti þess að velja óverðtryggt framyfir verðtryggt íbúðarlán. 
+    Tilgangurinn með þessari vefsíðu er að veita einstaklingum upplýsingar um hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni og kosti þess að velja óverðtryggt framyfir verðtryggt íbúðalán.
     Það getur reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
-    Þú getur byrjað á því að velja hvernig lán þú villt skoða og næstu skref munu sína hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
+    Þú getur byrjað á því að velja hvernig lán þú vilt skoða og næstu skref munu sýna hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
     """    
 
     # Explain the diff between index vs non indexed loans
     index_vs_nonindex = """
-    Megin munur á verðtryggðum og óverðtryggðum lánum er sá að verðtryggð lán eru alltaf verri kosturinn þegar í heildina er litið.
+    Megin munurinn á verðtryggðum og óverðtryggðum lánum er sá að verðtryggð lán eru alltaf verri kosturinn þegar í heildina er litið.
     
     **Verðtryggð** lán fylgja verðbólgu í landinu. \
     Það þýðir að í flestum tilfellum mun skuldinn hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. Það er vissulega hægt að finna nokkra mánuði síðustu áratugina þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.
@@ -75,14 +75,14 @@ class Text:
     # Step 2
     selected_non_indexed = "#""## Þú valdir **Óverðtryggt** lán"
     selected_non_indexed_info = """
-    Óverðtryggt lán er ávallt betri kosturinn þegar að það kemur að því að taka húsnæðislán. 
-    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri heldur en sambærilegt verðtryggt lán. 
+    Óverðtryggt lán er ávallt betri kosturinn þegar að það kemur að því að taka húsnæðislán.
+    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri heldur en sambærilegt verðtryggt lán.
     En eftir nokkur ár mun verðtryggða lánið hafa hærri greiðslur á meðan það óverðtryggða mun vera með sömu greiðslur (ef vextir breytast ekki þ.e.a.s.)
     """
     selected_indexed = "### Þú valdir **Verðtryggt** lán"
     selected_indexed_info = """
-    Verðtryggð lán eru ein óhagkæmustu lán til hægt er að taka og sérstaklega til lengri tíma. 
-    Ef að einstakingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
+    Verðtryggð lán eru ein óhagkvæmustu lán til hægt er að taka og sérstaklega til lengri tíma.
+    Ef að einstaklingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
     Með okkar reiknivél getur þú séð hversu slæm þessi lán eru í raun og veru.
     """
     step_2 = "2. Fylltu út eftirfarandi reiti, ef þú ert í einhverjum vafa getur þú alltaf smellt á spurningamerkið '?' hægra meginn við reitina til þess að fá ítarlegri upplýsingar um þann reit."
@@ -98,7 +98,7 @@ Dæmi: Tíu milljón króna lán skal vera fyllt inn sem '10000000' í þennan r
 
     interest_rate = "Vextir"
     interest_rate_help = """
-Vextirnir á láninu. Ef þú ert ekki viss um hvað þeir eru getur þú nálgast þá í heimabankanum þínum með því að fara í lánsyfirlit. 
+Vextirnir á láninu. Ef þú ert ekki viss um hvað þeir eru getur þú nálgast þá í heimabankanum þínum með því að fara í lánsyfirlit.
 
 Dæmi: Ef lánið er með 1.23% vöxtum skal setja '1.23' í þennan reit
 
@@ -107,8 +107,8 @@ Dæmi: Ef lánið er með 1.23% vöxtum skal setja '1.23' í þennan reit
 
     inflation_rate = "Núverandi verðbólga"
     inflation_rate_help = """
-Verðbólga er breytileg og getur hækkað og lækkað í framtíðinni. 
-Það er hægt að nálgast núverandi verðbólga á heimasíðu Seðlabanka Íslands: https://www.sedlabanki.is/ en þess má til gamans geta að verðbólgumarkmið seðlabankans er ávallt 2.5%. 
+Verðbólga er breytileg og getur hækkað og lækkað í framtíðinni.
+Það er hægt að nálgast núverandi verðbólga á heimasíðu Seðlabanka Íslands: https://www.sedlabanki.is/ en þess má til gamans geta að verðbólgumarkmið seðlabankans er ávallt 2.5%.
 
 Dæmi: Ef verðbólgan er 2.5% skal setja 2.5 í reitinn.
 
@@ -117,8 +117,8 @@ Dæmi: Ef verðbólgan er 2.5% skal setja 2.5 í reitinn.
 
     duration = "Lánstími eftir (í mánuðum)"
     duration_help = """
-Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. 
-Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. 
+Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið.
+Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit.
 
 Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuðir í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300"
 
@@ -126,7 +126,7 @@ Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 má
 """
     cost = "Kostnaður"
     cost_help = """
-Kostnaður er mánaðarlegt gjald sem bætt er við hverja afborgun af láni (betur þekkt sem peningarplokk), upphæð fer eftir bankanum sem veitir lánið. 
+Kostnaður er mánaðarlegt gjald sem bætt er við hverja afborgun af láni (betur þekkt sem peningaplokk), upphæð fer eftir bankanum sem veitir lánið.
 Þú getur nálgast þessa upphæð hjá bankanum þínum.
 
 Arion Banki: 130kr
@@ -145,22 +145,23 @@ Landsbankinn: 120kr
     Ef þú slóst inn einhverjar rangar upplýsingar getur þú einfaldlega lagað það í reitunum fyrir ofan til að fá út uppfærða útreikninga
     """
     # Total payments
-    total_loan_payment = "Heildargreiðsla"
-    total_loan_payment_help = "Hvað er heildargreiðsla?"
-    total_loan_payment_desc = "Heildargreiðsa er heildar upphæðinn sem að er greidd fyrir lánið. Þar er lagt saman afborgun, vexti og mánaðalega kostnaðinn sem bankinn rukkar"
+    total_loan_payment = "Heildarkostnaður"
+    total_loan_payment_info = "Þegar upp er staðið endar lántakandi oft með að greiða tugi milljóna umfram upprunalegu upphæð lánsins sem var tekinn."
+    total_loan_payment_help = "Hvað er heildarkostnaður?"
+    total_loan_payment_desc = "Heildarkostnaður er heildar upphæðinn sem að er greidd fyrir lánið. Þar er lagt saman afborgun, vexti og mánaðarlega kostnaðinn sem bankinn rukkar"
     # Interest payments
     total_interest_payment = "Vaxtagreiðslur"
     total_interest_payment_help = "Hvað eru vaxtagreiðslur?"
     total_interest_payment_desc = "Vaxtagreiðslur er heildarupphæðin sem að er greidd í vexti"
     
     monthly_payments_title = "Mánaðalegar greiðslur"
-    monthly_payments_info = "Hvað eru mánaðalegar greiðslur?"
+    monthly_payments_info = "Hvað eru mánaðarlegar greiðslur?"
     monthly_payments_info_desc = """
-Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánuði sem lántakandinn þarf að greiða. 
+Mánaðarlegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánuði sem lántakandinn þarf að greiða.
 Þessi upphæð fæst með því að leggja saman afborgun, vexti, kostnað og ef lánð er verðtryggt bætast ofan á það verðbætur.
     """
 
-    monthly_payments_desc = "Hérna er yfirlit yfir mánaðarlegar greiðslur sem þarf að greiða af láninu. Ef um óverðtryggt lán er að ræða haldast greiðslunar nánast eins frá byjun til enda (nema ef vextir breytast) á meðan greiðslur á verðtryggðum lánum breytast mánaðarlega og hækka hverju sinni"
+    monthly_payments_desc = "Hérna er yfirlit yfir mánaðarlegar greiðslur sem þarf að greiða af láninu. Ef um óverðtryggt lán er að ræða haldast greiðslunar nánast eins frá byrjun til enda (nema ef vextir breytast) á meðan greiðslur á verðtryggðum lánum breytast mánaðarlega og hækka hverju sinni"
     first_monthly_payments = "Fyrsta"
     last_monthly_payments = "Seinasta"
     avg_monthly_payments = "Meðaltal"
@@ -168,7 +169,7 @@ Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánu
     # Interest payments
     interest_title = "Vaxtagreiðslur"
     interest_desc = """
-    Vaxtagreiðslur af íbúðarlánum eru oft á tíðum mjög háar og hlaupa upp í tugi milljóna fyrir hvert lán.
+    Vaxtagreiðslur af íbúðalánum eru oft á tíðum mjög háar og hlaupa upp í tugi milljóna fyrir hvert lán.
     Hérna er yfirlit af áætluðum vaxtagreiðslum til bankans en í næsta skrefi munum við skoða hvernig hægt er að lækka þessa upphæð all verulega
     """
 
@@ -179,15 +180,30 @@ Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánu
     total_amount_with_interest = "Lán með vöxtum samtals"
     total_cost = "Samtals greiddur kostnaður"
 
-    payment_chart = "Upphæð mánaðalegra afborgana"
-    payment_chart_desc = "Línuritið sýnir hvað mánaðalegar afborganir eru í hverjum mánuði á verðtryggðu og óverðtryggðu íbúðarláni"
+    payment_chart = "Upphæð mánaðarlega afborgana"
+    payment_chart_desc = "Línuritið sýnir hvað mánaðarlegar afborganir eru í hverjum mánuði á verðtryggðu og óverðtryggðu íbúðarláni"
+
+
+    compare_loans_title = "Bera saman kjörin við"
+    compare_loans_title_pt2 = "lán"
+    compare_loans_help = "Til hvers að gera samanburð?"
+    compare_loans_info = """
+Það er mikilvægt að kynna sér alla möguleika þegar það kemur að því að fjárfesta í fasteignakaupum.
+Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri kostur.
+    """
+    compare_loans_desc_pt1 = "Nú munum við að bera lánið saman við"
+    compare_loans_desc_pt2 = "lán og skoða munin á þeim báðum"
+    indexation = "Verðbætur"
+    section = "Liður"
+
+
 
     # Step 4
     step_4 = "4. Hér getur þú gert áætlun um mánaðarlegar greiðslur inn á höfuðstól lánsins, en með því að borga mánaðarlega inn á höfuðstólinn getur þú sparað margar milljónir í vaxtagreiðslur og líka greitt upp lánið fyrr."
-    pay_fixed_rate = "Þú hefur valið að greiða **fastar greiðslur** inn á lánið. Vinsamlegast veldu þá upphæð sem að þú villt greiða mánaðarlega inn á lánið hérna fyrir neðan."
+    pay_fixed_rate = "Þú hefur valið að greiða **fastar greiðslur** inn á lánið. Vinsamlegast veldu þá upphæð sem að þú vilt greiða mánaðarlega inn á lánið hérna fyrir neðan."
     pay_fixed_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og er tilbúinn til þess að greiða ávallt 50.000kr inn á höfuðstól lánsins í hverjum mánuði og ert þar af leiðandi að greiða samtals 200.000kr hvern mánuð. Til að byrja með greiðir þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðarlega upphæðin sem bankinn rukkar lækka, en þú heldur áfram að greiða sömu upphæðina aukalega inn á höfuðstólinn. Sem dæmi væri mánaðalegur reikingurinn kominn niður í 120.000 en þú værir enn að greiða 50.000kr inn á höfuðstólinn þannig að þú værir nú að greiða í heildina 170.000kr hvern mánuð."
-    pay_adjusted_rate = "Núna kynnum við okkur hvernig skal greiða **aðlagandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildar upphæð sem að þú vilt greiða mánaðarlega þegar lagt er saman reikninginn frá bankanum og svo innborgun á lánið."
-    pay_adjusted_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reikning og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðalega upphæðin sem bankinn rukkar lækka, og þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum."
+    pay_adjusted_rate = "Núna kynnum við okkur hvernig skal greiða **aðlaðandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildar upphæð sem að þú vilt greiða mánaðarlega þegar lagt er saman reikninginn frá bankanum og svo innborgun á lánið."
+    pay_adjusted_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og ert tilbúinn að verja 200.000kr í bæði að greiða þann reikning og inn á höfuðstól lánsins. Þannig að til að byrja með greiður þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðarlega upphæðin sem bankinn rukkar lækka, og þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Sem dæmi væri mánaðarlegur reikningurinn kominn niður í 120.000 en þá yrðu greiðslur inn á höfuðstólinn orðnar 80.000 þar sem þú værir enn að halda áfram að greiða þessa 200.000kr mánaðarlega til húsnæðislánsins. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum."
     adj_fix_difference = 'Hvað eru aðlagandi greiðslur?'
     extra_payment = "Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins"
     extra_payment_help = ""
@@ -203,3 +219,9 @@ Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánu
     loan_duration = "Lánstími"
     loan_shortened_now = "Lánstími eftir núna"
     graph_title = "Afborganir af höfuðstól lánsins"
+    monthy_payments = "Mánaðalegar afborganir"
+
+    with_payments = "Með afborganir"
+    without_payments = "Án afborgana"
+
+

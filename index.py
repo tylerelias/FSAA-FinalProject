@@ -58,7 +58,10 @@ def show_loan_saved_graph():
     saved = make_same_size()
 
     if saved != 0:
-        df = pd.DataFrame({"Lán fyrir": principal_list, "Lán núna": saved})
+        df = pd.DataFrame({
+            Text.without_payments: principal_list,
+            Text.with_payments: saved
+        })
     st.line_chart(df)
 
 
@@ -85,6 +88,7 @@ def display_info(loan_type):
     st.markdown(f"#### {Text.interest_rate}: {interest}%")
 
     other_loan_type = ""
+    lt_indexation = 0
     if loan_type == Text.indexed:
         st.markdown(f"#### {Text.inflation_rate}: {inflation}%")
         # calculate the chosen loan
@@ -95,6 +99,7 @@ def display_info(loan_type):
         ot = NonIndexedLinked(principal, duration,
                               interest + 1.5, cost=cost)
         ot.non_index_calculation()
+        # TODO: Calculate lt_indexation
 
     elif loan_type == Text.non_indexed:
         # calculate the chosen loan
@@ -114,19 +119,22 @@ def display_info(loan_type):
     total_amount_paid = interest_list_sum + principal
 
     # Monthly payment section
+    lt_avg_m_payments = convert_to_isk(avg_monthly_payment)
+    lt_first_monthly_payment = convert_to_isk(lt.total_payment_list[0])
+    lt_last_monthly_payment = convert_to_isk(lt.total_payment_list[-1])
+
     st.markdown(f"## {Text.monthly_payments_title}")
     st.markdown(f"{Text.monthly_payments_desc}")
-    # st.markdown(Text.linebreak)
 
-    st.markdown(f"### {Text.avg_monthly_payments}: {convert_to_isk(avg_monthly_payment)}")
+    st.markdown(f"### {Text.avg_monthly_payments}: {lt_avg_m_payments}")
+    # Give more info if the loan is indexed, highlight how truly awful they end up being
     if loan_type == Text.indexed:
-        first_monthly_payment = lt.total_payment_list[0]
-        last_monthly_payment = lt.total_payment_list[-1]
-        st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(first_monthly_payment)}")
-        st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(last_monthly_payment)}")
+        st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(lt_first_monthly_payment)}")
+        st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(lt_last_monthly_payment)}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.monthly_payments_info):
         st.markdown(f"{Text.monthly_payments_info_desc}")
+
     # Chart to compare monthly payments
     df = pd.DataFrame({
         loan_type: lt.total_payment_list,
@@ -135,38 +143,59 @@ def display_info(loan_type):
     st.markdown(f"# {Text.payment_chart}")
     st.markdown(f"{Text.payment_chart_desc}")
     st.line_chart(df)
-
     st.markdown(Text.linebreak)
 
     # Payed interest section
     st.markdown(f"## {Text.interest_title}")
     st.markdown(f"{Text.interest_desc}")
     # Total interest payments
-    st.markdown(f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
+    lt_total_interest_payment = convert_to_isk(sum(lt.interest_list))
+
+    st.markdown(f"### {Text.total_interest_payment}: {lt_total_interest_payment}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.total_interest_payment_help):
         st.markdown(f"{Text.total_interest_payment_desc}")
-    #
-    # st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
-    #
-    # st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
-    #
-    st.markdown(f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
+    # Total loan payment
+    lt_total_loan_payment = convert_to_isk(lt.get_total_payment())
+
+    st.markdown(f"## {Text.total_loan_payment}")
+    st.markdown(f"{Text.total_loan_payment_info}")
+    st.markdown(f"### {Text.total_loan_payment}: {lt_total_loan_payment}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.total_loan_payment_help):
         st.markdown(f"{Text.total_loan_payment_desc}")
-    #
-    st.markdown(
-        f"### Sama lán sem {other_loan_type} með {INFLATION}% verðbólgu: {convert_to_isk(ot.get_total_payment())}"
-    )
+    # Compare with other_loan
+    ot_total_loan_payment = convert_to_isk(ot.get_total_payment())
+    other_loan_tolower = str(other_loan_type).lower()
+    ot_total_interest_payment = convert_to_isk(sum(ot.interest_list))
+    ot_indexation = 0
+    ot_avg_m_payments = convert_to_isk(sum(ot.total_payment_list) / len(ot.total_payment_list))
+    ot_first_monthly_payment = convert_to_isk(ot.total_payment_list[0])
+    ot_last_monthly_payment = convert_to_isk(ot.total_payment_list[-1])
+
+    st.markdown(f"## {Text.compare_loans_title} {other_loan_tolower} {Text.compare_loans_title_pt2}")
+    st.markdown(f"{Text.compare_loans_desc_pt1} {other_loan_tolower} {Text.compare_loans_desc_pt2}")
+    st.markdown(f"""
+| {Text.section}                | {loan_type}                 | {other_loan_type}           |
+|-------------------------------|-----------------------------|-----------------------------|
+| {Text.total_loan_payment}     | {lt_total_loan_payment}     | {ot_total_loan_payment}     |
+| {Text.total_interest_payment} | {lt_total_interest_payment} | {ot_total_interest_payment} |
+| {Text.indexation}             | {lt_indexation}             | {ot_indexation}             |
+| **{Text.monthy_payments}**    |                             |                             |
+| {Text.avg_monthly_payments}   | {lt_avg_m_payments}         | {ot_avg_m_payments}         |
+| {Text.first_monthly_payments} | {lt_first_monthly_payment}  | {ot_first_monthly_payment}  |
+| {Text.last_monthly_payments}  | {lt_last_monthly_payment}   | {ot_last_monthly_payment}   |
+    """)
+
+    st.markdown(Text.linebreak)
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.compare_loans_help):
+        st.markdown(f"{Text.compare_loans_info}")
 
     principal_list = lt.principal_list
     payed_interest = lt.interest_list
     monthly_payments = avg_monthly_payment
     total_loan_amount = total_amount_paid
-
-    # if(tegund == "indexed"):
-    # st.markdown(f'{Text.stop_getting_ripped_off}')
 
 
 def calculate_non_indexed():

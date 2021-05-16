@@ -173,7 +173,7 @@ def display_info(loan_type):
     ot_first_monthly_payment = convert_to_isk(ot.total_payment_list[0])
     ot_last_monthly_payment = convert_to_isk(ot.total_payment_list[-1])
 
-    st.markdown(f"## {Text.compare_loans_title} {other_loan_tolower} {Text.compare_loans_title_pt2}")
+    st.markdown(f"## {Text.compare_loans_title}")
     st.markdown(f"{Text.compare_loans_desc_pt1} {other_loan_tolower} {Text.compare_loans_desc_pt2}")
     st.markdown(f"""
 | {Text.section}                | {loan_type}                 | {other_loan_type}           |

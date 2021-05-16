@@ -58,10 +58,9 @@ def show_loan_saved_graph():
     saved = make_same_size()
 
     if saved != 0:
-        df = pd.DataFrame({
-            Text.without_payments: principal_list,
-            Text.with_payments: saved
-        })
+        df = pd.DataFrame(
+            {Text.without_payments: principal_list, Text.with_payments: saved}
+        )
     st.line_chart(df)
 
 
@@ -81,7 +80,9 @@ def display_info(loan_type):
     # st.markdown(f"### {Text.duration}: {duration}")
 
     if month_left > 0:
-        st.markdown(f"#### {Text.loan_duration}: {year_left} {Text.years_and} {month_left} {Text.months} ")
+        st.markdown(
+            f"#### {Text.loan_duration}: {year_left} {Text.years_and} {month_left} {Text.months} "
+        )
     elif month_left <= 0:
         st.markdown(f"#### {Text.loan_duration}: {year_left} {Text.years}")
 
@@ -96,8 +97,7 @@ def display_info(loan_type):
         lt.index_calculation()
         # calculated the other loan to compare results
         other_loan_type = Text.non_indexed
-        ot = NonIndexedLinked(principal, duration,
-                              interest + 1.5, cost=cost)
+        ot = NonIndexedLinked(principal, duration, interest + 1.5, cost=cost)
         ot.non_index_calculation()
         # TODO: Calculate lt_indexation
 
@@ -129,17 +129,16 @@ def display_info(loan_type):
     st.markdown(f"### {Text.avg_monthly_payments}: {lt_avg_m_payments}")
     # Give more info if the loan is indexed, highlight how truly awful they end up being
     if loan_type == Text.indexed:
-        st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(lt_first_monthly_payment)}")
-        st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(lt_last_monthly_payment)}")
+        st.markdown(f"### {Text.first_monthly_payments}: {(lt_first_monthly_payment)}")
+        st.markdown(f"### {Text.last_monthly_payments}: {(lt_last_monthly_payment)}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.monthly_payments_info):
         st.markdown(f"{Text.monthly_payments_info_desc}")
 
     # Chart to compare monthly payments
-    df = pd.DataFrame({
-        loan_type: lt.total_payment_list,
-        other_loan_type: ot.total_payment_list
-    })
+    df = pd.DataFrame(
+        {loan_type: lt.total_payment_list, other_loan_type: ot.total_payment_list}
+    )
     st.markdown(f"# {Text.payment_chart}")
     st.markdown(f"{Text.payment_chart_desc}")
     st.line_chart(df)
@@ -169,13 +168,18 @@ def display_info(loan_type):
     other_loan_tolower = str(other_loan_type).lower()
     ot_total_interest_payment = convert_to_isk(sum(ot.interest_list))
     ot_indexation = 0
-    ot_avg_m_payments = convert_to_isk(sum(ot.total_payment_list) / len(ot.total_payment_list))
+    ot_avg_m_payments = convert_to_isk(
+        sum(ot.total_payment_list) / len(ot.total_payment_list)
+    )
     ot_first_monthly_payment = convert_to_isk(ot.total_payment_list[0])
     ot_last_monthly_payment = convert_to_isk(ot.total_payment_list[-1])
 
     st.markdown(f"## {Text.compare_loans_title}")
-    st.markdown(f"{Text.compare_loans_desc_pt1} {other_loan_tolower} {Text.compare_loans_desc_pt2}")
-    st.markdown(f"""
+    st.markdown(
+        f"{Text.compare_loans_desc_pt1} {other_loan_tolower} {Text.compare_loans_desc_pt2}"
+    )
+    st.markdown(
+        f"""
 | {Text.section}                | {loan_type}                 | {other_loan_type}           |
 |-------------------------------|-----------------------------|-----------------------------|
 | {Text.total_loan_payment}     | {lt_total_loan_payment}     | {ot_total_loan_payment}     |
@@ -185,7 +189,8 @@ def display_info(loan_type):
 | {Text.avg_monthly_payments}   | {lt_avg_m_payments}         | {ot_avg_m_payments}         |
 | {Text.first_monthly_payments} | {lt_first_monthly_payment}  | {ot_first_monthly_payment}  |
 | {Text.last_monthly_payments}  | {lt_last_monthly_payment}   | {ot_last_monthly_payment}   |
-    """)
+    """
+    )
 
     st.markdown(Text.linebreak)
     st.markdown(Text.linebreak)
@@ -222,7 +227,14 @@ def no_missing_parameters(loan_type):
     if loan_type == Text.non_indexed:
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
     elif loan_type == Text.indexed:
-        return principal != 0 and duration != 0 and interest != 0.0 and inflation != 0.0 and inflation != 0 and cost != 0
+        return (
+            principal != 0
+            and duration != 0
+            and interest != 0.0
+            and inflation != 0.0
+            and inflation != 0
+            and cost != 0
+        )
 
 
 if __name__ == "__main__":
@@ -238,9 +250,9 @@ if __name__ == "__main__":
         "", (Text.none_selected, Text.non_indexed, Text.indexed), key="step_one"
     )
     with st.beta_expander(Text.n_idx_diff):
-        img_non_idx = Image.open('img/non_indexed.png')
-        img_idx = Image.open('img/indexed.png')
-        img_idx_exp = Image.open('img/indexed_more_exp.png')
+        img_non_idx = Image.open("img/non_indexed.png")
+        img_idx = Image.open("img/indexed.png")
+        img_idx_exp = Image.open("img/indexed_more_exp.png")
         # Detailed explanation
         st.markdown(Text.index_vs_nonindex)
         # images with desc
@@ -367,20 +379,27 @@ if __name__ == "__main__":
 
             if extra_payment > 0:
                 st.markdown(
-                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
+                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+                )
                 st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-                st.markdown(f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
+                st.markdown(
+                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
+                )
                 st.markdown(f"###")
-                st.markdown(f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
+                st.markdown(
+                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}"
+                )
                 if month_left_now > 0:
                     st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
+                    )
 
                 elif month_left_now <= 0:
-                    st.markdown(f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
+                    )
                 saved = nil.principal_list
                 show_loan_saved_graph()
-
 
         elif is_indexed:
             # Doesn't really matter how much you try to pay into the loan,

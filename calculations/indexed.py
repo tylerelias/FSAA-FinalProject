@@ -242,9 +242,12 @@ class IndexLinked:
 
         return norm - ex
 
+    def get_total_indexation(self):
+        return sum(self.verdbaetur_list)
+
 
 if __name__ == "__main__":
     lt = IndexLinked(40000000, 40 * 12, 2.54, 4.3, cost=130)
     lt.index_calculation()
 
-    print(lt.verdbaetur_list)
+    print(lt.get_total_indexation())

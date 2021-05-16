@@ -90,6 +90,7 @@ def display_info(loan_type):
 
     other_loan_type = ""
     lt_indexation = 0
+    ot_indexation = 0
     if loan_type == Text.indexed:
         st.markdown(f"#### {Text.inflation_rate}: {inflation}%")
         # calculate the chosen loan
@@ -99,7 +100,7 @@ def display_info(loan_type):
         other_loan_type = Text.non_indexed
         ot = NonIndexedLinked(principal, duration, interest + 1.5, cost=cost)
         ot.non_index_calculation()
-        # TODO: Calculate lt_indexation
+        lt_indexation = lt.get_total_indexation()
 
     elif loan_type == Text.non_indexed:
         # calculate the chosen loan
@@ -109,6 +110,7 @@ def display_info(loan_type):
         other_loan_type = Text.indexed
         ot = IndexLinked(principal, duration, interest - 1.5, INFLATION, cost=cost)
         ot.index_calculation()
+        ot_indexation = ot.get_total_indexation()
 
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.wrong_input):
@@ -150,6 +152,10 @@ def display_info(loan_type):
     # Total interest payments
     lt_total_interest_payment = convert_to_isk(sum(lt.interest_list))
 
+    # Indexations
+    lt_indexation = convert_to_isk(lt_indexation)
+    ot_indexation = convert_to_isk(ot_indexation)
+
     st.markdown(f"### {Text.total_interest_payment}: {lt_total_interest_payment}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.total_interest_payment_help):
@@ -167,7 +173,6 @@ def display_info(loan_type):
     ot_total_loan_payment = convert_to_isk(ot.get_total_payment())
     other_loan_tolower = str(other_loan_type).lower()
     ot_total_interest_payment = convert_to_isk(sum(ot.interest_list))
-    ot_indexation = 0
     ot_avg_m_payments = convert_to_isk(
         sum(ot.total_payment_list) / len(ot.total_payment_list)
     )

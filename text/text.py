@@ -6,7 +6,8 @@ class Text:
     # The intro and header
     header = "# Niðurgreiðslureiknivél"
     intro_text = """
-    Tilgangurinn með þessari vefsíðu er að veita einstaklingum yfirsín yfir hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni. Það reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
+    Tilgangurinn með þessari vefsíðu er að veita einstaklingum yfirsín yfir hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni. 
+    Það getur reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
     Þú getur byrjað á því að velja hvernig lán þú villt fylla út og næstu skref munu sína hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
     """    # Explain the diff between the two
     # TEMP ! Images:
@@ -15,7 +16,7 @@ class Text:
     # https://i.ibb.co/vPr9pDs/non-indexed.png
 
     index_vs_nonindex = """
-    Megin munur á verðtryggðum og óverðtryggðum lánum er í stuttu máli að verðtryggð lán eru alltaf verri kosturinn þegar í heildina er litið.
+    Megin munur á verðtryggðum og óverðtryggðum lánum er sá að verðtryggð lán eru alltaf verri kosturinn þegar í heildina er litið.
     
     **Verðtryggð** lán fylgja verðbólgu í landinu. \
     Það þýðir að í flestum tilfellum mun skuldinn hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. Það er vissulega hægt að finna nokkra mánuði síðustu áratugina þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.

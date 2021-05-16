@@ -3,18 +3,17 @@
 
 class Text:
 
+    # for lines
+    line = "---"
     # The intro and header
-    header = "# Niðurgreiðslureiknivél"
+    header = "Niðurgreiðslureiknivél fyrir íbúðarlán"
     intro_text = """
-    Tilgangurinn með þessari vefsíðu er að veita einstaklingum yfirsín yfir hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni. 
+    Tilgangurinn með þessari vefsíðu er að veita einstaklingum upplýsingar um hversu mikill sparnaður felst í því að greiða inn á höfuðstól á láni og kosti þess að velja óverðtryggt framyfir verðtryggt íbúðarlán. 
     Það getur reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
-    Þú getur byrjað á því að velja hvernig lán þú villt fylla út og næstu skref munu sína hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
-    """    # Explain the diff between the two
-    # TEMP ! Images:
-    # https://i.ibb.co/gJTKKSr/indexed-more-exp.png
-    # https://i.ibb.co/42rrCZ2/indexed.png
-    # https://i.ibb.co/vPr9pDs/non-indexed.png
+    Þú getur byrjað á því að velja hvernig lán þú villt skoða og næstu skref munu sína hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtargreiðslur.
+    """    
 
+    # Explain the diff between index vs non indexed loans
     index_vs_nonindex = """
     Megin munur á verðtryggðum og óverðtryggðum lánum er sá að verðtryggð lán eru alltaf verri kosturinn þegar í heildina er litið.
     
@@ -51,22 +50,19 @@ class Text:
 
     > 2. Þú eignast fljótar hlut í eigninni þinni
 
-    > 3. Laun hækka með tímanum skv. verðbólgu þannig að afborganir af láninu munu hafa minni áhrif á tekjuráðstöfunina þína
-
+    > 3. Laun hækka með tímanum samhliða verðbólgu þannig að afborganir af láninu munu hafa minni áhrif á tekjuráðstöfunina þína
 
     """
 
     img_non_idx_title = "Sjá dæmi um óverðtryggt lán"
     img_idx_title = "Sjá dæmi um verðtryggt lán"
-    img_idx_exp_title = "Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærri en óverðtryggða"
-    img_non_idx_desc = "Rauði kassinn með pílunni sýnir að ekkert bætist á höfuðstól lánsins, þannig að hann greiðist niður með tímanum"
+    img_idx_exp_title = "Sjá dæmi um hvenær afborganir á verðtryggðu láni verða hærri en á óverðtryggðu"
+    img_non_idx_desc = "Rauði kassinn með pílunni sýnir að ekkert bætist á höfuðstól lánsins, þannig að lánið greiðist niður með tímanum"
     img_idx_desc = "Rauði kassinn með pílunni sýnir að verðbætur bætast á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er mjög slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum"
     img_idx_exp_desc = "Eftir þrjú ár og fimm mánuði eru mánaðarlegar afborganir á verðtryggðu láni orðið hærra en hjá sambærilegu óvertryggðu láni, og það mun halda áfram að hækka þar til að er greitt að fullu"
 
-    # for lines
-    line = "---"
 
-    # For the first step when selecting a loan type
+    # Step 1
     step_1 = "1. Byrjaðu á því að velja tegund láns"
     loan_type = "Tegund Láns:"
     none_selected = "Ekkert valið"
@@ -75,26 +71,62 @@ class Text:
     submit = "Staðfesta Upplýsingar"
     n_idx_diff = "Hver er munurinn á verðtryggðum og óverðtryggðum lánum?"
 
-    # For the second step
-    selected_non_indexed = "### Þú valdir **Óverðtryggt** lán"
+    # Step 2
+    selected_non_indexed = "#""## Þú valdir **Óverðtryggt** lán"
+    selected_non_indexed_info = """
+    Óverðtryggt lán er ávallt betri kosturinn þegar að það kemur að því að taka húsnæðislán. 
+    Til að byrja með eru mánaðarlegar afborganir af láninu hlutfallslega hærri heldur en sambærilegt verðtryggt lán. 
+    En eftir nokkur ár mun verðtryggða lánið hafa hærri afborganir á meðan það óverðtryggða mun vera með sömu afborganir (ef vextir breytast ekki þ.e.a.s.)
+    """
     selected_indexed = "### Þú valdir **Verðtryggt** lán"
+    selected_indexed_info = """
+    Verðtryggð lán eru ein óhagkæmustu lán til hægt er að taka og sérstaklega til tugi ára. 
+    Ef að einstakingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
+    Með okkar reiknivél getur þú séð hversu slæm þessi lán eru í raun og veru.
+    """
     step_2 = "2. Fylltu út eftirfarandi reiti, ef þú ert í einhverjum vafa getur þú alltaf smellt á spurningamerkið '?' hægra meginn við reitina til þess að fá ítarlegri upplýsingar um þann reit."
 
     loan_amount = "Núverandi upphæð láns"
-    amount_help = "Sú heildarupphæð sem eftir á að greiða. Dæmi: Tíu milljón króna lán skal vera fyllt inn sem '10000000' í þennan reit"
+    amount_help = """
+Þetta er sú upphæð sem að þú átt eftir að greiða, hérna getur verið sett inn lán sem er nokkura ára gamalt og þá setur viðkomandi þá upphæð sem þau skulda núna.
+
+Dæmi: Tíu milljón króna lán skal vera fyllt inn sem '10000000' í þennan reit
+
++/- takkinn hækkar/lækkar um 1 milljón.kr
+"""
 
     interest_rate = "Núverandi vextir"
-    interest_rate_help = "Vextirnir á láninu. Ef þú ert ekki viss um hvað þeir eru getur þú nálgast þá í heimabankanum þínum með því að fara í lánsyfirlit. Dæmi: Ef lánið er með 1.23% vöxtum skal setja '1.23' í þennan reit"
+    interest_rate_help = """
+Vextirnir á láninu. Ef þú ert ekki viss um hvað þeir eru getur þú nálgast þá í heimabankanum þínum með því að fara í lánsyfirlit. 
+
+Dæmi: Ef lánið er með 1.23% vöxtum skal setja '1.23' í þennan reit
+
++/- takkinn hækkar/lækkar um 1 prósentustig
+"""
 
     inflation_rate = "Núverandi verðbólga"
-    inflation_rate_help = "Verðbólga er breytileg og getur hækkað og lækkað í framtíðinni. Það er hægt að nálgast núverandi verðbólga á heimasíðu Seðlabanka Íslands: https://www.sedlabanki.is/ en þess má til gamans geta að verðbólgumarkmið seðlabankans er ávallt 2.5%. Dæmi: Ef verðbólgan er 2.5% skal setja 2.5 í reitinn."
+    inflation_rate_help = """
+Verðbólga er breytileg og getur hækkað og lækkað í framtíðinni. 
+Það er hægt að nálgast núverandi verðbólga á heimasíðu Seðlabanka Íslands: https://www.sedlabanki.is/ en þess má til gamans geta að verðbólgumarkmið seðlabankans er ávallt 2.5%. 
+
+Dæmi: Ef verðbólgan er 2.5% skal setja 2.5 í reitinn.
+
++/- takkinn hækkar/lækkar um 1 prósentustig
+"""
 
     duration = "Lánstími eftir (í mánuðum)"
-    duration_help = "Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuðir í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300"
+    duration_help = """
+Lánstími er fjöldi skipta sem þú átt eftir að greiða inn á lánið. 
+Það er hægt að nálgast þessa tölu í heimabankanum þínum með því að fara í lánsyfirlit. 
 
+Dæmi: Ef þú ert með lán sem hefur 25 ára lánstíma þá eru það 300 mánuðir í heildina (25 ár * 12 mánuðir í hverju ári = 300 mánuðir), þannig að í þennan reit myndir þú setja 300"
+
++/- takkinn hækkar/lækkar um 12 mánuði (eitt ár)
+"""
     cost = "Kostnaður"
     cost_help = """
-Kostnaður er gjald sem bætt er við hverja lángreiðslu, upphæð fer eftir bankanum sem veitir lánið. Þú getur nálgast þessa upphæð hjá bankanum þínum.
+Kostnaður er mánaðarlegt gjald sem bætt er við hverja afborgun af láni (betur þekkt sem peningarplokk), upphæð fer eftir bankanum sem veitir lánið. 
+Þú getur nálgast þessa upphæð hjá bankanum þínum.
 
 Arion Banki: 130kr
 

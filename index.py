@@ -1,17 +1,14 @@
 import locale
-
 import pandas as pd
 import streamlit as st
 from PIL import Image
-
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
 
 # Current inflation, look into making this value auto-updating
 INFLATION = 4.6
-
-# Set the currency to ISK
+# Sets the currency to ISK
 locale.setlocale(locale.LC_ALL, "is_IS.UTF-8")
 
 # Used to keep track of the states
@@ -88,7 +85,7 @@ def display_info(loan_type):
     st.markdown(f"### {Text.interest_rate}: {interest}%")
 
     with st.beta_expander(Text.wrong_input):
-       st.markdown(f"{Text.if_wrong_input}")
+        st.markdown(f"{Text.if_wrong_input}")
 
     other_loan_type = ""
     if loan_type == "indexed":
@@ -161,7 +158,7 @@ def no_missing_parameters(loan_type):
 if __name__ == "__main__":
     # The layout of the website
     # Header and introduction text for the website
-    st.markdown(Text.header)
+    st.markdown(f"# {Text.header}")
     st.markdown(Text.line)
     st.markdown(Text.intro_text)
 
@@ -191,7 +188,7 @@ if __name__ == "__main__":
         three = False
         four = False
 
-    ### step 2
+    # Step 2
     if loan_type != Text.none_selected:
         st.markdown(Text.line)
         if loan_type == Text.non_indexed:
@@ -203,8 +200,10 @@ if __name__ == "__main__":
         # Text for the site
         if loan_type == Text.non_indexed:
             st.markdown(Text.selected_non_indexed)
+            st.markdown(Text.selected_non_indexed_info)
         elif loan_type == Text.indexed:
             st.markdown(Text.selected_indexed)
+            st.markdown(Text.selected_indexed_info)
 
         st.markdown(Text.step_2)
 
@@ -250,32 +249,23 @@ if __name__ == "__main__":
                 max_value=900000000.0,
                 step=1.00,
             )
-        # Submit the checkbox to get validated
-        # submit = st.form_submit_button(Text.submit)
-        # If user submits, or if user is in another state
-        # if submit or two:
+
         if no_missing_parameters(loan_type):
             two = True
 
-    ### step 3
+    # Step 3
     st.markdown(Text.line)
     # For non-indexed case
     if two and is_indexed is False:
-        # with st.form("non_indexed_overview"):
         calculate_non_indexed()
-        # step_three_submit = st.form_submit_button(Text.btn_step4)
-        # if step_three_submit:
         three = True
 
     # For indexed loan case
     if two and is_indexed is True:
-        # with st.form("indexed_overview"):
         calculate_indexed()
-        # step_three_submit = st.form_submit_button(Text.btn_step4)
-        # if step_three_submit:
         three = True
 
-    ### step 4
+    # Step 4
     if three:
         st.markdown(Text.line)
         st.markdown(Text.step_4)

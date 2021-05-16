@@ -405,4 +405,35 @@ if __name__ == "__main__":
             # Doesn't really matter how much you try to pay into the loan,
             # the capital will keep growing by hundreds of thousands, make this case to
             # the person using the calculator and suggest a refinance on their current loan
-            ...
+            il = IndexLinked(principal, duration, interest, inflation, cost=cost)
+            money_saved = il.total_saved_from_extra_payment(extra_payment)
+            year, month = format_time_saved(
+                il.time_saved_from_extra_payment(extra_payment)
+            )
+            # year month left
+            months_shortened = duration - (year * 12 + month)
+            year_left_now, month_left_now = format_time_saved(months_shortened)
+
+            if extra_payment > 0:
+                st.markdown(
+                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+                )
+                st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+                st.markdown(
+                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
+                )
+                st.markdown(f"###")
+                st.markdown(
+                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}"
+                )
+                if month_left_now > 0:
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
+                    )
+
+                elif month_left_now <= 0:
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
+                    )
+                saved = il.principal_list
+                show_loan_saved_graph()

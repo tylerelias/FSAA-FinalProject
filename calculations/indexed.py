@@ -60,6 +60,7 @@ class IndexLinked:
         self.payment_of_capital_list = []
         self.step = []
         self.total_payment_list = []
+        self.verdbaetur_list = []
 
         self.monthly_interest = self.interest / 12
         self.monthly_inflation = pow(1 + self.inflation, 1 / 12) - 1
@@ -81,6 +82,7 @@ class IndexLinked:
 
                 # calculated principal change per month
                 principal = self.principal * inflation_index / self.CPI
+                verdbaetur = self.principal * self.monthly_inflation
 
             # every step after initial step, since they depend on previous values
             else:
@@ -97,6 +99,9 @@ class IndexLinked:
                 principal = (principal - capital_payment) * (
                     inflation_index / self.inflation_index_list[i - 2]
                 )
+                verdbaetur = (
+                    self.principal_list[i - 2] - self.payment_of_capital_list[i - 2]
+                ) * self.monthly_inflation
 
             # monthly payment
             payment = principal / annuity_factor
@@ -119,6 +124,7 @@ class IndexLinked:
             self.payment_of_capital_list.append(capital_payment)
             self.total_payment_list.append(total_payment)
             self.step.append(i)
+            self.verdbaetur_list.append(verdbaetur)
 
     def _clear_buffer(self):
         self.inflation_index_list = []
@@ -153,6 +159,7 @@ class IndexLinked:
 
                 # calculated principal change per month
                 principal = self.principal * inflation_index / self.CPI
+                verdbaetur = self.principal * self.monthly_inflation
 
             # every step after initial step, since they depend on previous values
             else:
@@ -169,6 +176,10 @@ class IndexLinked:
                 principal = (principal - capital_payment) * (
                     inflation_index / self.inflation_index_list[i - 2]
                 )
+
+                verdbaetur = (
+                    self.principal_list[i - 2] - self.payment_of_capital_list[i - 2]
+                ) * self.monthly_inflation
 
             # monthly payment
             # payment = principal / annuity_factor
@@ -193,6 +204,8 @@ class IndexLinked:
             self.payment_of_capital_list.append(capital_payment)
             self.total_payment_list.append(total_payment)
             self.step.append(i)
+            self.verdbaetur_list.append(verdbaetur)
+
             if principal < 0:
                 break
 
@@ -233,7 +246,5 @@ class IndexLinked:
 if __name__ == "__main__":
     lt = IndexLinked(40000000, 40 * 12, 2.54, 4.3, cost=130)
     lt.index_calculation()
-    print(lt.get_total_payment())
-    avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
-    interest_list_sum = sum(lt.interest_list)
-    total_amount_paid = interest_list_sum + int(40000000)
+
+    print(lt.verdbaetur_list)

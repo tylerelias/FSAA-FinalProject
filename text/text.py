@@ -144,21 +144,34 @@ Landsbankinn: 120kr
     if_wrong_input = """
     Ef þú slóst inn einhverjar rangar upplýsingar getur þú einfaldlega lagað það í reitunum fyrir ofan til að fá út uppfærða útreikninga
     """
-    total_loan_payment = "Samtals Greitt"
-    total_interest_payment = "Samtals Greiddir Vextir"
+    # Total payments
+    total_loan_payment = "Heildargreiðsla"
+    total_loan_payment_help = "Hvað er heildargreiðsla?"
+    total_loan_payment_desc = "Heildargreiðsa er heildar upphæðinn sem að er greidd fyrir lánið. Þar er lagt saman afborgun, vexti og mánaðalega kostnaðinn sem bankinn rukkar"
+    # Interest payments
+    total_interest_payment = "Vaxtagreiðslur"
+    total_interest_payment_help = "Hvað eru vaxtagreiðslur?"
+    total_interest_payment_desc = "Vaxtagreiðslur er heildarupphæðin sem að er greidd í vexti"
     
     monthly_payments_title = "Mánaðalegar greiðslur"
     monthly_payments_info = "Hvað eru mánaðalegar greiðslur?"
     monthly_payments_info_desc = """
 Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánuði sem lántakandinn þarf að greiða. 
-Þessi upphæð fæst með því að leggja saman afborgun, vexti, kostnað og ef lánð er verðtryggt bætast ofan á þær verðbætur.
+Þessi upphæð fæst með því að leggja saman afborgun, vexti, kostnað og ef lánð er verðtryggt bætast ofan á það verðbætur.
     """
 
     monthly_payments_desc = "Hérna er yfirlit yfir mánaðarlegar greiðslur sem þarf að greiða af láninu. Ef um óverðtryggt lán er að ræða haldast greiðslunar nánast eins frá byjun til enda (nema ef vextir breytast) á meðan greiðslur á verðtryggðum lánum breytast mánaðarlega og hækka hverju sinni"
     first_monthly_payments = "Fyrsta"
     last_monthly_payments = "Seinasta"
     avg_monthly_payments = "Meðaltal"
-    
+
+    # Interest payments
+    interest_title = "Vaxtagreiðslur"
+    interest_desc = """
+    Vaxtagreiðslur af íbúðarlánum eru oft á tíðum mjög háar og hlaupa upp í tugi milljóna fyrir hvert lán.
+    Hérna er yfirlit af áætluðum vaxtagreiðslum til bankans en í næsta skrefi munum við skoða hvernig hægt er að lækka þessa upphæð all verulega
+    """
+
     stop_getting_ripped_off = "Þessir útreikningar gera ráð fyrir að þú greiðir aldrei inn á höfuðstól lánsins. Í næsta skrefi munum við kanna tvær leiðir til þess að minnka heildar vaxtagreiðslur til bankanna, en það getur verið sparnaður upp á margar milljónir."
     radio_pay_fixed_rate = "Borga fasta greiðslu inn á höfuðstól lánsins"
     radio_pay_adjusted_rate = "Borga aðlaðandi greiðslu inn á höfuðstól"

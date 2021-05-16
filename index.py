@@ -116,17 +116,17 @@ def display_info(loan_type):
     # Monthly payment section
     st.markdown(f"## {Text.monthly_payments_title}")
     st.markdown(f"{Text.monthly_payments_desc}")
-    st.markdown(Text.linebreak)
-    with st.beta_expander(Text.monthly_payments_info):
-        st.markdown(f"{Text.monthly_payments_info_desc}")
+    # st.markdown(Text.linebreak)
 
     st.markdown(f"### {Text.avg_monthly_payments}: {convert_to_isk(avg_monthly_payment)}")
     if loan_type == Text.indexed:
         first_monthly_payment = lt.total_payment_list[0]
-        last_monthly_payment = lt.total_payment_list[len(lt.total_payment_list) - 1]
+        last_monthly_payment = lt.total_payment_list[-1]
         st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(first_monthly_payment)}")
         st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(last_monthly_payment)}")
-    # st.markdown(Text.linebreak)
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.monthly_payments_info):
+        st.markdown(f"{Text.monthly_payments_info_desc}")
     # Chart to compare monthly payments
     df = pd.DataFrame({
         loan_type: lt.total_payment_list,
@@ -138,16 +138,24 @@ def display_info(loan_type):
 
     st.markdown(Text.linebreak)
 
-
     # Payed interest section
+    st.markdown(f"## {Text.interest_title}")
+    st.markdown(f"{Text.interest_desc}")
+    # Total interest payments
     st.markdown(f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
-
-    st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
-
-    st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
-
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.total_interest_payment_help):
+        st.markdown(f"{Text.total_interest_payment_desc}")
+    #
+    # st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
+    #
+    # st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
+    #
     st.markdown(f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
-
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.total_loan_payment_help):
+        st.markdown(f"{Text.total_loan_payment_desc}")
+    #
     st.markdown(
         f"### Sama lán sem {other_loan_type} með {INFLATION}% verðbólgu: {convert_to_isk(ot.get_total_payment())}"
     )
@@ -313,7 +321,7 @@ if __name__ == "__main__":
             help=Text.extra_payment_help,
             min_value=0,
             max_value=1000000,
-            step=10000,
+            step=5000,
         )
 
         if not is_indexed:

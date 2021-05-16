@@ -68,27 +68,25 @@ def display_info(loan_type):
     global payed_interest
     global monthly_payments
     global total_loan_amount
-
-    isk = locale.currency(int(principal), grouping=True)
+    # loan amount in icelandic krona
+    isk = locale.currency(principal, grouping=True)
     # year month left
     year_left, month_left = format_time_saved(duration)
 
     st.markdown(Text.step_3)
-    st.markdown(f"### {Text.loan_amount}: {isk}")
-    st.markdown(f"### {Text.duration}: {duration}")
+    st.markdown(f"#### {Text.loan_amount}: {isk}")
+    # st.markdown(f"### {Text.duration}: {duration}")
+
     if month_left > 0:
-        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years_and} {month_left} {Text.months} ")
-
+        st.markdown(f"#### {Text.loan_duration}: {year_left} {Text.years_and} {month_left} {Text.months} ")
     elif month_left <= 0:
-        st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
+        st.markdown(f"#### {Text.loan_duration}: {year_left} {Text.years}")
 
-    st.markdown(f"### {Text.interest_rate}: {interest}%")
-
-    with st.beta_expander(Text.wrong_input):
-        st.markdown(f"{Text.if_wrong_input}")
+    st.markdown(f"#### {Text.interest_rate}: {interest}%")
 
     other_loan_type = ""
-    if loan_type == "indexed":
+    if loan_type == Text.indexed:
+        st.markdown(f"#### {Text.inflation_rate}: {inflation}%")
         # calculate the chosen loan
         lt = IndexLinked(principal, duration, interest, inflation, cost=cost)
         lt.index_calculation()
@@ -98,7 +96,7 @@ def display_info(loan_type):
                               interest, cost=cost)
         ot.non_index_calculation()
 
-    elif loan_type == "non_indexed":
+    elif loan_type == Text.non_indexed:
         # calculate the chosen loan
         lt = NonIndexedLinked(principal, duration, interest, cost=cost)
         lt.non_index_calculation()
@@ -107,17 +105,40 @@ def display_info(loan_type):
         ot = IndexLinked(principal, duration, interest, INFLATION, cost=cost)
         ot.index_calculation()
 
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.wrong_input):
+        st.markdown(f"{Text.if_wrong_input}")
+
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
     interest_list_sum = sum(lt.interest_list)
     total_amount_paid = interest_list_sum + principal
+    # Monthly payment section
+    st.markdown(f"## {Text.monthly_payments_title}")
+    st.markdown(f"{Text.monthly_payments_desc}")
 
-    st.markdown(f"### {Text.monthly_payments}: {convert_to_isk(lt.total_payment_list[0])}")
+    st.markdown(f"### {Text.avg_monthly_payments}: {convert_to_isk(avg_monthly_payment)}")
+    if loan_type == Text.indexed:
+        first_monthly_payment = lt.total_payment_list[0]
+        last_monthly_payment = lt.total_payment_list[len(lt.total_payment_list) - 1]
+        st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(first_monthly_payment)}")
+        st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(last_monthly_payment)}")
+
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.monthly_payments_info):
+        st.markdown(f"{Text.monthly_payments_info_desc}")
+    st.markdown(Text.linebreak)
+    # Payed interest section
     st.markdown(f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
+
     st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
+
     st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
+
     st.markdown(f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
+
     st.markdown(
-        f"### Sama lán sem {other_loan_type} með {INFLATION}% verðbólgu: {convert_to_isk(ot.get_total_payment())}")
+        f"### Sama lán sem {other_loan_type} með {INFLATION}% verðbólgu: {convert_to_isk(ot.get_total_payment())}"
+    )
 
     principal_list = lt.principal_list
     payed_interest = lt.interest_list
@@ -129,11 +150,11 @@ def display_info(loan_type):
 
 
 def calculate_non_indexed():
-    display_info("non_indexed")
+    display_info(Text.non_indexed)
 
 
 def calculate_indexed():
-    display_info("indexed")
+    display_info(Text.indexed)
 
 
 # returns years, months
@@ -149,9 +170,9 @@ def format_time_saved(time):
 
 
 def no_missing_parameters(loan_type):
-    if loan_type == 'Óverðtryggt':
+    if loan_type == Text.non_indexed:
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
-    elif loan_type == 'Verðtryggt':
+    elif loan_type == Text.indexed:
         return principal != 0 and duration != 0 and interest != 0.0 and inflation != 0.0 and inflation != 0 and cost != 0
 
 

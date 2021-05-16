@@ -93,7 +93,7 @@ def display_info(loan_type):
         # calculated the other loan to compare results
         other_loan_type = Text.non_indexed
         ot = NonIndexedLinked(principal, duration,
-                              interest, cost=cost)
+                              interest + 1.5, cost=cost)
         ot.non_index_calculation()
 
     elif loan_type == Text.non_indexed:
@@ -102,7 +102,7 @@ def display_info(loan_type):
         lt.non_index_calculation()
         # calculated the other loan to compare results
         other_loan_type = Text.indexed
-        ot = IndexLinked(principal, duration, interest, INFLATION, cost=cost)
+        ot = IndexLinked(principal, duration, interest - 1.5, INFLATION, cost=cost)
         ot.index_calculation()
 
     st.markdown(Text.linebreak)
@@ -112,9 +112,13 @@ def display_info(loan_type):
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
     interest_list_sum = sum(lt.interest_list)
     total_amount_paid = interest_list_sum + principal
+
     # Monthly payment section
     st.markdown(f"## {Text.monthly_payments_title}")
     st.markdown(f"{Text.monthly_payments_desc}")
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.monthly_payments_info):
+        st.markdown(f"{Text.monthly_payments_info_desc}")
 
     st.markdown(f"### {Text.avg_monthly_payments}: {convert_to_isk(avg_monthly_payment)}")
     if loan_type == Text.indexed:
@@ -122,11 +126,19 @@ def display_info(loan_type):
         last_monthly_payment = lt.total_payment_list[len(lt.total_payment_list) - 1]
         st.markdown(f"### {Text.first_monthly_payments}: {convert_to_isk(first_monthly_payment)}")
         st.markdown(f"### {Text.last_monthly_payments}: {convert_to_isk(last_monthly_payment)}")
+    # st.markdown(Text.linebreak)
+    # Chart to compare monthly payments
+    df = pd.DataFrame({
+        loan_type: lt.total_payment_list,
+        other_loan_type: ot.total_payment_list
+    })
+    st.markdown(f"# {Text.payment_chart}")
+    st.markdown(f"{Text.payment_chart_desc}")
+    st.line_chart(df)
 
     st.markdown(Text.linebreak)
-    with st.beta_expander(Text.monthly_payments_info):
-        st.markdown(f"{Text.monthly_payments_info_desc}")
-    st.markdown(Text.linebreak)
+
+
     # Payed interest section
     st.markdown(f"### {Text.total_interest_payment}: {convert_to_isk(sum(lt.interest_list))}")
 
@@ -211,7 +223,6 @@ if __name__ == "__main__":
 
     # Step 2
     if loan_type != Text.none_selected:
-        st.markdown(Text.line)
         if loan_type == Text.non_indexed:
             is_indexed = False
         else:
@@ -226,6 +237,7 @@ if __name__ == "__main__":
             st.markdown(Text.selected_indexed)
             st.markdown(Text.selected_indexed_info)
 
+        st.markdown(Text.line)
         st.markdown(Text.step_2)
 
         principal = st.number_input(

@@ -81,7 +81,7 @@ class Text:
     """
     selected_indexed = "### Þú valdir **Verðtryggt** lán"
     selected_indexed_info = """
-    Verðtryggð lán eru ein óhagkæmustu lán til hægt er að taka og sérstaklega til tugi ára. 
+    Verðtryggð lán eru ein óhagkæmustu lán til hægt er að taka og sérstaklega til lengri tíma. 
     Ef að einstakingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
     Með okkar reiknivél getur þú séð hversu slæm þessi lán eru í raun og veru.
     """
@@ -165,6 +165,9 @@ Mánaðalegar greiðslur er sú upphæð sem að bankinn rukkar í hverjum mánu
     
     total_amount_with_interest = "Lán með vöxtum samtals"
     total_cost = "Samtals greiddur kostnaður"
+
+    payment_chart = "Upphæð mánaðalegra afborgana"
+    payment_chart_desc = "Línuritið sýnir hvað mánaðalegar afborganir eru í hverjum mánuði á verðtryggðu og óverðtryggðu íbúðarláni"
 
     # Step 4
     step_4 = "4. Hér getur þú gert áætlun um mánaðarlegar greiðslur inn á höfuðstól lánsins, en með því að borga mánaðarlega inn á höfuðstólinn getur þú sparað margar milljónir í vaxtagreiðslur og líka greitt upp lánið fyrr."

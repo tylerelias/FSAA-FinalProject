@@ -1,10 +1,9 @@
 import locale
-from numpy import cos
 
 import pandas as pd
 import streamlit as st
-
 from PIL import Image
+
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
@@ -16,22 +15,23 @@ INFLATION = 4.6
 locale.setlocale(locale.LC_ALL, "is_IS.UTF-8")
 
 # Used to keep track of the states
-one=False  # Not needed?
-two=False
-three=False
-four=False
-principal=0
-duration=0
-interest=0.0
-inflation=0.0
-is_indexed=False
-extra_payment=0
-principal_list=[]
-payed_interest=[]
-monthly_payments=[]
+one = False  # Not needed?
+two = False
+three = False
+four = False
+principal = 0
+duration = 0
+interest = 0.0
+inflation = 0.0
+is_indexed = False
+extra_payment = 0
+principal_list = []
+payed_interest = []
+monthly_payments = []
 total_loan_amount = 0
 saved = []
-cost=0
+cost = 0
+
 
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
@@ -40,7 +40,7 @@ def convert_to_isk(amount):
 def make_same_size():
     global principal_list
     global saved
-    
+
     len_principal = len(principal_list)
     len_saved = len(saved)
 
@@ -86,12 +86,11 @@ def display_info(loan_type):
         st.markdown(f"### {Text.loan_duration} {year_left} {Text.years}")
 
     st.markdown(f"### {Text.interest_rate}: {interest}%")
-    
-    #with st.beta_expander(Text.wrong_input):
-    #    st.markdown(f"{Text.if_wrong_input}")
+
+    with st.beta_expander(Text.wrong_input):
+       st.markdown(f"{Text.if_wrong_input}")
 
     other_loan_type = ""
-    _interest = 4.34
     if loan_type == "indexed":
         # calculate the chosen loan
         lt = IndexLinked(principal, duration, interest, inflation, cost=cost)
@@ -108,7 +107,7 @@ def display_info(loan_type):
         lt.non_index_calculation()
         # calculated the other loan to compare results
         other_loan_type = Text.indexed
-        ot = IndexLinked(principal, duration, interest, _interest, cost=cost)
+        ot = IndexLinked(principal, duration, interest, INFLATION, cost=cost)
         ot.index_calculation()
 
     avg_monthly_payment = sum(lt.total_payment_list) / len(lt.total_payment_list)
@@ -120,13 +119,13 @@ def display_info(loan_type):
     st.markdown(f"### {Text.total_amount_with_interest}: {convert_to_isk(total_amount_paid)}")
     st.markdown(f"### {Text.total_cost}: {convert_to_isk(lt.duration * lt.cost)}")
     st.markdown(f"### {Text.total_loan_payment}: {convert_to_isk(lt.get_total_payment())}")
-    st.markdown(f"### Sama lán sem {other_loan_type} með {_interest}% verðbólgu: {convert_to_isk(ot.get_total_payment())}")
+    st.markdown(
+        f"### Sama lán sem {other_loan_type} með {INFLATION}% verðbólgu: {convert_to_isk(ot.get_total_payment())}")
 
     principal_list = lt.principal_list
     payed_interest = lt.interest_list
     monthly_payments = avg_monthly_payment
     total_loan_amount = total_amount_paid
-
 
     # if(tegund == "indexed"):
     # st.markdown(f'{Text.stop_getting_ripped_off}')
@@ -153,9 +152,9 @@ def format_time_saved(time):
 
 
 def no_missing_parameters(loan_type):
-    if(loan_type == 'Óverðtryggt'):
+    if loan_type == 'Óverðtryggt':
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
-    elif(loan_type == 'Verðtryggt'):
+    elif loan_type == 'Verðtryggt':
         return principal != 0 and duration != 0 and interest != 0.0 and inflation != 0.0 and inflation != 0 and cost != 0
 
 
@@ -191,10 +190,10 @@ if __name__ == "__main__":
         two = False
         three = False
         four = False
-        
 
     ### step 2
     if loan_type != Text.none_selected:
+        st.markdown(Text.line)
         if loan_type == Text.non_indexed:
             is_indexed = False
         else:
@@ -208,11 +207,7 @@ if __name__ == "__main__":
             st.markdown(Text.selected_indexed)
 
         st.markdown(Text.step_2)
-        # Input fields
-        # TODO: These values do not get updated when form is submitted again with changes
-        # to the same field, but it does update if you change values in different fields?
-        # this could be some Streamlit implementation problem
-        
+
         principal = st.number_input(
             Text.loan_amount,
             value=principal,
@@ -256,31 +251,33 @@ if __name__ == "__main__":
                 step=1.00,
             )
         # Submit the checkbox to get validated
-        #submit = st.form_submit_button(Text.submit)
+        # submit = st.form_submit_button(Text.submit)
         # If user submits, or if user is in another state
-        #if submit or two:
-        if(no_missing_parameters(loan_type)):
+        # if submit or two:
+        if no_missing_parameters(loan_type):
             two = True
 
     ### step 3
+    st.markdown(Text.line)
     # For non-indexed case
     if two and is_indexed is False:
-        #with st.form("non_indexed_overview"):
-            calculate_non_indexed()
-            #step_three_submit = st.form_submit_button(Text.btn_step4)
-            #if step_three_submit:
-            three = True
+        # with st.form("non_indexed_overview"):
+        calculate_non_indexed()
+        # step_three_submit = st.form_submit_button(Text.btn_step4)
+        # if step_three_submit:
+        three = True
 
     # For indexed loan case
     if two and is_indexed is True:
-        #with st.form("indexed_overview"):
-            calculate_indexed()
-            #step_three_submit = st.form_submit_button(Text.btn_step4)
-            #if step_three_submit:
-            three = True
+        # with st.form("indexed_overview"):
+        calculate_indexed()
+        # step_three_submit = st.form_submit_button(Text.btn_step4)
+        # if step_three_submit:
+        three = True
 
     ### step 4
     if three:
+        st.markdown(Text.line)
         st.markdown(Text.step_4)
         st.markdown(Text.pay_adjusted_rate)
 
@@ -309,13 +306,15 @@ if __name__ == "__main__":
             year_left_now, month_left_now = format_time_saved(months_shortened)
 
             if extra_payment > 0:
-                st.markdown(f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
+                st.markdown(
+                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}")
                 st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
                 st.markdown(f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} ")
                 st.markdown(f"###")
                 st.markdown(f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}")
                 if month_left_now > 0:
-                    st.markdown(f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
+                    st.markdown(
+                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} ")
 
                 elif month_left_now <= 0:
                     st.markdown(f"### {Text.loan_shortened_now} {year_left_now} {Text.years}")
@@ -324,5 +323,7 @@ if __name__ == "__main__":
 
 
         elif is_indexed:
+            # Doesn't really matter how much you try to pay into the loan,
+            # the capital will keep growing by hundreds of thousands, make this case to
+            # the person using the calculator and suggest a refinance on their current loan
             ...
-        st.markdown(Text.line)

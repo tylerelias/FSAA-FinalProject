@@ -108,10 +108,7 @@ Landsbankinn: 120kr
     step_3 = "3. Hér fyrir neðan hefur verið reiknað út hvað þú munt enda með að greiða í heildina til bankans fyrir íbúðarlánið. Í flestum tilfellum endar þú með að greiða margar milljónir í vaxtakostnað, en með því að greiða aukalega beint inn á höfuðstól lánsins er hægt að stórlækka þessa tölu. Við munum fara betur yfir það í 4. skrefi"
     wrong_input = "Settir þú inn rangar tölur?"
     if_wrong_input = """
-    **Tímabundið: Vegna galla í kerfinu þarf að endurhlaða (refresh) síðuna og setja inn gögninn í skrefi 2 upp á nýtt. 
-    Það er hægt með að ýta á F5 takkann á lyklaborðinu eða Refresh hnappinn á vafranum þínum. Við biðjumst afsökunar á þessum óþægindum**
-    
-    Ath: Ef þú slóst inn einhverjar vitlausar upplýsingar getur þú einfaldlega lagað það í 2. skrefi og smellt aftur takkann til að fá út nýja útreikninga
+    Ef þú slóst inn einhverjar vitlausar upplýsingar getur þú einfaldlega lagað það í reitunum fyrir ofan til að fá út uppfærða útreikninga
     """
     total_loan_payment = "Samtals Greitt"
     total_interest_payment = "Samtals Greiddir Vextir"

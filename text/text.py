@@ -216,7 +216,7 @@ Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri k
 Dæmi: Þú ert að greiða mánaðarlega 150.000kr í afborgun af láninu og ert tilbúinn að greiða 200.000kr í heildina, s.s. afborgun plús innborgun á höfuðstól lánsins. 
 Til að byrja með greiðir þú 150.000kr í afborgun og svo 50.000kr inn á höfuðstól lánsins. Með tímanum mun mánaðarleg afborgun lækka. 
 Þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. 
-Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu greiðslur inn á höfuðstólinn verið 80.000kr, þar sem þú vilt enn að halda áfram að greiða 200.000kr mánaðarlega í heildina. 
+Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu greiðslur inn á höfuðstólinn verið 80.000kr, þar sem þú vilt enn halda áfram að greiða 200.000kr mánaðarlega í heildina. 
 Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.
 """
     adj_fix_difference = 'Hvað eru aðlagandi greiðslur?'
@@ -224,16 +224,16 @@ Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu 
     extra_payment_help = ""
     monthly_extra_payment1 = "Með því að greiða inn "
     monthly_extra_payment2 = "munt þú ná fram eftirfarandi sparnaði"
-    montly_additional = "Mánaðarleg lángreiðsla + Aukagreiðsla ="
+    montly_additional = "Mánaðarleg greiðsla + Aukagreiðsla ="
     money_saved = "Heildarsparnaður"
     time_saved = "Stytting lánstíma"
     principal_downpay = "Höfuðstóll með innborgun"
     years_and = "ár og"
     years = "ár"
     months = "mánuðir"
-    total_loan = "Heildar upphæð láns núna"
+    total_loan = "Heildarkostnaður er núna"
     loan_duration = "Lánstími"
-    loan_shortened_now = "Lánstími eftir núna"
+    loan_shortened_now = "Lánstími er núna"
     graph_title = "Afborganir af láninu"
     monthy_payments = "Mánaðarlegar afborganir"
 

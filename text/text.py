@@ -16,28 +16,28 @@ class Text:
 
     # Explain the diff between index vs non indexed loans
     index_vs_nonindex = """
-    Þegar borin eru saman verðtryggð og óverðtryggð lán, koma óverðtryggð lán alltaf út sem betri kostur fyrir lántakandann.
+    Þegar borin eru saman verðtryggð og óverðtryggð lán, koma óverðtryggð lán alltaf út sem betri kostur fyrir lántakann.
     
     **Verðtryggð** lán fylgja [verðbólgu](https://www.visindavefur.is/svar.php?id=140) í landinu. \
     Það þýðir að í flestum tilfellum mun skuldin hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. 
-    Það er vissulega hægt að finna nokkra mánuði síðustu áratuga þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.
-    Það sem lætur verðtryggð lán líta vel út er að í upphafi eru greiðslur á þeim lánum lægri heldur en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkurra ára.
+    Það er vissulega hægt að finna nokkra mánuði síðustu áratuga þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það er sjaldgæft.
+    Það sem lætur verðtryggð lán líta vel út er að í upphafi eru greiðslur á þeim lánum lægri en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkurra ára.
     Á sama tíma eru greiðslur á óverðtryggðum lánum þau sömu (svo lengi sem að vextir á lánunum hækka ekki).    
     
     > **Gallar**:
 
     > 1. Verðtryggð lán eru látin líta út sem sá kostur sem býður lægri mánaðarlegar greiðslur fyrir fólk sem vill borga sem minnst í hverjum mánuði. 
-    Raunin er sú að eftir nokkur ár verða greiðslurnar hærri og viðkomandi endar með að greiða miklu meira til baka heldur en sá sem tekur óverðtryggt lán.
+    Raunin er sú að eftir nokkur ár verða greiðslurnar hærri og lántaki endar með að greiða meira til lánveitandans heldur en sá sem tekur óverðtryggt lán.
     
     
-    > 2. Höfuðstóll lánsins hækkar í hverjum mánuði fyrsta helming lánstímans, þannig að þú endar með að skulda hærri fjárhæð en þú fékkst lánaða.
+    > 2. Höfuðstóll lánsins hækkar í hverjum mánuði í fyrri helmingi tímabilsins, þannig að þú endar á því að skulda hærri fjárhæð en þú fékkst lánaða.
     
     > **Kostir**:
     
-    > 1. Það eru einfaldlega engir kostir sem fylgja verðtryggðum lánum. Þó að greiðslur séu vissulega lægri fyrstu árin, verða þær mikið hærri heldur en greiðslur á óverðtryggðum lánum eftir aðeins nokkur ár.
+    > 1. Það eru engir kostir sem fylgja verðtryggðum lánum. Þó að greiðslur séu vissulega lægri fyrstu árin, verða þær mun hærri heldur en greiðslur á óverðtryggðum lánum eftir aðeins nokkur ár.
 
-    Oft er litið á **óverðtryggð** lán sem verri kost vegna þess að til að byrja með eru afborganir á þeim lánum talsvert hærri en á sambærilegum lánum sem eru verðtryggð. 
-    Hinsvegar tæki aðeins nokkur ár fyrir afborganir af verðtryggðu láni að verða jafn háar og af sambærilegu óverðtryggðu láni.
+    Oft er litið á **óverðtryggð** lán sem verri kost þar sem afborganir á þeim lánum eru talsvert hærri en á sambærilegum **verðtryggðum** lánum til að byrja með. 
+    Hins vegar tekur aðeins nokkur ár fyrir afborganir af verðtryggðu láni að verða jafnháar og af sambærilegu óverðtryggðu láni.
     Auk þess hækkar aldrei höfuðstóll óverðtryggða lánsins eins og gerist hjá verðtryggða láninu, sem er mikill kostur.
 
     
@@ -80,15 +80,15 @@ class Text:
     # Step 2
     selected_non_indexed = "#" "## Þú valdir **óverðtryggt** lán"
     selected_non_indexed_info = """
-    Óverðtryggt lán er ávallt betri kosturinn þegar að það kemur að því að taka húsnæðislán.
-    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri heldur en af sambærilegu verðtryggu láni.
-    Eftir nokkur ár mun verðtryggða lánið hafa hærri greiðslur á meðan það óverðtryggða mun vera með sömu greiðslur (ef vextir breytast ekki þ.e.a.s.)
+    Óverðtryggð lán eru ávallt betri kosturinn þegar kemur að því að taka húsnæðislán.
+    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri en af sambærilegu verðtryggu láni, en
+    eftir nokkur ár munu greiðslur verðtryggðs láns hækka á meðan það óverðtryggða helst óbreytt (ef vextir breytast ekki þ.e.a.s.)
     """
     selected_indexed = "### Þú valdir **verðtryggt** lán"
     selected_indexed_info = """
-    Verðtryggð lán eru ein óhagkvæmustu lán til hægt er að taka og sérstaklega til lengri tíma.
-    Ef að einstaklingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
-    Með okkar reiknivél getur þú séð hversu slæm þessi lán eru í raun og veru.
+    Verðtryggð lán eru óhagkvæmari til lengri tíma en sambærileg óverðtryggð lán.
+    Ef að einstaklingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að íhuga að **endurfjármagna lánið sitt** og breyta því yfir í óverðtryggt lán.
+    Með okkar reiknivél sérð þú hversu óhagstæð þessi lán geta verið.
     """
     step_2 = "2. Fylltu út eftirfarandi reiti, ef þú ert í einhverjum vafa getur þú alltaf smellt á spurningamerkið '?' hægra meginn við reitina til þess að fá ítarlegri upplýsingar um þann reit."
 

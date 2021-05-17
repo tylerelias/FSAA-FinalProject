@@ -21,7 +21,7 @@ duration = 0
 interest = 0.0
 inflation = 0.0
 is_indexed = False
-extra_payment = 0
+extra_payment = 5000
 principal_list = []
 payed_interest = []
 monthly_payments = []
@@ -100,6 +100,7 @@ def display_info(loan_type):
         other_loan_type = Text.non_indexed
         ot = NonIndexedLinked(principal, duration, interest + 1.5, cost=cost)
         ot.non_index_calculation()
+        # Indexation calculation and display
         lt_indexation = lt.get_total_indexation()
 
     elif loan_type == Text.non_indexed:
@@ -151,16 +152,23 @@ def display_info(loan_type):
     st.markdown(f"{Text.interest_desc}")
     # Total interest payments
     lt_total_interest_payment = convert_to_isk(sum(lt.interest_list))
-
-    # Indexations
-    lt_indexation = convert_to_isk(lt_indexation)
-    ot_indexation = convert_to_isk(ot_indexation)
-
     st.markdown(f"### {Text.total_interest_payment}: {lt_total_interest_payment}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.total_interest_payment_help):
         st.markdown(f"{Text.total_interest_payment_desc}")
     # Total loan payment
+
+    # Indexations
+    lt_indexation = convert_to_isk(lt_indexation)
+    ot_indexation = convert_to_isk(ot_indexation)
+
+    st.markdown(f"## {Text.indexation}")
+    st.markdown(f"{Text.indexation_desc}")
+    st.markdown(f"### {Text.payed_indexation}: {lt_indexation}")
+    st.markdown(Text.linebreak)
+    with st.beta_expander(Text.indexation_help):
+        st.markdown(f"{Text.indexation_info}")
+
     lt_total_loan_payment = convert_to_isk(lt.get_total_payment())
 
     st.markdown(f"## {Text.total_loan_payment}")
@@ -191,13 +199,13 @@ def display_info(loan_type):
 | {Text.section}                | {loan_type}                 | {other_loan_type}           |
 |-------------------------------|-----------------------------|-----------------------------|
 | {Text.loan_amount}            | {total_loan_amount}         | {total_loan_amount}         |
-| {Text.total_interest_payment} | {lt_total_interest_payment} | {ot_total_interest_payment} |
 | {Text.indexation}             | {lt_indexation}             | {ot_indexation}             |
+| {Text.total_interest_payment} | {lt_total_interest_payment} | {ot_total_interest_payment} |
 | {Text.cost}                   | {lt_cost}                   | {ot_cost}                   |
 | {Text.total_loan_payment}     | **{lt_total_loan_payment}** | **{ot_total_loan_payment}** |
 | **{Text.monthy_payments}**    |                             |                             |
-| {Text.avg_monthly_payments}   | {lt_avg_m_payments}         | {ot_avg_m_payments}         |
 | {Text.first_monthly_payments} | {lt_first_monthly_payment}  | {ot_first_monthly_payment}  |
+| {Text.avg_monthly_payments}   | {lt_avg_m_payments}         | {ot_avg_m_payments}         |
 | {Text.last_monthly_payments}  | {lt_last_monthly_payment}   | {ot_last_monthly_payment}   |
     """
     )
@@ -238,12 +246,12 @@ def no_missing_parameters(loan_type):
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
     elif loan_type == Text.indexed:
         return (
-            principal != 0
-            and duration != 0
-            and interest != 0.0
-            and inflation != 0.0
-            and inflation != 0
-            and cost != 0
+                principal != 0
+                and duration != 0
+                and interest != 0.0
+                and inflation != 0.0
+                and inflation != 0
+                and cost != 0
         )
 
 
@@ -370,7 +378,7 @@ if __name__ == "__main__":
             Text.extra_payment,
             value=extra_payment,
             help=Text.extra_payment_help,
-            min_value=0,
+            min_value=1000,
             max_value=1000000,
             step=5000,
         )

@@ -18,7 +18,7 @@ class Text:
     index_vs_nonindex = """
     Þegar borin eru saman verðtryggð og óverðtryggð lán, koma óverðtryggð lán alltaf út sem betri kostur fyrir lántakandann.
     
-    **Verðtryggð** lán fylgja verðbólgu í landinu. \
+    **Verðtryggð** lán fylgja [verðbólgu](https://www.visindavefur.is/svar.php?id=140) í landinu. \
     Það þýðir að í flestum tilfellum mun skuldin hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. 
     Það er vissulega hægt að finna nokkra mánuði síðustu áratugina þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.
     Það sem lætur verðtryggð lán líta vel út er að til að byrja með eru greiðslur á þeim lánum lægri heldur en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkurra ára.
@@ -199,6 +199,11 @@ Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri k
     compare_loans_desc_pt2 = "lán og skoða muninn"
     indexation = "Verðbætur"
     section = "Liður"
+
+    payed_indexation = "Greiddar verðbætur"
+    indexation_help = "Hvað eru verðbætur?"
+    indexation_info = "Verðbætur er upphæð sem bætt er á höfuðstól verðtryggrða lána í hverjum mánuði. Þessi upphæð er reiknuð með því að bæta núverandi verðbólgu ofan í höfuðstól lánsins. Sá nánari lýsingu [hérna](https://www.visindavefur.is/svar.php?id=3484)"
+    indexation_desc = "Ef tekið er verðtryggt lán eru greiddar verðbætur í hverjum mánuði. Hérna sérð þú hversu mikið er greitt í heildina í verðbætur."
 
 
 

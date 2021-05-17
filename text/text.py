@@ -12,46 +12,46 @@ class Text:
     Tilgangurinn með þessari vefsíðu er að veita einstaklingum upplýsingar um hversu mikill sparnaður felst í því að greiða inn á höfuðstól láns og kosti þess að velja óverðtryggt íbúðalán framyfir verðtryggt.
     Það getur reynst bæði flókið og tímafrekt að gera svona útreikningar en þessi vefsíða er ætluð til þess að einfalda ferlið.
     Þú getur byrjað á því að velja hvernig lán þú vilt skoða og næstu skref munu sýna hvernig þú getur mögulega borgað niður lánið hraðar og sparað milljónir í vaxtagreiðslur.
-    """    
+    """
 
     # Explain the diff between index vs non indexed loans
     index_vs_nonindex = """
-    Þegar borin eru saman verðtryggð og óverðtryggð lán, koma óverðtryggð lán alltaf út sem betri kostur fyrir lántakandann.
+    Þegar borin eru saman verðtryggð og óverðtryggð lán, koma óverðtryggð lán alltaf út sem betri kostur fyrir lántakann.
     
     **Verðtryggð** lán fylgja [verðbólgu](https://www.visindavefur.is/svar.php?id=140) í landinu. \
     Það þýðir að í flestum tilfellum mun skuldin hækka í hverjum mánuði um tugi eða hundruð þúsundir króna, þó að viðkomandi sé að greiða lánið mánaðarlega. 
-    Það er vissulega hægt að finna nokkra mánuði síðustu áratugina þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það gerist mjög sjaldan.
-    Það sem lætur verðtryggð lán líta vel út er að til að byrja með eru greiðslur á þeim lánum lægri heldur en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkurra ára.
+    Það er vissulega hægt að finna nokkra mánuði síðustu áratuga þar sem verðbólgan er neikvæð og í þeim tilfellum hækkar höfuðstóll lánsins ekki, en það er sjaldgæft.
+    Það sem lætur verðtryggð lán líta vel út er að í upphafi eru greiðslur á þeim lánum lægri en á óverðtryggðum lánum, en það er aðeins tilfellið í nokkur ár þar sem að mánaðarlega greiðslan hækkar í hverjum mánuði og tekur fram úr mánaðarlegum greiðslum óverðtryggðra lána innan nokkurra ára.
     Á sama tíma eru greiðslur á óverðtryggðum lánum þau sömu (svo lengi sem að vextir á lánunum hækka ekki).    
     
     > **Gallar**:
 
     > 1. Verðtryggð lán eru látin líta út sem sá kostur sem býður lægri mánaðarlegar greiðslur fyrir fólk sem vill borga sem minnst í hverjum mánuði. 
-    Raunin er sú að eftir nokkur ár verða greiðslurnar hærri og viðkomandi endar með að greiða miklu meira til baka heldur en sá sem tekur óverðtryggt lán.
+    Raunin er sú að eftir nokkur ár verða greiðslurnar hærri og lántaki endar með að greiða meira til lánveitandans heldur en sá sem tekur óverðtryggt lán.
     
     
-    > 2. Höfuðstóll lánsins hækkar í hverjum mánuði fyrsta helming lánstímans, þannig að þú endar með að skulda hærri fjárhæð en þú fékkst lánaða.
+    > 2. Höfuðstóll lánsins hækkar í hverjum mánuði í fyrri helmingi tímabilsins, þannig að þú endar á því að skulda hærri fjárhæð en þú fékkst lánaða.
     
     > **Kostir**:
     
-    > 1. Það eru einfaldlega engir kostir sem fylgja verðtryggðum lánum. Þó að greiðslur séu vissulega lægri fyrstu árin, verða þær mikið hærri heldur en greiðslur á óverðtryggðum lánum eftir aðeins nokkur ár.
+    > 1. Það eru engir kostir sem fylgja verðtryggðum lánum. Þó að greiðslur séu vissulega lægri fyrstu árin, verða þær mun hærri heldur en greiðslur á óverðtryggðum lánum eftir aðeins nokkur ár.
 
-    Oft er litið á **óverðtryggð** lán sem verri kost vegna þess að til að byrja með eru afborganir á þeim lánum talsvert hærri en á sambærilegum lánum sem eru verðtryggð. 
-    Hinsvegar tæki aðeins nokkur ár fyrir afborganir af verðtryggðu láni að verða jafn háar og af sambærilegu óverðtryggðu láni.
+    Oft er litið á **óverðtryggð** lán sem verri kost þar sem afborganir á þeim lánum eru talsvert hærri en á sambærilegum **verðtryggðum** lánum til að byrja með. 
+    Hins vegar tekur aðeins nokkur ár fyrir afborganir af verðtryggðu láni að verða jafnháar og af sambærilegu óverðtryggðu láni.
     Auk þess hækkar aldrei höfuðstóll óverðtryggða lánsins eins og gerist hjá verðtryggða láninu, sem er mikill kostur.
 
     
     > **Gallar**:
 
     > 1. Vaxtabreytingar geta haft áhrif á mánaðarlegar afborganir. 
-    Núna eru vextir í sögulega lágmarki hjá Seðlabanka Íslands (0.75%) og margt sem að bendir til þess að þeir muni hækka á næstunni
+    Núna eru meginvextir í sögulega lágmarki hjá Seðlabanka Íslands (0.75%) og margt sem að bendir til þess að þeir muni hækka á næstunni
     
     
     > 2. Greiðslur á þessum lánum eru háar til að byrja með, en þar sem þessi lán hækka ekki í takt við verðbólgu rétt eins og verðtryggð lán og laun flestra gera, þá mun þessi upphæð vera lægra hlutfall af tekjum einstaklings þegar lengra líður á lánstímann
     
     > **Kostir**:
     
-    > 1. Þú getur sparað marga tugi milljóna í *verðbætur* sem einstaklingur sem tekur verðtryggt lán þarf að greiða
+    > 1. Þú getur sparað marga tugi milljóna í *verðbótum* sem einstaklingur sem tekur verðtryggt lán þarf að greiða
 
     > 2. Þú eignast fljótar hlut í eigninni þinni
 
@@ -61,11 +61,12 @@ class Text:
 
     img_non_idx_title = "Sjá dæmi um óverðtryggt lán"
     img_idx_title = "Sjá dæmi um verðtryggt lán"
-    img_idx_exp_title = "Sjá dæmi um hvenær greiðslur á verðtryggðu láni verða hærri en á óverðtryggðu"
+    img_idx_exp_title = (
+        "Sjá dæmi um hvenær greiðslur á verðtryggðu láni verða hærri en á óverðtryggðu"
+    )
     img_non_idx_desc = "Rauði kassinn með pílunni sýnir að ekkert bætist á höfuðstól lánsins, þannig að lánið greiðist niður með tímanum"
-    img_idx_desc = "Rauði kassinn með pílunni sýnir að verðbætur bætast á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er mjög slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum"
+    img_idx_desc = "Rauði kassinn með pílunni sýnir að verðbætur bætast á höfuðstól lánsins, þannig að höfuðstólinn hækkar með tímanum. Þetta er slæmt fyrir þann sem tekur lánið og þekkist ekki í öðrum löndum"
     img_idx_exp_desc = "Eftir þrjú ár og fimm mánuði eru mánaðarlegar greiðslur á verðtryggðu láni orðið hærra en hjá sambærilegu óvertryggðu láni, og það mun halda áfram að hækka þar til að er greitt að fullu"
-
 
     # Step 1
     step_1 = "1. Byrjaðu á því að velja tegund láns"
@@ -77,17 +78,17 @@ class Text:
     n_idx_diff = "Hver er munurinn á verðtryggðum og óverðtryggðum lánum?"
 
     # Step 2
-    selected_non_indexed = "#""## Þú valdir **óverðtryggt** lán"
+    selected_non_indexed = "#" "## Þú valdir **óverðtryggt** lán"
     selected_non_indexed_info = """
-    Óverðtryggt lán er ávallt betri kosturinn þegar að það kemur að því að taka húsnæðislán.
-    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri heldur en af sambærilegu verðtryggu láni.
-    Eftir nokkur ár mun verðtryggða lánið hafa hærri greiðslur á meðan það óverðtryggða mun vera með sömu greiðslur (ef vextir breytast ekki þ.e.a.s.)
+    Óverðtryggð lán eru ávallt betri kosturinn þegar kemur að því að taka húsnæðislán.
+    Til að byrja með eru mánaðarlegar greiðslur af láninu hlutfallslega hærri en af sambærilegu verðtryggu láni, en
+    eftir nokkur ár munu greiðslur verðtryggðs láns hækka á meðan það óverðtryggða helst óbreytt (ef vextir breytast ekki þ.e.a.s.)
     """
     selected_indexed = "### Þú valdir **verðtryggt** lán"
     selected_indexed_info = """
-    Verðtryggð lán eru ein óhagkvæmustu lán til hægt er að taka og sérstaklega til lengri tíma.
-    Ef að einstaklingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að **endurfjármagna lánið sitt sem fyrst** og breyta því yfir í óverðtryggt lán.
-    Með okkar reiknivél getur þú séð hversu slæm þessi lán eru í raun og veru.
+    Verðtryggð lán eru óhagkvæmari til lengri tíma en sambærileg óverðtryggð lán.
+    Ef að einstaklingur er með verðtryggt lán á sinni fasteign ætti sá hin sami að íhuga að **endurfjármagna lánið sitt** og breyta því yfir í óverðtryggt lán.
+    Með okkar reiknivél sérð þú hversu óhagstæð þessi lán geta verið.
     """
     step_2 = "2. Fylltu út eftirfarandi reiti, ef þú ert í einhverjum vafa getur þú alltaf smellt á spurningamerkið '?' hægra meginn við reitina til þess að fá ítarlegri upplýsingar um þann reit."
 
@@ -156,8 +157,10 @@ Landsbankinn: 120kr
     # Interest payments
     total_interest_payment = "Vaxtagreiðslur"
     total_interest_payment_help = "Hvað eru vaxtagreiðslur?"
-    total_interest_payment_desc = "Vaxtagreiðslur er heildarupphæðin sem er greidd í vexti"
-    
+    total_interest_payment_desc = (
+        "Vaxtagreiðslur er heildarupphæðin sem er greidd í vexti"
+    )
+
     monthly_payments_title = "Mánaðarlegar greiðslur"
     monthly_payments_info = "Hvað eru mánaðarlegar greiðslur?"
     monthly_payments_info_desc = """
@@ -180,13 +183,12 @@ Mánaðarlegar greiðslur er sú upphæð sem að bankinn rukkar lántakanda í 
     stop_getting_ripped_off = "Þessir útreikningar gera ráð fyrir að þú greiðir aldrei inn á höfuðstól lánsins. Í næsta skrefi munum við kanna tvær leiðir til þess að minnka heildar vaxtagreiðslur til bankanna, en það getur verið sparnaður upp á margar milljónir."
     radio_pay_fixed_rate = "Borga fasta greiðslu inn á höfuðstól lánsins"
     radio_pay_adjusted_rate = "Borga aðlagandi greiðslu inn á höfuðstól"
-    
+
     total_amount_with_interest = "Lán með vöxtum samtals"
     total_cost = "Samtals greiddur kostnaður"
 
     payment_chart = "Upphæð mánaðarlegra afborgana"
     payment_chart_desc = "Línuritið sýnir hvað mánaðarlegar afborganir eru í hverjum mánuði á verðtryggðu og óverðtryggðu íbúðaláni"
-
 
     compare_loans_title = "Samanburður á kjörum lána"
     compare_loans_title_pt2 = "lán"
@@ -205,8 +207,6 @@ Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri k
     indexation_info = "Verðbætur er upphæð sem bætt er á höfuðstól verðtryggrða lána í hverjum mánuði. Þessi upphæð er reiknuð með því að bæta núverandi verðbólgu ofan í höfuðstól lánsins. Sá nánari lýsingu [hérna](https://www.visindavefur.is/svar.php?id=3484)"
     indexation_desc = "Ef tekið er verðtryggt lán eru greiddar verðbætur í hverjum mánuði. Hérna sérð þú hversu mikið er greitt í heildina í verðbætur."
 
-
-
     # Step 4
     step_4 = "4. Hér getur þú gert áætlun um mánaðarlegar greiðslur inn á höfuðstól lánsins, en með því að borga mánaðarlega inn á höfuðstólinn getur þú sparað margar milljónir í vaxtagreiðslur og líka greitt upp lánið fyrr."
     pay_fixed_rate = "Þú hefur valið að greiða **fastar greiðslur** inn á lánið. Vinsamlegast veldu þá upphæð sem að þú vilt greiða mánaðarlega inn á lánið hérna fyrir neðan."
@@ -219,7 +219,7 @@ Til að byrja með greiðir þú 150.000kr í afborgun og svo 50.000kr inn á h�
 Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu greiðslur inn á höfuðstólinn verið 80.000kr, þar sem þú vilt enn halda áfram að greiða 200.000kr mánaðarlega í heildina. 
 Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.
 """
-    adj_fix_difference = 'Hvað eru aðlagandi greiðslur?'
+    adj_fix_difference = "Hvað eru aðlagandi greiðslur?"
     extra_payment = "Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins"
     extra_payment_help = ""
     monthly_extra_payment1 = "Með því að greiða inn "

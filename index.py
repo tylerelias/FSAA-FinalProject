@@ -28,7 +28,7 @@ monthly_payments = []
 total_loan_amount = 0
 saved = []
 cost = 0
-
+total_loan_payment = 0.0
 
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
@@ -70,6 +70,7 @@ def display_info(loan_type):
     global payed_interest
     global monthly_payments
     global total_loan_amount
+    global total_loan_payment
     # loan amount in icelandic krona
     isk = locale.currency(principal, grouping=True)
     # year month left
@@ -211,6 +212,7 @@ def display_info(loan_type):
     payed_interest = lt.interest_list
     monthly_payments = avg_monthly_payment
     total_loan_amount = total_amount_paid
+    total_loan_payment = lt.get_total_payment()
 
 
 def calculate_non_indexed():
@@ -434,7 +436,7 @@ if __name__ == "__main__":
                 )
                 st.markdown(f"###")
                 st.markdown(
-                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}"
+                    f"### {Text.total_loan}: {convert_to_isk(total_loan_payment - money_saved)}"
                 )
                 if month_left_now > 0:
                     st.markdown(

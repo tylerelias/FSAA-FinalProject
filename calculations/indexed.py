@@ -181,6 +181,9 @@ class IndexLinked:
                     self.principal_list[i - 2] - self.payment_of_capital_list[i - 2]
                 ) * self.monthly_inflation
 
+                if principal == 0:
+                    break
+
             # monthly payment
             # payment = principal / annuity_factor
 
@@ -188,6 +191,9 @@ class IndexLinked:
 
             # how much of payment is payment of interests
             interest = principal * self.monthly_interest
+
+            if principal - payment < 0:
+                payment = principal + interest
 
             # how much of payment is payment of loan capital
             capital_payment = payment - interest
@@ -205,9 +211,6 @@ class IndexLinked:
             self.total_payment_list.append(total_payment)
             self.step.append(i)
             self.verdbaetur_list.append(verdbaetur)
-
-            if principal < 0:
-                break
 
     def _graph(self):
         plt.plot(self.step, self.principal_list)
@@ -250,4 +253,4 @@ if __name__ == "__main__":
     lt = IndexLinked(40000000, 40 * 12, 2.54, 4.3, cost=130)
     lt.index_calculation()
 
-    print(lt.get_total_indexation())
+    print(lt.total_saved_from_extra_payment(1000))

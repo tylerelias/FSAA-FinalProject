@@ -82,6 +82,7 @@ class NonIndexedLinked:
 
     def calculation_extra_amount(self, amount):
         for i in range(1, self.duration + 1):
+
             # seperate calculation for initial step
             if i == 1:
                 # annuity factor, necessary for index calculations
@@ -93,7 +94,7 @@ class NonIndexedLinked:
                 # calculated principal change per month
                 principal = self.principal
 
-                payment = principal / annuity_factor + amount
+                payment = (principal / annuity_factor) + amount
 
             # every step after initial step, since they depend on previous values
             else:
@@ -105,9 +106,14 @@ class NonIndexedLinked:
 
                 # calculated principal change per month
                 principal = principal - capital_payment
+                if principal == 0:
+                    break
 
             # how much of payment is payment of interests
             interest = principal * self.monthly_interest
+
+            if principal - payment < 0:
+                payment = principal + interest
 
             # how much of payment is payment of loan capital
             capital_payment = payment - interest
@@ -123,8 +129,6 @@ class NonIndexedLinked:
             self.payment_of_capital_list.append(capital_payment)
             self.total_payment_list.append(total_payment)
             self.step.append(i)
-            if principal < 0:
-                break
 
     def _graph(self):
         plt.plot(self.step, self.principal_list)
@@ -165,8 +169,7 @@ if __name__ == "__main__":
         3.44,
     )
 
-    print(l.total_saved_from_extra_payment(10000))
-    print(l.time_saved_from_extra_payment(10000))
+    print(l.total_saved_from_extra_payment(0))
 
     """k = NonIndexedLinked(
         40000000,

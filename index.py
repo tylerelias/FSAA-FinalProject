@@ -380,15 +380,15 @@ if __name__ == "__main__":
             Text.extra_payment,
             value=extra_payment,
             help=Text.extra_payment_help,
-            min_value=1000,
+            min_value=5000,
             max_value=1000000,
             step=5000,
         )
 
         if not is_indexed:
+            org_nil = NonIndexedLinked(principal, duration, interest)
+            org_nil.non_index_calculation()
             nil = NonIndexedLinked(principal, duration, interest)
-            nil.non_index_calculation()
-            extra_amount = nil.calculation_extra_amount(principal)
             money_saved = nil.total_saved_from_extra_payment(extra_payment)
             year, month = format_time_saved(
                 nil.time_saved_from_extra_payment(extra_payment)
@@ -397,34 +397,36 @@ if __name__ == "__main__":
             months_shortened = duration - (year * 12 + month)
             year_left_now, month_left_now = format_time_saved(months_shortened)
 
-            if extra_payment > 0:
+            st.markdown(f"### {Text.montly_additional} {convert_to_isk(extra_payment + org_nil.total_payment_list[0])}")
+            st.markdown(
+                f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+            )
+            st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+            st.markdown(
+                f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
+            )
+            st.markdown(f"###")
+            st.markdown(
+                f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}"
+            )
+            if month_left_now > 0:
                 st.markdown(
-                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
                 )
-                st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-                st.markdown(
-                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
-                )
-                st.markdown(f"###")
-                st.markdown(
-                    f"### {Text.total_loan}: {convert_to_isk(total_loan_amount - money_saved)}"
-                )
-                if month_left_now > 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
-                    )
 
-                elif month_left_now <= 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
-                    )
-                saved = nil.principal_list
-                show_loan_saved_graph()
+            elif month_left_now <= 0:
+                st.markdown(
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
+                )
+            saved = nil.principal_list
+            show_loan_saved_graph()
 
         elif is_indexed:
             # Doesn't really matter how much you try to pay into the loan,
             # the capital will keep growing by hundreds of thousands, make this case to
             # the person using the calculator and suggest a refinance on their current loan
+            org_il = IndexLinked(principal, duration, interest, inflation, cost=cost)
+            org_il.index_calculation()
             il = IndexLinked(principal, duration, interest, inflation, cost=cost)
             money_saved = il.total_saved_from_extra_payment(extra_payment)
             year, month = format_time_saved(
@@ -434,26 +436,28 @@ if __name__ == "__main__":
             months_shortened = duration - (year * 12 + month)
             year_left_now, month_left_now = format_time_saved(months_shortened)
 
-            if extra_payment > 0:
+            st.markdown(f"### {Text.first_monthly_payments}: {Text.montly_additional} {convert_to_isk(extra_payment + org_il.total_payment_list[0])}")
+            st.markdown(f"### {Text.avg_monthly_payments}: {Text.montly_additional} {convert_to_isk(extra_payment + sum(org_il.total_payment_list) / len(org_il.total_payment_list))}")
+            st.markdown(f"### {Text.last_monthly_payments}: {Text.montly_additional} {convert_to_isk(extra_payment + org_il.total_payment_list[-1])}")
+            st.markdown(
+                f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+            )
+            st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
+            st.markdown(
+                f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
+            )
+            st.markdown(f"###")
+            st.markdown(
+                f"### {Text.total_loan}: {convert_to_isk(total_loan_payment - money_saved)}"
+            )
+            if month_left_now > 0:
                 st.markdown(
-                    f"### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
                 )
-                st.markdown(f"### {Text.money_saved}: {convert_to_isk(money_saved)}")
-                st.markdown(
-                    f"### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
-                )
-                st.markdown(f"###")
-                st.markdown(
-                    f"### {Text.total_loan}: {convert_to_isk(total_loan_payment - money_saved)}"
-                )
-                if month_left_now > 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years_and} {month_left_now} {Text.months} "
-                    )
 
-                elif month_left_now <= 0:
-                    st.markdown(
-                        f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
-                    )
-                saved = il.principal_list
-                show_loan_saved_graph()
+            elif month_left_now <= 0:
+                st.markdown(
+                    f"### {Text.loan_shortened_now} {year_left_now} {Text.years}"
+                )
+            saved = il.principal_list
+            show_loan_saved_graph()

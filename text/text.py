@@ -212,12 +212,19 @@ Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri k
     pay_fixed_rate = "Þú hefur valið að greiða **fastar greiðslur** inn á lánið. Vinsamlegast veldu þá upphæð sem að þú vilt greiða mánaðarlega inn á lánið hérna fyrir neðan."
     pay_fixed_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr til bankans og er tilbúinn til þess að greiða ávallt 50.000kr inn á höfuðstól lánsins í hverjum mánuði og ert þar af leiðandi að greiða samtals 200.000kr hvern mánuð. Til að byrja með greiðir þú reikninginn: 150.000kr og inn á lánið 50.000kr. Með tímanum mun mánaðarlega upphæðin sem bankinn rukkar lækka, en þú heldur áfram að greiða sömu upphæðina aukalega inn á höfuðstólinn. Sem dæmi væri mánaðalegur reikingurinn kominn niður í 120.000 en þú værir enn að greiða 50.000kr inn á höfuðstólinn þannig að þú værir nú að greiða í heildina 170.000kr hvern mánuð."
     pay_adjusted_rate = "Núna kynnum við okkur hvernig greiða skuli **aðlagandi greiðslur** inn á lánið. Vinsamlegast veldu þá heildarupphæð sem að þú vilt greiða aukalega á mánuði."
-    pay_adjusted_rate_example = "Dæmi: Þú ert að greiða mánaðarlega 150.000kr í afborgun af láninu og ert tilbúinn að greiða 200.000kr í heildina, s.s. afborgun plús innborgun á höfuðstól lánsins. Til að byrja með greiðir þú 150.000kr í afborgun og svo 50.000kr inn á höfuðstól lánsins. Með tímanum mun mánaðarleg afborgun lækka. Þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu greiðslur inn á höfuðstólinn verið 80.000kr, þar sem þú vilt enn að halda áfram að greiða 200.000kr mánaðarlega í heildina. Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum."
+    pay_adjusted_rate_example = """
+Dæmi: Þú ert að greiða mánaðarlega 150.000kr í afborgun af láninu og ert tilbúinn að greiða 200.000kr í heildina, s.s. afborgun plús innborgun á höfuðstól lánsins. 
+Til að byrja með greiðir þú 150.000kr í afborgun og svo 50.000kr inn á höfuðstól lánsins. Með tímanum mun mánaðarleg afborgun lækka. 
+Þar af leiðandi getur þú aukið greiðsluna inn á höfuðstólinn. 
+Segjum svo að mánaðarleg afborgun sé kominn niður í 120.000kr, þá gætu greiðslur inn á höfuðstólinn verið 80.000kr, þar sem þú vilt enn að halda áfram að greiða 200.000kr mánaðarlega í heildina. 
+Þannig eru greiðslunar að aðlagast breytingunum sem verða með tímanum.
+"""
     adj_fix_difference = 'Hvað eru aðlagandi greiðslur?'
     extra_payment = "Sú upphæð sem mun vera greidd aukalega inn á höfuðstól lánsins"
     extra_payment_help = ""
     monthly_extra_payment1 = "Með því að greiða inn "
     monthly_extra_payment2 = "munt þú ná fram eftirfarandi sparnaði"
+    montly_additional = "Mánaðarleg lángreiðsla + Aukagreiðsla ="
     money_saved = "Heildarsparnaður"
     time_saved = "Stytting lánstíma"
     principal_downpay = "Höfuðstóll með innborgun"

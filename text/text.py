@@ -227,5 +227,3 @@ Svo er líka mikilvægt að sjá svart á hvítu hvor valmöguleikinn er betri k
 
     with_payments = "Með auka greiðslu"
     without_payments = "Án auka greiðslu"
-
-

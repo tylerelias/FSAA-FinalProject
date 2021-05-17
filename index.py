@@ -178,6 +178,9 @@ def display_info(loan_type):
     )
     ot_first_monthly_payment = convert_to_isk(ot.total_payment_list[0])
     ot_last_monthly_payment = convert_to_isk(ot.total_payment_list[-1])
+    total_loan_amount = convert_to_isk(principal)
+    lt_cost = convert_to_isk(lt.cost * lt.duration)
+    ot_cost = convert_to_isk(ot.cost * ot.duration)
 
     st.markdown(f"## {Text.compare_loans_title}")
     st.markdown(
@@ -187,9 +190,11 @@ def display_info(loan_type):
         f"""
 | {Text.section}                | {loan_type}                 | {other_loan_type}           |
 |-------------------------------|-----------------------------|-----------------------------|
-| {Text.total_loan_payment}     | {lt_total_loan_payment}     | {ot_total_loan_payment}     |
+| {Text.loan_amount}            | {total_loan_amount}         | {total_loan_amount}         |
 | {Text.total_interest_payment} | {lt_total_interest_payment} | {ot_total_interest_payment} |
 | {Text.indexation}             | {lt_indexation}             | {ot_indexation}             |
+| {Text.cost}                   | {lt_cost}                   | {ot_cost}                   |
+| {Text.total_loan_payment}     | **{lt_total_loan_payment}** | **{ot_total_loan_payment}** |
 | **{Text.monthy_payments}**    |                             |                             |
 | {Text.avg_monthly_payments}   | {lt_avg_m_payments}         | {ot_avg_m_payments}         |
 | {Text.first_monthly_payments} | {lt_first_monthly_payment}  | {ot_first_monthly_payment}  |

@@ -1,12 +1,14 @@
 import locale
+
 import pandas as pd
 import streamlit as st
 from PIL import Image
+
 from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
 
-
+# Hides the hamburger menu
 hide_menu_style = """
         <style>
         #MainMenu {visibility: hidden;}
@@ -14,14 +16,18 @@ hide_menu_style = """
         """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-
 # Current inflation, look into making this value auto-updating
 INFLATION = 4.6
+# This is a constant to calculate the the other type of loans for comparison
+# look into having a more sophisticated to get a more reliable figure
+INFLATION_ADJUSTMENT = 1.5
 # Sets the currency to ISK
 locale.setlocale(locale.LC_ALL, "is_IS.UTF-8")
 
 # Used to keep track of the states
-one = False  # Not needed?
+# We were running into a lot of issues with states in Streamlit when
+# passing them around in functions and keeping them within certain scopes
+# in the end we resorted to this method to keep and update states that worked
 two = False
 three = False
 four = False
@@ -39,9 +45,10 @@ saved = []
 cost = 0
 total_loan_payment = 0.0
 org_loan = []
-cmp_loan = []
 
 
+# convert_to_isk()
+# Takes in a number and returns a #.### kr format item
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
 
@@ -92,7 +99,6 @@ def display_info(loan_type):
 
     st.markdown(Text.step_3)
     st.markdown(f"#### {Text.loan_amount}: {isk}")
-    # st.markdown(f"### {Text.duration}: {duration}")
 
     if month_left > 0:
         st.markdown(
@@ -147,8 +153,8 @@ def display_info(loan_type):
     st.markdown(f"### {Text.avg_monthly_payments}: {lt_avg_m_payments}")
     # Give more info if the loan is indexed, highlight how truly awful they end up being
     if loan_type == Text.indexed:
-        st.markdown(f"### {Text.first_monthly_payments}: {(lt_first_monthly_payment)}")
-        st.markdown(f"### {Text.last_monthly_payments}: {(lt_last_monthly_payment)}")
+        st.markdown(f"### {Text.first_monthly_payments}: {lt_first_monthly_payment}")
+        st.markdown(f"### {Text.last_monthly_payments}: {lt_last_monthly_payment}")
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.monthly_payments_info):
         st.markdown(f"{Text.monthly_payments_info_desc}")
@@ -204,7 +210,7 @@ def display_info(loan_type):
     total_loan_amount = convert_to_isk(principal)
     lt_cost = convert_to_isk(lt.cost * lt.duration)
     ot_cost = convert_to_isk(ot.cost * ot.duration)
-
+    # Chat for side-by-side comparison
     st.markdown(f"## {Text.compare_loans_title}")
     st.markdown(
         f"{Text.compare_loans_desc_pt1} {other_loan_tolower} {Text.compare_loans_desc_pt2}"
@@ -225,7 +231,8 @@ def display_info(loan_type):
 | {Text.last_monthly_payments}  | {lt_last_monthly_payment}   | {ot_last_monthly_payment}   |
     """
     )
-
+    # place the original loan into a global list to use elsewhere
+    # definitely needs to be refactored in future
     org_loan = [
         total_loan_amount,
         lt_indexation,
@@ -239,24 +246,11 @@ def display_info(loan_type):
         loan_type,
     ]
 
-    cmp_loan = [
-        total_loan_amount,
-        ot_indexation,
-        ot_total_interest_payment,
-        ot_cost,
-        ot_total_loan_payment,
-        duration,
-        ot_first_monthly_payment,
-        ot_avg_m_payments,
-        ot_last_monthly_payment,
-        other_loan_type,
-    ]
-
     st.markdown(Text.linebreak)
     st.markdown(Text.linebreak)
     with st.beta_expander(Text.compare_loans_help):
         st.markdown(f"{Text.compare_loans_info}")
-
+    # Update states
     principal_list = lt.principal_list
     payed_interest = lt.interest_list
     monthly_payments = avg_monthly_payment
@@ -289,12 +283,12 @@ def no_missing_parameters(loan_type):
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
     elif loan_type == Text.indexed:
         return (
-            principal != 0
-            and duration != 0
-            and interest != 0.0
-            and inflation != 0.0
-            and inflation != 0
-            and cost != 0
+                principal != 0
+                and duration != 0
+                and interest != 0.0
+                and inflation != 0.0
+                and inflation != 0
+                and cost != 0
         )
 
 
@@ -326,6 +320,7 @@ if __name__ == "__main__":
         st.markdown(f"### {Text.img_idx_exp_title}")
         st.image(img_idx_exp, caption=Text.img_idx_exp_desc)
 
+    # Reset the view if no loans are selected
     if loan_type == Text.none_selected:
         two = False
         three = False
@@ -337,8 +332,6 @@ if __name__ == "__main__":
             is_indexed = False
         else:
             is_indexed = True
-        # The form
-
         # Text for the site
         if loan_type == Text.non_indexed:
             st.markdown(Text.selected_non_indexed)
@@ -349,7 +342,7 @@ if __name__ == "__main__":
 
         st.markdown(Text.line)
         st.markdown(Text.step_2)
-
+        # Input boxes to fill out loan info
         principal = st.number_input(
             Text.loan_amount,
             value=principal,
@@ -438,11 +431,10 @@ if __name__ == "__main__":
             months_shortened = duration - (year * 12 + month)
             year_left_now, month_left_now = format_time_saved(months_shortened)
             # Monthly additional payment
-            # st.markdown(f"### {Text.montly_additional} {convert_to_isk(extra_payment + org_nil.total_payment_list[0])}")
             st.markdown(
                 f"#### {Text.monthly_extra_payment1} {convert_to_isk(extra_payment)} {Text.monthly_extra_payment2}"
             )
-
+            # calculate the new values when additional payment is added
             new_avg_payment = convert_to_isk(nil.total_payment_list[0])
             new_avg_payment = convert_to_isk(
                 extra_payment
@@ -455,6 +447,7 @@ if __name__ == "__main__":
             total_cost = convert_to_isk(cost * duration)
             total_payed = convert_to_isk(sum(nil.total_payment_list))
             st.markdown(Text.linebreak)
+            # Place in a chart for comparison
             st.markdown(
                 f"""
 | {Text.section}                | {org_loan[9]}               | {Text.with_payments}          |
@@ -469,8 +462,8 @@ if __name__ == "__main__":
     """
             )
             st.markdown(Text.linebreak)
+            # Breakdown in money and time saved
             st.markdown(f"#### {Text.money_saved}: {convert_to_isk(money_saved)}")
-            # st.markdown(f"{Text.linebreak}")
             st.markdown(
                 f"#### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
             )
@@ -487,9 +480,6 @@ if __name__ == "__main__":
             show_loan_saved_graph()
 
         elif is_indexed:
-            # Doesn't really matter how much you try to pay into the loan,
-            # the capital will keep growing by hundreds of thousands, make this case to
-            # the person using the calculator and suggest a refinance on their current loan
             org_il = IndexLinked(principal, duration, interest, inflation, cost=cost)
             org_il.index_calculation()
             il = IndexLinked(principal, duration, interest, inflation, cost=cost)
@@ -513,6 +503,7 @@ if __name__ == "__main__":
             total_indexation = convert_to_isk(il.get_total_indexation())
 
             st.markdown(Text.linebreak)
+            # Place in a chart for comparison
             st.markdown(
                 f"""
 | {Text.section}                | {org_loan[9]}               | {Text.with_payments}          |
@@ -530,8 +521,8 @@ if __name__ == "__main__":
     """
             )
             st.markdown(Text.linebreak)
+            # Breakdown in money and time saved
             st.markdown(f"#### {Text.money_saved}: {convert_to_isk(money_saved)}")
-            # st.markdown(f"{Text.linebreak}")
             st.markdown(
                 f"#### {Text.time_saved}: {year} {Text.years_and} {month} {Text.months} "
             )

@@ -223,7 +223,7 @@ def display_info(loan_type):
 | {Text.indexation}             | {lt_indexation}             | {ot_indexation}             |
 | {Text.total_interest_payment} | {lt_total_interest_payment} | {ot_total_interest_payment} |
 | {Text.cost}                   | {lt_cost}                   | {ot_cost}                   |
-| {Text.total_loan_payment}     | **{lt_total_loan_payment}** | **{ot_total_loan_payment}** |
+| **{Text.total_loan_payment}** | **{lt_total_loan_payment}** | **{ot_total_loan_payment}** |
 | {Text.loan_duration}          | {duration}                  | {duration}                  |
 | **{Text.monthy_payments}**    |                             |                             |
 | {Text.first_monthly_payments} | {lt_first_monthly_payment}  | {ot_first_monthly_payment}  |
@@ -456,7 +456,7 @@ if __name__ == "__main__":
 | {Text.indexation}             | {org_loan[1]}               | 0 kr                          |
 | {Text.total_interest_payment} | {org_loan[2]}               | {total_interest}              |
 | {Text.cost}                   | {org_loan[3]}               | {total_cost}                  |
-| {Text.total_loan_payment}     | **{org_loan[4]}**           | **{total_payed}**             |
+| **{Text.total_loan_payment}** | **{org_loan[4]}**           | **{total_payed}**             |
 | {Text.loan_duration}          | {org_loan[5]}               | {months_shortened}            |
 |   {Text.monthy_payments}      | {org_loan[7]}               | {new_avg_payment}             |
     """
@@ -512,7 +512,7 @@ if __name__ == "__main__":
 | {Text.indexation}             | {org_loan[1]}               | {total_indexation}            |
 | {Text.total_interest_payment} | {org_loan[2]}               | {total_interest}              |
 | {Text.cost}                   | {org_loan[3]}               | {total_cost}                  |
-| {Text.total_loan_payment}     | **{org_loan[4]}**           | **{total_payed}**             |
+| **{Text.total_loan_payment}** | **{org_loan[4]}**           | **{total_payed}**             |
 | {Text.loan_duration}          | {org_loan[5]}               | {months_shortened}            |
 | **{Text.monthy_payments}**    |                             |                             |
 | {Text.first_monthly_payments} | {org_loan[6]}  | {new_first_payment}  |

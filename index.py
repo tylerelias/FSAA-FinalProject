@@ -6,6 +6,15 @@ from calculations.indexed import IndexLinked
 from calculations.nonindexed import NonIndexedLinked
 from text.text import Text
 
+
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
 # Current inflation, look into making this value auto-updating
 INFLATION = 4.6
 # Sets the currency to ISK
@@ -31,6 +40,7 @@ cost = 0
 total_loan_payment = 0.0
 org_loan = []
 cmp_loan = []
+
 
 def convert_to_isk(amount):
     return locale.currency(amount, grouping=True)
@@ -226,7 +236,7 @@ def display_info(loan_type):
         lt_first_monthly_payment,
         lt_avg_m_payments,
         lt_last_monthly_payment,
-        loan_type
+        loan_type,
     ]
 
     cmp_loan = [
@@ -239,7 +249,7 @@ def display_info(loan_type):
         ot_first_monthly_payment,
         ot_avg_m_payments,
         ot_last_monthly_payment,
-        other_loan_type
+        other_loan_type,
     ]
 
     st.markdown(Text.linebreak)
@@ -279,12 +289,12 @@ def no_missing_parameters(loan_type):
         return principal != 0 and duration != 0 and interest != 0.0 and cost != 0
     elif loan_type == Text.indexed:
         return (
-                principal != 0
-                and duration != 0
-                and interest != 0.0
-                and inflation != 0.0
-                and inflation != 0
-                and cost != 0
+            principal != 0
+            and duration != 0
+            and interest != 0.0
+            and inflation != 0.0
+            and inflation != 0
+            and cost != 0
         )
 
 
@@ -434,8 +444,13 @@ if __name__ == "__main__":
             )
 
             new_avg_payment = convert_to_isk(nil.total_payment_list[0])
-            new_avg_payment = convert_to_isk(extra_payment + sum(org_nil.total_payment_list) / len(org_nil.total_payment_list))
-            new_last_payment = convert_to_isk(extra_payment + nil.total_payment_list[-2])
+            new_avg_payment = convert_to_isk(
+                extra_payment
+                + sum(org_nil.total_payment_list) / len(org_nil.total_payment_list)
+            )
+            new_last_payment = convert_to_isk(
+                extra_payment + nil.total_payment_list[-2]
+            )
             total_interest = convert_to_isk(sum(nil.interest_list))
             total_cost = convert_to_isk(cost * duration)
             total_payed = convert_to_isk(sum(nil.total_payment_list))
@@ -487,7 +502,10 @@ if __name__ == "__main__":
             year_left_now, month_left_now = format_time_saved(months_shortened)
 
             new_first_payment = convert_to_isk(il.total_payment_list[0])
-            new_avg_payment = convert_to_isk(extra_payment + sum(org_il.total_payment_list) / len(org_il.total_payment_list))
+            new_avg_payment = convert_to_isk(
+                extra_payment
+                + sum(org_il.total_payment_list) / len(org_il.total_payment_list)
+            )
             new_last_payment = convert_to_isk(extra_payment + il.total_payment_list[-2])
             total_interest = convert_to_isk(sum(il.interest_list))
             total_cost = convert_to_isk(cost * duration)

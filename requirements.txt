@@ -1,3 +1,4 @@
 pandas==1.2.4
 streamlit==0.81.1
 matplotlib==3.4.2
+protobuf==3.17.0

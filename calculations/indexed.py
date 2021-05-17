@@ -135,6 +135,7 @@ class IndexLinked:
         self.payment_of_capital_list = []
         self.step = []
         self.total_payment_list = []
+        self.verdbaetur_list = []
 
     # calculates the loan table with extra month added, and savings reinvested
     def calc_with_extraamount(self, amount):

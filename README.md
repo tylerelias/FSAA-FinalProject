@@ -39,3 +39,5 @@ index.py holds the frontend code
 calculations/ holds all loan calculations
 
 if streamlit run gives a weird error in the terminal, try deleting the credentials.toml file located in your streamlit directory (~/.streamlit by default)
+
+The files setup.sh, runtime.txt, procfile and .locales are necessary for the application to be deployed on Heroku
